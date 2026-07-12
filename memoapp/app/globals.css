@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  /* Typography */
+  --font-heading: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Lora", Georgia, serif;
+
+  /* Core surfaces */
+  --color-memo-bg: #f7f4ee;
+  --color-memo-surface: #fffdf8;
+  --color-memo-text: #25231f;
+  --color-memo-divider: #ddd7cc;
+
+  /* Neutral palette */
+  --color-memo-neutral-100: #f6f3ed;
+  --color-memo-neutral-700: #686259;
+  --color-memo-neutral-900: #25231f;
+
+  /* Connection / insight palette */
+  --color-memo-connection-100: #eef0fb;
+  --color-memo-connection-300: #c5cae7;
+  --color-memo-connection-400: #9da7d6;
+  --color-memo-connection-500: #7582c1;
+  --color-memo-connection-600: #CC017E;
+  --color-memo-connection-700: #414c82;
+}
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-memo-bg);
+  color: var(--color-memo-text);
+  font-family: var(--font-body);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
