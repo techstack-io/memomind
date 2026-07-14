@@ -2,27 +2,27 @@
 
 @theme {
   /* Typography */
-  --font-heading: "Cormorant Garamond", Georgia, serif;
-  --font-body: "Lora", Georgia, serif;
+  --font-sans: "Manrope", Arial, sans-serif;
 
   /* Core surfaces */
-  --color-memo-bg: #f7f4ee;
+  --color-memo-bg: #FBFAF7;
   --color-memo-surface: #fffdf8;
   --color-memo-text: #25231f;
   --color-memo-divider: #ddd7cc;
 
   /* Neutral palette */
   --color-memo-neutral-100: #f6f3ed;
+  --color-memo-neutral-300: #e7e1d8;
+  --color-memo-neutral-500: #9a948a;
   --color-memo-neutral-700: #686259;
   --color-memo-neutral-900: #25231f;
 
-  /* Connection / insight palette */
-  --color-memo-connection-100: #eef0fb;
-  --color-memo-connection-300: #c5cae7;
-  --color-memo-connection-400: #9da7d6;
-  --color-memo-connection-500: #7582c1;
-  --color-memo-connection-600: #CC017E;
-  --color-memo-connection-700: #414c82;
+  /* Fern Breath accents */
+  --color-memo-connection-100: #eef3ea;
+  --color-memo-connection-300: #d2e3c8;
+  --color-memo-connection-500: #86a789;
+  --color-memo-connection-600: #5f7f63;
+  --color-memo-connection-700: #4e6f52;
 }
 
 :root {
@@ -42,7 +42,7 @@ body {
   min-height: 100vh;
   background: var(--color-memo-bg);
   color: var(--color-memo-text);
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
 }
 
 button,

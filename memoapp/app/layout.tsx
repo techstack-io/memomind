@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Lora } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 
-const headingFont = Cormorant_Garamond({
-  variable: "--font-heading-loaded",
+const manrope = Manrope({
+  variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-});
-
-const bodyFont = Lora({
-  variable: "--font-body-loaded",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -27,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${headingFont.variable} ${bodyFont.variable}`}>
+      <body className={`${manrope.variable} antialiased`}>
         {children}
       </body>
     </html>

@@ -4,6 +4,8 @@ import Image from "next/image";
 
 import { useEffect, useRef, useState } from "react";
 
+import { ScanSearch } from "lucide-react";
+
 /**
  * MemoMind landing page — Next.js + Tailwind port of the "Classical" design
  * system HTML prototype. Drop this component into any App Router page.
@@ -153,16 +155,16 @@ export default function MemoMindLanding({
         <div className="text-xs tracking-widest uppercase text-memo-neutral-700 mb-4">
           Your life map
         </div>
-        <h1 className="font-heading font-normal text-[58px] leading-[1.08] max-w-3xl">
+        <h1 className="font-heading font-normal text-[48px] leading-[1.08] max-w-3xl">
           Your life is more than chat history.
         </h1>
-        <h1 className="font-heading font-normal text-[58px] leading-[1.08] max-w-3xl mt-1.5">
+        <h1 className="font-heading font-normal text-[48px] leading-[1.08] max-w-3xl mt-1.5">
           Meet <span className="text-memo-connection-600 italic">Memo</span>, the AI that builds
           a living map of your life.
         </h1>
         <p className="max-w-xl text-lg leading-relaxed text-memo-text/70 mt-6">
-          Instead of remembering conversations, Memo remembers what matters — the people, goals,
-          and moments that make up who you are.
+        Inspired by Lojong, MemoMind uses daily reflection to discover what matters most while building a living map of your life.
+
         </p>
 
         <div className="flex gap-3.5 mt-8">
@@ -283,7 +285,7 @@ export default function MemoMindLanding({
                     y1={edge.y1}
                     x2={edge.x2}
                     y2={edge.y2}
-                    stroke={edge.accent ? "#44518f" : "#8b98d4"}
+                    stroke={edge.accent ? "#6B8E73" : "#B8C4BB"}
                     strokeWidth={1.5}
                     style={{
                       strokeDasharray: len,
@@ -326,27 +328,17 @@ export default function MemoMindLanding({
           {/* insight */}
           {insightReady && (
             <div className="mt-5 flex gap-3 items-start rounded border border-memo-connection-300 bg-memo-connection-100 p-4 animate-[fadeUp_0.5s_ease]">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="flex-none mt-0.5 text-memo-connection-600"
-              >
-                <path d="M12 2a7 7 0 0 0-4 12.7V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.3A7 7 0 0 0 12 2z" />
-                <line x1="10" y1="21" x2="14" y2="21" />
-              </svg>
+              <ScanSearch
+                className="h-[18px] w-[18px] flex-none mt-0.5 text-memo-connection-600"
+              />
               <div>
                 <div className="text-[10px] tracking-widest uppercase text-memo-connection-600 mb-1">
                   Memo notices
                 </div>
                 <p className="text-[15px] leading-relaxed m-0">
-                  Your biggest source of stress this week was launching Memologic — and taking a
-                  family weekend brought it back down.
+                Your biggest source of stress this week
+                was launching Memologic—taking a
+                family weekend brought it back down.
                 </p>
               </div>
             </div>
