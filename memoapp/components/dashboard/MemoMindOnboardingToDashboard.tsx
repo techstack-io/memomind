@@ -6,7 +6,7 @@ import { useState } from "react";
  * MemoMind onboarding wizard — modal overlay.
  * Next.js + Tailwind, same "Fern Breath" tokens as MemoMindDashboard.tsx.
  *
- * Steps: welcome → boundaries → memory → content → crisis → begin.
+ * Steps: welcome → tradition → boundaries → memory → content → crisis → begin.
  * (Age confirmation happens earlier, in AgeGateModal — not part of this
  * wizard.)
  *
@@ -18,9 +18,9 @@ import { useState } from "react";
  * off. Finishing just calls onFinish() and the parent removes the overlay.
  */
 
-type StepId = "welcome" | "boundaries" | "memory" | "content" | "crisis" | "begin";
+type StepId = "welcome" | "tradition" | "boundaries" | "memory" | "content" | "crisis" | "begin";
 
-const STEP_ORDER: StepId[] = ["welcome", "boundaries", "memory", "content", "crisis", "begin"];
+const STEP_ORDER: StepId[] = ["welcome", "tradition", "boundaries", "memory", "content", "crisis", "begin"];
 
 function MemoMark({ size = 24 }: { size?: number }) {
   return (
@@ -140,31 +140,31 @@ export default function MemoMindOnboardingToDashboard({
 
         <div className="flex-1 overflow-y-auto flex flex-col justify-start gap-5 pr-1">
           {step === "welcome" && (
-  <>
-    <h1 className="font-heading font-semibold text-[36px] leading-snug">
-      Welcome to MemoMind.
-    </h1>
-    <p className="text-[19px] leading-relaxed text-memo-neutral-700">
-      MemoMind is inspired by Lojong, an ancient Mahayana
-      Buddhist practice often translated as &ldquo;mind
-      training.&rdquo; Lojong uses 59 short slogans to help
-      people respond to life&rsquo;s difficult moments with
-      greater awareness and compassion.
-    </p>
-    <p className="text-[19px] leading-relaxed text-memo-neutral-700">
-      Unlike sitting meditation, which may feel intimidating
-      to beginners, Lojong offers simple phrases you can
-      recall when you need them most. The slogans
-      aren&rsquo;t meant to be studied only as ideas — they
-      become useful through practice and repetition.
-    </p>
-    <p className="text-[19px] leading-relaxed text-memo-neutral-700">
-      With MemoMind, you can gradually build a personal set
-      of slogans to turn to when your thoughts begin to race
-      or a situation feels overwhelming.
-    </p>
-  </>
-)}
+            <>
+              <h1 className="font-heading font-semibold text-[36px] leading-snug">
+                Welcome to MemoMind.
+              </h1>
+              <p className="text-[19px] leading-relaxed text-memo-neutral-700">
+                MemoMind is inspired by Lojong, an ancient Mahayana
+                Buddhist practice often translated as &ldquo;mind
+                training.&rdquo; Lojong uses 59 short slogans to help
+                people respond to life&rsquo;s difficult moments with
+                greater awareness and compassion.
+              </p>
+              <p className="text-[19px] leading-relaxed text-memo-neutral-700">
+                Unlike sitting meditation, which may feel intimidating
+                to beginners, Lojong offers simple phrases you can
+                recall when you need them most. The slogans
+                aren&rsquo;t meant to be studied only as ideas — they
+                become useful through practice and repetition.
+              </p>
+              <p className="text-[19px] leading-relaxed text-memo-neutral-700">
+                With MemoMind, you can gradually build a personal set
+                of slogans to turn to when your thoughts begin to race
+                or a situation feels overwhelming.
+              </p>
+            </>
+          )}
 
           {step === "tradition" && (
             <>
@@ -196,22 +196,23 @@ export default function MemoMindOnboardingToDashboard({
           )}
 
           {step === "boundaries" && (
-          <>
-          <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-memo-connection-100">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"
-              className="size-6 text-memo-connection-600">
-              <path strokeLinecap="round" strokeLinejoin="round"
-                d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-            </svg>
-          </div>
-          <h1 className="font-heading font-semibold text-[32px] leading-snug">
-            What I&rsquo;m not.
-          </h1>
-          <p className="text-[19px] leading-relaxed text-memo-neutral-700">
-            As much as I care about helping people, MemoMind is not a therapist and cannot replace professional care. For clinical guidance, professional advice, or support during a mental health crisis, please contact a licensed mental health professional or emergency service in your area.
-          </p>
-          </>
+            <>
+              <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-memo-connection-100">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"
+                  className="size-6 text-memo-connection-600">
+                  <path strokeLinecap="round" strokeLinejoin="round"
+                    d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                </svg>
+              </div>
+              <h1 className="font-heading font-semibold text-[32px] leading-snug">
+                What I&rsquo;m not.
+              </h1>
+              <p className="text-[19px] leading-relaxed text-memo-neutral-700">
+                As much as I care about helping people, MemoMind is not a therapist and cannot replace professional care. For clinical guidance, professional advice, or support during a mental health crisis, please contact a licensed mental health professional or emergency service in your area.
+              </p>
+            </>
           )}
+
           {step === "memory" && (
             <>
               <h1 className="font-heading font-semibold text-[32px] leading-snug">
@@ -308,7 +309,7 @@ export default function MemoMindOnboardingToDashboard({
         <div className="flex-none flex flex-col gap-3">
           {step === "welcome" && <PrimaryButton onClick={goNext}>Continue</PrimaryButton>}
 
-          {(step === "boundaries" || step === "content" || step === "crisis") && (
+          {(step === "tradition" || step === "boundaries" || step === "content" || step === "crisis") && (
             <>
               <PrimaryButton onClick={goNext}>Continue</PrimaryButton>
               <TextButton onClick={goBack}>Back</TextButton>
