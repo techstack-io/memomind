@@ -138,31 +138,39 @@ export default function MemoMindOnboardingToDashboard({
           <StepDots current={stepIndex} />
         </div>
 
-        <div className="flex-1 overflow-y-auto flex flex-col justify-center gap-5 pr-1">
+        <div className="flex-1 overflow-y-auto flex flex-col justify-start gap-5 pr-1">
           {step === "welcome" && (
+  <>
+    <h1 className="font-heading font-semibold text-[36px] leading-snug">
+      Welcome to MemoMind.
+    </h1>
+    <p className="text-[19px] leading-relaxed text-memo-neutral-700">
+      MemoMind is inspired by Lojong, an ancient Mahayana
+      Buddhist practice often translated as &ldquo;mind
+      training.&rdquo; Lojong uses 59 short slogans to help
+      people respond to life&rsquo;s difficult moments with
+      greater awareness and compassion.
+    </p>
+    <p className="text-[19px] leading-relaxed text-memo-neutral-700">
+      Unlike sitting meditation, which may feel intimidating
+      to beginners, Lojong offers simple phrases you can
+      recall when you need them most. The slogans
+      aren&rsquo;t meant to be studied only as ideas — they
+      become useful through practice and repetition.
+    </p>
+    <p className="text-[19px] leading-relaxed text-memo-neutral-700">
+      With MemoMind, you can gradually build a personal set
+      of slogans to turn to when your thoughts begin to race
+      or a situation feels overwhelming.
+    </p>
+  </>
+)}
+
+          {step === "tradition" && (
             <>
-              <h1 className="font-heading font-semibold text-[36px] leading-snug">
-                Welcome to MemoMind.
+              <h1 className="font-heading font-semibold text-[32px] leading-snug">
+                Rooted in something older.
               </h1>
-              <p className="text-[19px] leading-relaxed text-memo-neutral-700">
-                MemoMind is inspired by Lojong, an ancient Mahayana
-                Buddhist practice often translated as &ldquo;mind
-                training.&rdquo; Lojong uses 59 short slogans to help
-                people respond to life&rsquo;s difficult moments with
-                greater awareness and compassion.
-              </p>
-              <p className="text-[19px] leading-relaxed text-memo-neutral-700">
-                Unlike sitting meditation, which may feel intimidating
-                to beginners, Lojong offers simple phrases you can
-                recall when you need them most. The slogans
-                aren&rsquo;t meant to be studied only as ideas — they
-                become useful through practice and repetition.
-              </p>
-              <p className="text-[19px] leading-relaxed text-memo-neutral-700">
-                With MemoMind, you can gradually build a personal set
-                of slogans to turn to when your thoughts begin to race
-                or a situation feels overwhelming.
-              </p>
               <p className="text-[19px] leading-relaxed text-memo-neutral-700">
                 Lojong is not magic, and it won&rsquo;t make your
                 problems disappear. Instead, it can help you pause,
