@@ -1,4 +1,3 @@
-// Merge this into your existing tailwind.config.ts (theme.extend).
 // These tokens come from the "Classical" design system used for the mock
 // (editorial, warm neutrals) plus a single indigo "connection" accent —
 // reserved for Memo mentions, insight callouts, graph connections, and
@@ -27,21 +26,3 @@ export const memoMindThemeExtend = {
     body: ["Lora", "serif"],
   },
 };
-
-/*
-Example tailwind.config.ts:
-
-import type { Config } from "tailwindcss";
-import { memoMindThemeExtend } from "./tailwind.config.snippet";
-
-const config: Config = {
-  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
-  theme: {
-    extend: {
-      ...memoMindThemeExtend,
-    },
-  },
-};
-
-export default config;
-*/
