@@ -132,7 +132,7 @@ export default function MemoMindOnboardingToDashboard({
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-memo-text/40 backdrop-blur-sm px-6 py-10">
-      <div className="w-full max-w-[1020px] max-h-[92vh] bg-memo-bg border border-memo-divider rounded-[16px] px-12 py-10 flex flex-col gap-8 overflow-hidden">
+      <div className="w-full max-w-[640px] max-h-[92vh] bg-memo-bg border border-memo-divider rounded-[16px] px-10 py-10 flex flex-col gap-8 overflow-hidden">
         <div className="flex items-center justify-between flex-none">
           <MemoMark size={24} />
           <StepDots current={stepIndex} />
