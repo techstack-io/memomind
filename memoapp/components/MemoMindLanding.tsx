@@ -159,11 +159,10 @@ export default function MemoMindLanding({
           Your life is more than chat history.
         </h1>
         <h1 className="font-heading font-normal text-[48px] leading-[1.08] max-w-3xl mt-1.5">
-          Meet <span className="text-memo-connection-600 italic">Memo</span>, the AI that builds
-          a living map of your life.
+          Meet <span className="text-memo-connection-600 italic">Memo</span>, your reflective companion.
         </h1>
         <p className="max-w-xl text-lg leading-relaxed text-memo-text/70 mt-6">
-        Inspired by Lojong, MemoMind uses daily reflection to discover what matters most while building a living map of your life.
+        Inspired by Lojong, MemoMind uses daily reflection to discover what matters most.
 
         </p>
 
