@@ -155,9 +155,6 @@ export default function MemoMindLanding({
         <div className="text-xs tracking-widest uppercase text-memo-neutral-700 mb-4">
           Your life map
         </div>
-        <h1 className="font-heading font-normal text-[48px] leading-[1.08] max-w-3xl">
-          Your life is more than chat history.
-        </h1>
         <h1 className="font-heading font-normal text-[48px] leading-[1.08] max-w-3xl mt-1.5">
           Meet <span className="text-memo-connection-600 italic">Memo</span>, your reflective companion.
         </h1>
