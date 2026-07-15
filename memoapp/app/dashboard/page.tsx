@@ -1,5 +1,5 @@
-import MemoMindDashboard from "@/components/dashboard/MemoMindDashboard";
+import MemoMindEntry from "@/components/dashboard/MemoMindEntry";
 
 export default function DashboardPage() {
-  return <MemoMindDashboard userName="Dan" />;
+  return <MemoMindEntry userName="Dan" />;
 }

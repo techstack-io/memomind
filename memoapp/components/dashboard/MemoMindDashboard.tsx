@@ -1,48 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
- * MemoMind authenticated dashboard — Next.js + Tailwind port of the "1a"
- * option (icon rail for future features, bubble message style) from the
- * dashboard mock. Same "Fern Breath" tokens as MemoMindLanding.tsx — see
- * tailwind.config.snippet.ts.
+ * MemoMind authenticated dashboard shell — Next.js + Tailwind, same
+ * "Fern Breath" tokens as MemoMindLanding.tsx (see tailwind.config.snippet.ts).
+ *
+ * Stripped down from the original dashboard: nav, icon rail, and greeting
+ * are intact. The conversation (messages, typing indicator, composer) has
+ * been removed so this can serve as a clean base — e.g. for the age-gate
+ * modal to render on top of, or for the conversation to be reintroduced
+ * as its own piece later.
  */
-
-type Message = { id: string; who: "user" | "memo"; text: string };
-
-const INITIAL_MESSAGES: Message[] = [
-  { id: "m1", who: "user", text: "Today felt like too much. I don't even know where to start." },
-  {
-    id: "m2",
-    who: "memo",
-    text: "That sounds like a lot to carry at once. If you had to name just one thing weighing on you most right now — what would it be?",
-  },
-  {
-    id: "m3",
-    who: "user",
-    text: "Probably the Memologic launch. It's eaten every evening this week and I still feel behind.",
-  },
-  {
-    id: "m4",
-    who: "memo",
-    text: "It makes sense you're tired — you've been giving it everything you have. When you picture tomorrow evening, what would actually feel like relief?",
-  },
-  {
-    id: "m5",
-    who: "user",
-    text: "Honestly? Just going for a walk without my phone. I keep meaning to and never do.",
-  },
-];
-
-const FOLLOW_UP =
-  "That's worth protecting, even for twenty minutes. I noticed something similar after your family weekend — you said it reset you completely.";
-
-const CANNED_REPLIES = [
-  "Thank you for sharing that. What does that bring up for you?",
-  "That sounds meaningful — tell me more whenever you're ready.",
-  "I hear you. Let's sit with that for a moment before moving on.",
-];
 
 const RAIL_ITEMS = [
   {
@@ -81,6 +50,111 @@ const RAIL_ITEMS = [
   },
 ];
 
+// Original lines, written in Memo's own voice — not translations or
+// quotations of any specific text or tradition. Rotates once per day.
+const DAILY_LINES = [
+  "Whatever today holds, you don't have to meet it all at once.",
+  "Difficulty isn't proof something has gone wrong — sometimes it's just weather.",
+  "You don't need to have this figured out yet to take one honest step.",
+  "The people who test your patience are also teaching you something about it.",
+  "Not every thought needs to be believed the moment it arrives.",
+  "Small, steady attention is its own kind of strength.",
+  "What feels urgent and what actually matters aren't always the same thing.",
+];
+
+function getGreeting(date: Date = new Date()): string {
+  const hour = date.getHours();
+  if (hour < 12) return "Good morning";
+  if (hour < 18) return "Good afternoon";
+  return "Good evening";
+}
+
+function getDailyLine(date: Date = new Date()): string {
+  const startOfYear = new Date(date.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((date.getTime() - startOfYear.getTime()) / 86400000);
+  return DAILY_LINES[dayOfYear % DAILY_LINES.length];
+}
+
+// --- Morning practice (Lojong 41) -----------------------------------------
+//
+// Day 1: show the full teaching once.
+// Days 2 through NUDGE_WINDOW_DAYS: a small, dismissible daily nudge, so the
+// practice has a real chance to become a habit rather than being taught once
+// and forgotten. The user can turn this off at any point.
+// After the window (or once turned off): falls back to the regular rotating
+// daily reflection card — no separate prompt hangs around indefinitely.
+//
+// NOTE: this demo persists state in localStorage for simplicity. In
+// production this should be tracked server-side against the user's account
+// (first-use date, ack, nudge preference), the same way onboarding consent
+// should be — a device-local flag isn't durable across devices or reinstalls.
+
+const NUDGE_WINDOW_DAYS = 14;
+const FIRST_SEEN_KEY = "memomind_first_seen_at";
+const DAY1_ACK_KEY = "memomind_day1_practice_ack";
+const NUDGE_ENABLED_KEY = "memomind_morning_nudge_enabled";
+
+const MORNING_PRACTICE_TITLE = "Lojong Slogan 41 — Two Activities: One at the Beginning, One at the End";
+
+const MORNING_PRACTICE_INTRO =
+  "This slogan is about treating the start and close of your day as deliberate moments, not just the edges of your to-do list — beginning with intention, and ending by looking back on how the day went.";
+
+const MORNING_PRACTICE_BODY = [
+  "From the moment you wake up, your mind tends to start moving — the school run, an email to send, coffee, breakfast, the day's first can't-forget. For the next few days, just notice that. Notice what shows up first, without needing to do anything about it yet.",
+  "After a few days of noticing, try something different: wake up, and stay quiet for a moment before anything else. Listen — the birds, the room, whatever's actually around you. Let yourself be there before the list starts.",
+  "Once you feel a little settled, offer a small word of thanks. There's no script for this — thank the light for showing up, the plants outside, the people in your life, yourself for waking up again. Make it yours as you go.",
+  "This works well done with children, too — a simple, steady way to begin the day together.",
+];
+
+type PracticePhase = "loading" | "day1" | "nudge" | "settled";
+
+function usePracticePhase(): {
+  phase: PracticePhase;
+  acknowledgeDay1: () => void;
+  disableNudge: () => void;
+} {
+  const [phase, setPhase] = useState<PracticePhase>("loading");
+
+  useEffect(() => {
+    const firstSeenRaw = window.localStorage.getItem(FIRST_SEEN_KEY);
+    const day1Ack = window.localStorage.getItem(DAY1_ACK_KEY) === "true";
+    const nudgeEnabled = window.localStorage.getItem(NUDGE_ENABLED_KEY) !== "false";
+
+    if (!firstSeenRaw) {
+      // First time this device has ever loaded the dashboard.
+      window.localStorage.setItem(FIRST_SEEN_KEY, String(Date.now()));
+      setPhase("day1");
+      return;
+    }
+
+    if (!day1Ack) {
+      // They've been here before but never acknowledged day 1 — keep
+      // showing it rather than skipping ahead.
+      setPhase("day1");
+      return;
+    }
+
+    const daysSinceFirst = Math.floor((Date.now() - Number(firstSeenRaw)) / 86400000);
+    if (nudgeEnabled && daysSinceFirst <= NUDGE_WINDOW_DAYS) {
+      setPhase("nudge");
+    } else {
+      setPhase("settled");
+    }
+  }, []);
+
+  const acknowledgeDay1 = () => {
+    window.localStorage.setItem(DAY1_ACK_KEY, "true");
+    setPhase("nudge");
+  };
+
+  const disableNudge = () => {
+    window.localStorage.setItem(NUDGE_ENABLED_KEY, "false");
+    setPhase("settled");
+  };
+
+  return { phase, acknowledgeDay1, disableNudge };
+}
+
 function MemoMark({ size = 24 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="text-memo-connection-600">
@@ -92,46 +166,24 @@ function MemoMark({ size = 24 }: { size?: number }) {
 }
 
 export default function MemoMindDashboard({ userName = "Dan" }: { userName?: string }) {
-  const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
-  const [isTyping, setIsTyping] = useState(true);
-  const [input, setInput] = useState("");
   const [profileOpen, setProfileOpen] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const replyIndex = useRef(0);
-  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const [expanded, setExpanded] = useState(false);
+  const { phase, acknowledgeDay1, disableNudge } = usePracticePhase();
+
+  // getGreeting()/getDailyLine() depend on the current time, which can
+  // legitimately differ between server render and client hydration (e.g.
+  // if the render happens to straddle an hour boundary). Computing them
+  // during render caused a hydration mismatch. Instead, render a stable
+  // placeholder on first paint and fill in the real value client-side,
+  // the same way usePracticePhase() already handles its own client-only
+  // state.
+  const [greeting, setGreeting] = useState<string | null>(null);
+  const [dailyLine, setDailyLine] = useState<string | null>(null);
 
   useEffect(() => {
-    const t = setTimeout(() => {
-      setMessages((m) => [...m, { id: "m6", who: "memo", text: FOLLOW_UP }]);
-      setIsTyping(false);
-    }, 1600);
-    timers.current.push(t);
-    return () => timers.current.forEach(clearTimeout);
+    setGreeting(getGreeting());
+    setDailyLine(getDailyLine());
   }, []);
-
-  useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
-  }, [messages, isTyping]);
-
-  const send = (text: string) => {
-    const value = text.trim();
-    if (!value) return;
-    setMessages((m) => [...m, { id: crypto.randomUUID(), who: "user", text: value }]);
-    setInput("");
-    setIsTyping(true);
-    const reply = CANNED_REPLIES[replyIndex.current % CANNED_REPLIES.length];
-    replyIndex.current += 1;
-    const t = setTimeout(() => {
-      setMessages((m) => [...m, { id: crypto.randomUUID(), who: "memo", text: reply }]);
-      setIsTyping(false);
-    }, 1400);
-    timers.current.push(t);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    send(input);
-  };
 
   return (
     <div className="h-screen flex bg-memo-bg text-memo-text font-body">
@@ -202,107 +254,85 @@ export default function MemoMindDashboard({ userName = "Dan" }: { userName?: str
           </div>
         </div>
 
-        {/* CONVERSATION */}
+        {/* CONTENT — conversation removed */}
         <div className="flex-1 flex flex-col items-center overflow-hidden min-h-0">
           <div className="w-full max-w-[720px] flex-none pt-6 px-6">
-            <h2 className="font-heading font-semibold text-[22px]">Good evening, {userName}.</h2>
-            <div className="text-sm text-memo-neutral-700 mt-1">Here&rsquo;s where we left off.</div>
-          </div>
+            <h2 className="font-heading font-semibold text-[22px]">
+              {greeting ?? "Welcome"}, {userName}.
+            </h2>
 
-          <div ref={scrollRef} className="flex-1 w-full max-w-[720px] overflow-y-auto px-6 py-5 flex flex-col gap-[18px] min-h-0">
-            {messages.map((m) => {
-              const isUser = m.who === "user";
-              return (
-                <div key={m.id} className={`flex gap-2.5 ${isUser ? "justify-end" : "justify-start"}`}>
-                  <div className={isUser ? "order-2 flex-none" : "order-none flex-none"}>
-                    {isUser ? (
-                      <div className="w-[26px] h-[26px] rounded-full border border-memo-divider bg-memo-surface flex items-center justify-center font-heading font-semibold text-[11px]">
-                        {userName[0]}
-                      </div>
-                    ) : (
-                      <MemoMark size={26} />
-                    )}
-                  </div>
-                  <div
-                    className={`order-1 max-w-[64%] text-[15px] leading-relaxed px-4 py-3 rounded-[10px] border ${
-                      isUser
-                        ? "border-memo-divider bg-memo-surface"
-                        : "border-memo-connection-300 bg-memo-connection-100"
-                    }`}
+            {phase === "day1" && (
+              <div className="mt-4 border border-memo-connection-300 bg-memo-connection-100 rounded-[10px] px-5 py-4">
+                <div className="text-[11px] tracking-wider uppercase text-memo-neutral-700 mb-1.5">
+                  {MORNING_PRACTICE_TITLE}
+                </div>
+                <p className="text-[14px] leading-relaxed text-memo-neutral-700 mb-3">
+                  {MORNING_PRACTICE_INTRO}
+                </p>
+                <div className="text-[13px] font-medium mb-1.5">A way to start your day</div>
+                <div className="flex flex-col gap-2.5">
+                  {MORNING_PRACTICE_BODY.map((paragraph, i) => (
+                    <p key={i} className="text-[15px] leading-relaxed">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  onClick={acknowledgeDay1}
+                  className="mt-4 rounded-full border border-memo-connection-500 text-memo-connection-600 font-heading font-semibold text-[14px] px-5 py-2 hover:bg-memo-bg transition-colors"
+                >
+                  Got it
+                </button>
+              </div>
+            )}
+
+            {phase === "nudge" && (
+              <div className="mt-4 border border-memo-divider rounded-[10px] px-4 py-3.5 bg-memo-surface">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-[15px]">
+                    Morning practice — a moment before the day starts?
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setExpanded((v) => !v)}
+                    className="text-[13px] text-memo-connection-600 whitespace-nowrap hover:underline"
                   >
-                    {m.text}
+                    {expanded ? "Hide" : "Show me"}
+                  </button>
+                </div>
+                {expanded && (
+                  <div className="flex flex-col gap-2.5 mt-3 pt-3 border-t border-memo-divider">
+                    {MORNING_PRACTICE_BODY.map((paragraph, i) => (
+                      <p key={i} className="text-[14px] leading-relaxed text-memo-neutral-700">
+                        {paragraph}
+                      </p>
+                    ))}
                   </div>
-                </div>
-              );
-            })}
+                )}
+                <button
+                  type="button"
+                  onClick={disableNudge}
+                  className="text-[12px] text-memo-neutral-700 hover:text-memo-text underline underline-offset-4 decoration-memo-divider transition-colors mt-3"
+                >
+                  Turn off this reminder
+                </button>
+              </div>
+            )}
 
-            {isTyping && (
-              <div className="flex items-center gap-2.5">
-                <MemoMark size={26} />
-                <div className="flex items-center gap-1.5 text-sm text-memo-neutral-700">
-                  Memo is reflecting
-                  <span className="inline-flex gap-1">
-                    <span className="w-1 h-1 rounded-full bg-memo-neutral-700 animate-pulse" />
-                    <span className="w-1 h-1 rounded-full bg-memo-neutral-700 animate-pulse [animation-delay:150ms]" />
-                    <span className="w-1 h-1 rounded-full bg-memo-neutral-700 animate-pulse [animation-delay:300ms]" />
-                  </span>
+            {phase === "settled" && (
+              <div className="mt-4 border border-memo-divider rounded-[10px] px-4 py-3.5 bg-memo-surface">
+                <div className="text-[11px] tracking-wider uppercase text-memo-neutral-700 mb-1">
+                  Today&rsquo;s reflection
                 </div>
+                <p className="text-[15px] leading-relaxed italic">{dailyLine ?? "\u00A0"}</p>
               </div>
             )}
           </div>
 
-          {/* COMPOSER */}
-          <div className="w-full max-w-[720px] flex-none px-6 pt-3 pb-8">
-            <div className="flex gap-2 flex-wrap mb-3">
-              {["Tell me more", "I'd rather talk about something else", "What patterns have you noticed?"].map(
-                (chip) => (
-                  <button
-                    key={chip}
-                    type="button"
-                    onClick={() => setInput(chip)}
-                    className="text-xs border border-memo-divider rounded-full px-3.5 py-1.5 hover:bg-memo-connection-100 transition-colors"
-                  >
-                    {chip}
-                  </button>
-                )
-              )}
-            </div>
-            <form
-              onSubmit={handleSubmit}
-              className="flex items-center gap-1.5 border border-memo-divider rounded-full px-2 py-1.5 bg-memo-surface"
-            >
-              <button type="button" aria-label="Attach" className="p-2 text-memo-neutral-700">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
-                </svg>
-              </button>
-              <button type="button" aria-label="Voice" className="p-2 text-memo-neutral-700">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
-                  <path d="M19 11v1a7 7 0 0 1-14 0v-1" />
-                  <line x1="12" y1="19" x2="12" y2="23" />
-                  <line x1="8" y1="23" x2="16" y2="23" />
-                </svg>
-              </button>
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Message Memo…"
-                className="flex-1 bg-transparent outline-none text-sm px-1 py-2"
-              />
-              <button
-                type="submit"
-                aria-label="Send"
-                className="w-[34px] h-[34px] flex-none rounded-full border border-memo-connection-500 text-memo-connection-600 flex items-center justify-center hover:bg-memo-connection-100 transition-colors"
-              >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="22" y1="2" x2="11" y2="13" />
-                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                </svg>
-              </button>
-            </form>
-          </div>
+          {/* Everything below this point — message list, typing indicator,
+              composer — was removed. This is where the conversation, or
+              anything else, gets reintroduced next. */}
         </div>
       </div>
     </div>

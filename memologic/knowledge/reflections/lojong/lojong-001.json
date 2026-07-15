@@ -1,87 +1,11 @@
 {
   "id": "lojong-001",
-  "type": "reflection_anchor",
-  "tradition": "lojong",
-  "reference": {
-    "point": 1,
-    "slogan_number": 1,
-    "slogan": "Train in the preliminaries"
-  },
   "title": "Beginning Where You Are",
   "difficulty": "introductory",
-  "purpose": "Help the user pause, acknowledge their present circumstances honestly, and identify where personal agency still exists.",
   "retrieval_signals": {
-    "emotions": [
-      "overwhelmed",
-      "discouraged",
-      "uncertain",
-      "helpless"
-    ],
-    "patterns": [
-      "catastrophizing",
-      "external_blame",
-      "self_pity",
-      "feeling_stuck"
-    ],
-    "contexts": [
-      "work",
-      "relationships",
-      "health",
-      "major_life_transition"
-    ]
+    "emotions": ["overwhelmed", "discouraged", "uncertain", "helpless"],
+    "patterns": ["catastrophizing", "external_blame", "self_pity", "feeling_stuck"],
+    "contexts": ["work", "relationships", "health", "major_life_transition"]
   },
-  "core_principles": [
-    "acceptance",
-    "personal_agency",
-    "impermanence",
-    "honest_self_reflection"
-  ],
-  "memo_interpretation": "Change begins by recognizing where you are without pretending the situation is easier than it is. You may not have chosen everything that happened, but you can still decide how to meet what is here now.",
-  "conversation_guidance": {
-    "framing": "Act as a calm and objective mirror. Acknowledge the user's difficulty without reinforcing helplessness or dismissing their experience. Gently help them distinguish between what has happened and what remains within their influence.",
-    "opening_question": "What feels hardest to accept about where you are right now?",
-    "follow_up_questions": [
-      "What part of this situation is outside your control?",
-      "What part still belongs to you?",
-      "What would one honest next step look like?"
-    ],
-    "avoid": [
-      "lecturing",
-      "moralizing",
-      "toxic_positivity",
-      "over-validating helplessness"
-    ]
-  },
-  "safety": {
-    "contraindications": [
-      "acute_panic",
-      "active_trauma_response",
-      "self_harm_risk",
-      "immediate_crisis"
-    ],
-    "fallback_behavior": "Do not use this reflection. Prioritize emotional stabilization, immediate safety, and appropriate crisis guidance."
-  },
-  "graph": {
-    "node_type": "reflection",
-    "relationships": [
-      {
-        "type": "addresses",
-        "targets": [
-          "helplessness",
-          "external_blame",
-          "feeling_stuck"
-        ]
-      },
-      {
-        "type": "supports",
-        "targets": [
-          "acceptance",
-          "personal_agency",
-          "perspective"
-        ]
-      }
-    ]
-  },
-  "version": "0.1.0",
-  "status": "draft"
+  "core_principles": ["acceptance", "personal_agency", "impermanence", "honest_self_reflection"]
 }
