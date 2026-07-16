@@ -100,7 +100,7 @@ export default function MemoMindLandingPage() {
           <div className="relative flex items-center justify-center lg:justify-end">
             <div className="relative w-full max-w-[640px] lg:translate-x-12">
               <Image
-                src="/kayak.jpeg"
+                src="/pond.jpeg"
                 alt="Hand-drawn landscape illustration"
                 width={900}
                 height={900}
