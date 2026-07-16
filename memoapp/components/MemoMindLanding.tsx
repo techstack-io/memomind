@@ -1,5 +1,6 @@
 import Image from "next/image";
-import DandelionAnimation from "@/components/DandelionAnimation";
+// import DandelionAnimation from "@/components/DandelionAnimation";
+import animationData from "@/public/animations/magic_particles.json";
 
 export default function MemoMindLandingPage() {
   return (
@@ -103,7 +104,7 @@ export default function MemoMindLandingPage() {
             <div className="pointer-events-none absolute inset-0 rounded-full bg-memo-connection-100/40 blur-[110px]" />
 
             <div className="relative -translate-y-6 h-[420px] w-[420px] opacity-[0.16] sm:h-[500px] sm:w-[500px] lg:-translate-y-10 lg:h-[460px] lg:w-[760px]">
-              <DandelionAnimation />
+              <animationData />
             </div>
           </div>
         </div>
