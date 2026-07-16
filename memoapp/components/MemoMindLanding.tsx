@@ -61,7 +61,7 @@ export default function MemoMindLandingPage() {
       </header>
 
       {/* Hero */}
-      <section className="relative overflow-hidden px-6 pt-4 pb-12 lg:px-10 lg:pt-6 lg:pb-20">
+      <section className="relative overflow-hidden px-6 pb-12 pt-0 lg:px-10 lg:pb-20 lg:pt-0">
         <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-6">
           {/* Left: Hero text */}
           <div className="relative z-10 text-left">
@@ -101,11 +101,20 @@ export default function MemoMindLandingPage() {
             <div className="relative w-full max-w-[640px] lg:translate-x-12">
               <Image
                 src="/reflection-sketch.jpg"
-                alt="A quiet garden representing reflection and perspective"
+                alt="Hand-drawn landscape illustration"
                 width={900}
                 height={900}
-                priority
-                className="h-auto w-full -translate-y-8 select-none opacity-90 mix-blend-multiply"
+                draggable={false}
+                className="
+                  h-auto
+                  w-full
+                  -translate-y-8
+                  select-none
+                  mix-blend-multiply
+                  opacity-50
+                  contrast-90
+                  brightness-105
+                  "
               />
       
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-memo-bg/80 via-transparent to-memo-bg/20" />
