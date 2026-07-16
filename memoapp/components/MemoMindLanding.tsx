@@ -111,7 +111,7 @@ export default function MemoMindLandingPage() {
                   -translate-y-8
                   select-none
                   mix-blend-multiply
-                  opacity-35
+                  opacity-20
                   contrast-90
                   brightness-105
                   "
