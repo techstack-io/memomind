@@ -4,8 +4,8 @@ export default function MemoMindLandingPage() {
   return (
     <main className="min-h-screen bg-memo-bg text-memo-text">
       {/* Navigation */}
-      <header className="sticky top-0 z-50 bg-memo-bg/75 backdrop-blur-xl shadow-[0_1px_20px_rgba(42,36,31,0.03)]">
-        <div className="mx-auto flex h-20 max-w-7xl items-center px-6 lg:px-10">
+      <header className="w-full px-6 py-4 sm:px-8 lg:px-10">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
           <a href="#" className="mr-auto flex items-center gap-2">
             <Image
               src="/memomind-logo@72x.svg"
@@ -14,11 +14,11 @@ export default function MemoMindLandingPage() {
               height={56}
               priority
             />
-            <div className="flex items-baseline gap-2">
-              <span className="font-heading text-2xl font-medium">
+            <div className="flex items-center gap-2 min-w-0 flex-shrink-0">
+              <span className="font-heading text-xl font-bold text-memo-neutral-900">
                 MemoMind
               </span>
-              <span className="text-[10px] font-normal uppercase tracking-[0.22em] text-memo-neutral-700/70">
+              <span className="text-[10px] tracking-widest text-memo-neutral-400 uppercase">
                 Beta
               </span>
             </div>
@@ -51,9 +51,11 @@ export default function MemoMindLandingPage() {
             </a>
           </nav>
 
+          {/* Right: CTA Button */}
+          {/* Reducing its text size/padding slightly on mobile stops it from colliding with the logo */}
           <a
             href="#waitlist"
-            className="ml-8 inline-flex min-h-12 items-center justify-center rounded-xl border border-memo-connection-600 px-6 text-sm font-semibold text-memo-text transition-all duration-300 hover:-translate-y-0.5 hover:bg-memo-connection-600 hover:text-white hover:shadow-lg"
+            className="inline-flex min-h-10 items-center justify-center rounded-xl border border-memo-neutral-300 bg-memo-surface px-4 py-2 text-xs font-semibold text-memo-text transition-all sm:px-5 sm:text-sm hover:border-memo-connection-300"
           >
             Join the waitlist
           </a>
@@ -62,9 +64,10 @@ export default function MemoMindLandingPage() {
 
       {/* Hero */}
       <section className="relative overflow-hidden px-6 pb-12 pt-0 lg:px-10 lg:pb-20 lg:pt-0">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-6">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-0">
+          
           {/* Left: Hero text */}
-          <div className="relative z-10 text-left">
+          <div className="relative z-10 text-left lg:-translate-y-12">
             <p className="text-xs uppercase tracking-[0.34em] text-memo-neutral-700/80 sm:text-sm">
               Inspired by Lojong mind training
             </p>
@@ -96,9 +99,10 @@ export default function MemoMindLandingPage() {
               </a>
             </div>
           </div>
+
           {/* Right: Editorial illustration */}
-          <div className="relative flex items-center justify-center lg:justify-end">
-            <div className="relative w-full max-w-[640px] lg:translate-x-12">
+          <div className="relative flex items-center justify-center pt-0 lg:justify-start lg:pt-20">
+            <div className="relative w-full max-w-[640px] lg:-translate-x-4">
               <Image
                 src="/tree.png"
                 alt="Hand-drawn landscape illustration"
@@ -108,13 +112,14 @@ export default function MemoMindLandingPage() {
                 className="
                   h-auto
                   w-full
-                  -translate-y-8
+                  translate-y-0
+                  lg:translate-y-6
                   select-none
                   mix-blend-multiply
                   opacity-30
                   contrast-90
                   brightness-105
-                  "
+                "
               />
             </div>
           </div>
