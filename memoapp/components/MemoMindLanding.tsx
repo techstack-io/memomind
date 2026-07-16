@@ -111,14 +111,11 @@ export default function MemoMindLandingPage() {
                   -translate-y-8
                   select-none
                   mix-blend-multiply
-                  opacity-50
+                  opacity-35
                   contrast-90
                   brightness-105
                   "
               />
-      
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-memo-bg/80 via-transparent to-memo-bg/20" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-memo-bg to-transparent" />
             </div>
           </div>
         </div>
