@@ -100,7 +100,7 @@ export default function MemoMindLandingPage() {
           <div className="relative flex items-center justify-center lg:justify-end">
             <div className="relative w-full max-w-[640px] lg:translate-x-12">
               <Image
-                src="/thinking.png"
+                src="/kayak.jpeg"
                 alt="Hand-drawn landscape illustration"
                 width={900}
                 height={900}
@@ -111,7 +111,7 @@ export default function MemoMindLandingPage() {
                   -translate-y-8
                   select-none
                   mix-blend-multiply
-                  opacity-20
+                  opacity-30
                   contrast-90
                   brightness-105
                   "
