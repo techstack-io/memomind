@@ -1,4 +1,5 @@
 import Image from "next/image";
+import DandelionAnimation from "@/components/DandelionAnimation";
 
 export default function MemoMindLandingPage() {
   return (
@@ -61,38 +62,49 @@ export default function MemoMindLandingPage() {
       </header>
 
       {/* Hero */}
-      <section className="relative overflow-hidden px-6 pb-20 pt-24 sm:pt-28 lg:px-10 lg:pb-24 lg:pt-32">
-        <div className="pointer-events-none absolute left-1/2 top-10 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-memo-connection-100/70 blur-[120px]" />
+      <section className="relative overflow-hidden px-6 pt-4 pb-12 lg:px-10 lg:pt-6 lg:pb-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-6">
+          {/* Left: Hero text */}
+          <div className="relative z-10 text-left">
+            <p className="text-xs uppercase tracking-[0.34em] text-memo-neutral-700/80 sm:text-sm">
+              Inspired by Lojong mind training
+            </p>
 
-        <div className="relative mx-auto max-w-5xl text-center">
-          <p className="text-xs uppercase tracking-[0.34em] text-memo-neutral-700/80 sm:text-sm">
-            Inspired by Lojong mind training
-          </p>
+            <h1 className="mt-10 font-heading text-6xl font-normal leading-[0.98] tracking-[-0.045em] sm:text-7xl lg:text-[68px]">
+              Meet{" "}
+              <span className="italic text-memo-connection-600">
+                Memo
+              </span>
+            </h1>
 
-          <h1 className="animate-[fadeUp_900ms_ease-out_forwards] opacity-0 mt-10 font-heading text-6xl font-normal leading-[0.98] tracking-[-0.045em] sm:text-7xl lg:text-[68px]">
-            Meet{" "}
-            <span className="italic text-memo-connection-600">
-              Memo
-            </span>
-          </h1>
+            <p className="mt-4 max-w-xl text-xl leading-9 text-memo-neutral-700">
+              Thoughtful conversations rooted in timeless wisdom.
+            </p>
 
-          <p className="mx-auto mt-8 max-w-2xl text-xl leading-9 text-memo-neutral-700 sm:text-xl">
-            Thoughtful conversations rooted in timeless wisdom.
-          </p>
-
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <div className="mt-10 flex flex-col items-start gap-3 sm:flex-row">
             <a
               href="#waitlist"
-              className="inline-flex min-h-12 items-center justify-center rounded-xl bg-slate-700 px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-memo-connection-700 hover:shadow-lg"
+              className="inline-flex min-h-12 items-center justify-center rounded-xl bg-memo-neutral-900 px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg"
             >
               Join the waitlist
             </a>
-            <a
-              href="#conversation"
-              className="inline-flex min-h-12 items-center justify-center rounded-xl border border-memo-neutral-300 bg-memo-surface/80 px-7 text-sm font-semibold text-memo-text transition-all duration-300 hover:-translate-y-0.5 hover:border-memo-connection-300 hover:bg-memo-surface hover:shadow-md"
-            >
-              See how it works
-            </a>
+
+              <a
+                href="#conversation"
+                className="inline-flex min-h-12 items-center justify-center rounded-xl border border-memo-neutral-300 bg-memo-surface/80 px-7 text-sm font-semibold text-memo-text transition-all duration-300 hover:-translate-y-0.5 hover:border-memo-connection-300 hover:bg-memo-surface hover:shadow-md"
+              >
+                See how it works
+              </a>
+            </div>
+          </div>
+
+          {/* Right: Lottie animation */}
+          <div className="relative flex items-center justify-center lg:justify-end">
+            <div className="pointer-events-none absolute inset-0 rounded-full bg-memo-connection-100/40 blur-[110px]" />
+
+            <div className="relative -translate-y-6 h-[420px] w-[420px] opacity-[0.16] sm:h-[500px] sm:w-[500px] lg:-translate-y-10 lg:h-[460px] lg:w-[760px]">
+              <DandelionAnimation />
+            </div>
           </div>
         </div>
       </section>
