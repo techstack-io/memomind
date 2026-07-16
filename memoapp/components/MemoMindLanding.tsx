@@ -1,6 +1,4 @@
 import Image from "next/image";
-// import DandelionAnimation from "@/components/DandelionAnimation";
-import MagicParticles from "@/components/MagicParticles";
 
 export default function MemoMindLandingPage() {
   return (
@@ -83,12 +81,12 @@ export default function MemoMindLandingPage() {
             </p>
 
             <div className="mt-10 flex flex-col items-start gap-3 sm:flex-row">
-            <a
-              href="#waitlist"
-              className="inline-flex min-h-12 items-center justify-center rounded-xl bg-memo-neutral-900 px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg"
-            >
-              Join the waitlist
-            </a>
+              <a
+                href="#waitlist"
+                className="inline-flex min-h-12 items-center justify-center rounded-xl bg-memo-neutral-900 px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg"
+              >
+                Join the waitlist
+              </a>
 
               <a
                 href="#conversation"
@@ -98,13 +96,21 @@ export default function MemoMindLandingPage() {
               </a>
             </div>
           </div>
-
-          {/* Right: Lottie animation */}
+          {/* Right: Editorial illustration */}
           <div className="relative flex items-center justify-center lg:justify-end">
-            <div className="pointer-events-none absolute inset-0 rounded-full bg-memo-connection-100/40 blur-[110px]" />
-            <MagicParticles
-              className="relative -translate-y-6 h-[420px] w-[420px] opacity-[0.16] sm:h-[500px] sm:w-[500px] lg:-translate-y-10 lg:h-[460px] lg:w-[760px]"
-            />
+            <div className="relative w-full max-w-[640px] lg:translate-x-12">
+              <Image
+                src="/images/reflection-sketch.png"
+                alt="A quiet garden representing reflection and perspective"
+                width={900}
+                height={900}
+                priority
+                className="h-auto w-full -translate-y-8 select-none opacity-90 mix-blend-multiply"
+              />
+      
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-memo-bg/80 via-transparent to-memo-bg/20" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-memo-bg to-transparent" />
+            </div>
           </div>
         </div>
       </section>
