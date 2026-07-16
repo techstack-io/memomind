@@ -1,29 +1,30 @@
 @import "tailwindcss";
 @config "../tailwind.config.ts";
 
-@theme {
+@theme inline {
   /* Typography */
-  --font-sans: "Manrope", Arial, sans-serif;
+  --font-sans: var(--font-manrope);
+  --font-heading: var(--font-manrope);
 
   /* Core surfaces */
-  --color-memo-bg: #FBFAF7;
-  --color-memo-surface: #fffdf8;
-  --color-memo-text: #25231f;
-  --color-memo-divider: #ddd7cc;
+  --color-memo-bg: #fbf7f2;
+  --color-memo-surface: #fffaf4;
+  --color-memo-text: #2a241f;
+  --color-memo-divider: #dfd2c5;
 
   /* Neutral palette */
-  --color-memo-neutral-100: #f6f3ed;
-  --color-memo-neutral-300: #e7e1d8;
-  --color-memo-neutral-500: #9a948a;
-  --color-memo-neutral-700: #686259;
-  --color-memo-neutral-900: #25231f;
+  --color-memo-neutral-100: #f6eee7;
+  --color-memo-neutral-300: #e8dcd1;
+  --color-memo-neutral-500: #9d8f84;
+  --color-memo-neutral-700: #6f6259;
+  --color-memo-neutral-900: #2a241f;
 
-  /* Fern Breath accents */
-  --color-memo-connection-100: #eef3ea;
-  --color-memo-connection-300: #d2e3c8;
-  --color-memo-connection-500: #86a789;
-  --color-memo-connection-600: #5f7f63;
-  --color-memo-connection-700: #4e6f52;
+  /* Copper accents */
+  --color-memo-connection-100: #f8e8df;
+  --color-memo-connection-300: #e9bca8;
+  --color-memo-connection-500: #d37b5b;
+  --color-memo-connection-600: #c76849;
+  --color-memo-connection-700: #a95138;
 }
 
 :root {
@@ -43,7 +44,7 @@ body {
   min-height: 100vh;
   background: var(--color-memo-bg);
   color: var(--color-memo-text);
-  font-family: var(--font-sans);
+  font-family: var(--font-manrope), Arial, sans-serif;
 }
 
 button,
@@ -54,7 +55,6 @@ select {
 }
 
 a {
-  color: inherit;
   text-decoration: none;
 }
 
