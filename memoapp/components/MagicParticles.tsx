@@ -3,9 +3,9 @@
 import Lottie from "lottie-react";
 import animationData from "@/public/animations/magic_particles.json";
 
-type MagicParticlesProps = {
+interface MagicParticlesProps {
   className?: string;
-};
+}
 
 export default function MagicParticles({
   className = "",
