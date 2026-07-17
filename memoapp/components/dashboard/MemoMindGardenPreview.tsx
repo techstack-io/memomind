@@ -76,7 +76,7 @@ export default function MemoMindGardenPreview() {
 
           <div className="relative min-h-[460px] lg:min-h-[720px]">
             <Image
-              src="/memomind-landscape.jpg"
+              src="/memomind-landscape.jpeg"
               alt="A colorful contemplative landscape with mountains, trees, and water"
               fill
               priority
