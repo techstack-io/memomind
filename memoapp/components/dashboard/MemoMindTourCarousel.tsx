@@ -13,7 +13,9 @@ const TOUR_SLIDES: TourSlide[] = [
   {
     eyebrow: "Welcome",
     title: "I'm Memo.",
-    body: "Together we'll explore the wisdom of Lojong through simple conversations and daily practice.",
+    body: "Together we'll explore the wisdom of Lojong through
+      <br />
+      simple conversations and daily practice.",
     actionLabel: "Continue",
   },
   {
