@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import MemoMindTourCarousel from "./MemoMindTourCarousel";
 
 
 const DAILY_INVITATIONS = [
@@ -149,7 +150,14 @@ export default function MemoMindDashboard({
             </h1>
 
             <p className="mt-4 text-lg leading-8 text-memo-neutral-700">I'm Memo, your guideTogether we'll explore the wisdom of Lojong through simple conversations and daily practice..</p>
-
+            <MemoMindTourCarousel
+              onComplete={() => {
+                window.location.href = "/conversation";
+              }}
+              onSkip={() => {
+                window.location.href = "/conversation";
+              }}
+            />
           </div>
 
           <section className="mx-auto mt-16 max-w-3xl border-y border-memo-divider py-12 text-center">
