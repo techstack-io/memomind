@@ -102,18 +102,24 @@ export default function MemoMindLandingPage() {
 
           {/* Right: Editorial illustration */}
           <div className="relative flex items-center justify-center pt-0 lg:justify-start lg:pt-20">
-            <div className="relative w-full max-w-[640px] lg:-translate-x-4">
+            <div
+              className="
+                relative
+                w-full
+                max-w-[700px]
+                lg:-translate-x-16
+              "
+            >
               <Image
                 src="/tree.png"
-                alt="Hand-drawn landscape illustration"
+                alt="Hand-drawn tree illustration"
                 width={900}
                 height={900}
                 draggable={false}
                 className="
+                  memo-tree
                   h-auto
                   w-full
-                  translate-y-0
-                  lg:translate-y-6
                   select-none
                   mix-blend-multiply
                   opacity-30

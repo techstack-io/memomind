@@ -1,65 +1,18 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
-/**
- * MemoMind authenticated dashboard shell — Next.js + Tailwind, same
- * "Fern Breath" tokens as MemoMindLanding.tsx (see tailwind.config.snippet.ts).
- *
- * Stripped down from the original dashboard: nav, icon rail, and greeting
- * are intact. The conversation (messages, typing indicator, composer) has
- * been removed so this can serve as a clean base — e.g. for the age-gate
- * modal to render on top of, or for the conversation to be reintroduced
- * as its own piece later.
- */
 
-const RAIL_ITEMS = [
+const DAILY_INVITATIONS = [
   {
-    label: "Memories",
-    icon: (
-      <>
-        <path d="M12 2 2 7l10 5 10-5-10-5z" />
-        <path d="M2 12l10 5 10-5" />
-        <path d="M2 17l10 5 10-5" />
-      </>
-    ),
+    eyebrow: "Slogan 41",
+    title: "Begin at the beginning. End at the end.",
+    body: [
+      "This is a wonderful place to begin our journey.Slogan 41 invites us to start the day with a commitment to be mindful, openhearted, and compassionate. At the end of the day, we pause and reflect on how things went.I’d also like to add a small moment of gratitude to the practice. It can help the day begin on a positive note, and it can be especially meaningful to practice with your children.",
+      "",
+    ],
   },
-  {
-    label: "Reflections",
-    icon: (
-      <>
-        <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z" />
-        <line x1="16" y1="8" x2="2" y2="22" />
-        <line x1="17.5" y1="15" x2="9" y2="15" />
-      </>
-    ),
-  },
-  {
-    label: "Goals",
-    icon: (
-      <>
-        <circle cx="12" cy="12" r="9" />
-        <circle cx="12" cy="12" r="5" />
-        <circle cx="12" cy="12" r="1" />
-      </>
-    ),
-  },
-  {
-    label: "Insights",
-    icon: <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />,
-  },
-];
-
-// Original lines, written in Memo's own voice — not translations or
-// quotations of any specific text or tradition. Rotates once per day.
-const DAILY_LINES = [
-  "Whatever today holds, you don't have to meet it all at once.",
-  "Difficulty isn't proof something has gone wrong — sometimes it's just weather.",
-  "You don't need to have this figured out yet to take one honest step.",
-  "The people who test your patience are also teaching you something about it.",
-  "Not every thought needs to be believed the moment it arrives.",
-  "Small, steady attention is its own kind of strength.",
-  "What feels urgent and what actually matters aren't always the same thing.",
 ];
 
 function getGreeting(date: Date = new Date()): string {
@@ -69,272 +22,184 @@ function getGreeting(date: Date = new Date()): string {
   return "Good evening";
 }
 
-function getDailyLine(date: Date = new Date()): string {
-  const startOfYear = new Date(date.getFullYear(), 0, 0);
-  const dayOfYear = Math.floor((date.getTime() - startOfYear.getTime()) / 86400000);
-  return DAILY_LINES[dayOfYear % DAILY_LINES.length];
-}
 
-// --- Morning practice (Lojong 41) -----------------------------------------
-//
-// Day 1: show the full teaching once.
-// Days 2 through NUDGE_WINDOW_DAYS: a small, dismissible daily nudge, so the
-// practice has a real chance to become a habit rather than being taught once
-// and forgotten. The user can turn this off at any point.
-// After the window (or once turned off): falls back to the regular rotating
-// daily reflection card — no separate prompt hangs around indefinitely.
-//
-// NOTE: this demo persists state in localStorage for simplicity. In
-// production this should be tracked server-side against the user's account
-// (first-use date, ack, nudge preference), the same way onboarding consent
-// should be — a device-local flag isn't durable across devices or reinstalls.
-
-const NUDGE_WINDOW_DAYS = 14;
-const FIRST_SEEN_KEY = "memomind_first_seen_at";
-const DAY1_ACK_KEY = "memomind_day1_practice_ack";
-const NUDGE_ENABLED_KEY = "memomind_morning_nudge_enabled";
-
-const MORNING_PRACTICE_TITLE = "Lojong Slogan 41 — Two Activities: One at the Beginning, One at the End";
-
-const MORNING_PRACTICE_INTRO =
-  "This slogan is about treating the start and close of your day as deliberate moments, not just the edges of your to-do list — beginning with intention, and ending by looking back on how the day went.";
-
-const MORNING_PRACTICE_BODY = [
-  "From the moment you wake up, your mind tends to start moving — the school run, an email to send, coffee, breakfast, the day's first can't-forget. For the next few days, just notice that. Notice what shows up first, without needing to do anything about it yet.",
-  "After a few days of noticing, try something different: wake up, and stay quiet for a moment before anything else. Listen — the birds, the room, whatever's actually around you. Let yourself be there before the list starts.",
-  "Once you feel a little settled, offer a small word of thanks. There's no script for this — thank the light for showing up, the plants outside, the people in your life, yourself for waking up again. Make it yours as you go.",
-  "This works well done with children, too — a simple, steady way to begin the day together.",
-];
-
-type PracticePhase = "loading" | "day1" | "nudge" | "settled";
-
-function usePracticePhase(): {
-  phase: PracticePhase;
-  acknowledgeDay1: () => void;
-  disableNudge: () => void;
-} {
-  const [phase, setPhase] = useState<PracticePhase>("loading");
-
-  useEffect(() => {
-    const firstSeenRaw = window.localStorage.getItem(FIRST_SEEN_KEY);
-    const day1Ack = window.localStorage.getItem(DAY1_ACK_KEY) === "true";
-    const nudgeEnabled = window.localStorage.getItem(NUDGE_ENABLED_KEY) !== "false";
-
-    if (!firstSeenRaw) {
-      // First time this device has ever loaded the dashboard.
-      window.localStorage.setItem(FIRST_SEEN_KEY, String(Date.now()));
-      setPhase("day1");
-      return;
-    }
-
-    if (!day1Ack) {
-      // They've been here before but never acknowledged day 1 — keep
-      // showing it rather than skipping ahead.
-      setPhase("day1");
-      return;
-    }
-
-    const daysSinceFirst = Math.floor((Date.now() - Number(firstSeenRaw)) / 86400000);
-    if (nudgeEnabled && daysSinceFirst <= NUDGE_WINDOW_DAYS) {
-      setPhase("nudge");
-    } else {
-      setPhase("settled");
-    }
-  }, []);
-
-  const acknowledgeDay1 = () => {
-    window.localStorage.setItem(DAY1_ACK_KEY, "true");
-    setPhase("nudge");
-  };
-
-  const disableNudge = () => {
-    window.localStorage.setItem(NUDGE_ENABLED_KEY, "false");
-    setPhase("settled");
-  };
-
-  return { phase, acknowledgeDay1, disableNudge };
-}
-
-function MemoMark({ size = 24 }: { size?: number }) {
+function MemoMark() {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="text-memo-connection-600">
-      <circle cx="8" cy="16" r="3" />
-      <circle cx="16" cy="8" r="3" />
-      <line x1="10.2" y1="13.8" x2="13.8" y2="10.2" />
+    <div className="relative grid h-20 w-20 place-items-center rounded-full border border-memo-divider bg-memo-surface/90 shadow-[0_18px_60px_rgba(42,36,31,0.08)]">
+      <Image
+        src="/memomind-logo@72x.svg"
+        alt="Memo"
+        width={52}
+        height={52}
+        priority
+        className="select-none"
+        draggable={false}
+      />
+      <span className="absolute inset-0 rounded-full border border-memo-connection-300/40 animate-[memo-breathe_7s_ease-in-out_infinite]" />
+    </div>
+  );
+}
+
+function ArrowIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
+      <path
+        d="M5 12h14M13 6l6 6-6 6"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
-export default function MemoMindDashboard({ userName = "Dan" }: { userName?: string }) {
+export default function MemoMindDashboard({
+  userName = "Dan",
+}: {
+  userName?: string;
+}) {
   const [profileOpen, setProfileOpen] = useState(false);
-  const [expanded, setExpanded] = useState(false);
-  const { phase, acknowledgeDay1, disableNudge } = usePracticePhase();
-
-  // getGreeting()/getDailyLine() depend on the current time, which can
-  // legitimately differ between server render and client hydration (e.g.
-  // if the render happens to straddle an hour boundary). Computing them
-  // during render caused a hydration mismatch. Instead, render a stable
-  // placeholder on first paint and fill in the real value client-side,
-  // the same way usePracticePhase() already handles its own client-only
-  // state.
-  const [greeting, setGreeting] = useState<string | null>(null);
-  const [dailyLine, setDailyLine] = useState<string | null>(null);
-
+  const [greeting, setGreeting] = useState("Welcome");
+  
   useEffect(() => {
-    setGreeting(getGreeting());
-    setDailyLine(getDailyLine());
+    setGreeting(getGreeting(new Date()));
   }, []);
+  
+  const invitation = DAILY_INVITATIONS[0];
+
 
   return (
-    <div className="h-screen flex bg-memo-bg text-memo-text font-body">
-      {/* ICON RAIL — future features */}
-      <div className="w-[84px] flex-none flex flex-col items-center py-5 border-r border-memo-divider bg-memo-surface">
-        <div className="mb-7">
-          <MemoMark size={24} />
-        </div>
-        {RAIL_ITEMS.map((item) => (
-          <button
-            key={item.label}
-            type="button"
-            className="flex flex-col items-center gap-1.5 w-full py-2.5 text-memo-neutral-700 hover:bg-memo-connection-100 transition-colors"
-            title={`${item.label} — coming soon`}
-          >
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-              {item.icon}
-            </svg>
-            <span className="text-[9px] tracking-wider uppercase">{item.label}</span>
-          </button>
-        ))}
-        <div className="flex-1" />
-        <button
-          type="button"
-          className="flex flex-col items-center gap-1.5 w-full py-2.5 text-memo-neutral-700 hover:bg-memo-connection-100 transition-colors"
-          title="Settings"
-        >
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="4" y1="21" x2="4" y2="14" />
-            <line x1="4" y1="10" x2="4" y2="3" />
-            <line x1="12" y1="21" x2="12" y2="12" />
-            <line x1="12" y1="8" x2="12" y2="3" />
-            <line x1="20" y1="21" x2="20" y2="16" />
-            <line x1="20" y1="12" x2="20" y2="3" />
-            <line x1="1" y1="14" x2="7" y2="14" />
-            <line x1="9" y1="8" x2="15" y2="8" />
-            <line x1="17" y1="16" x2="23" y2="16" />
-          </svg>
-          <span className="text-[9px] tracking-wider uppercase">Settings</span>
-        </button>
-      </div>
+    <main className="min-h-screen bg-memo-bg text-memo-text">
+      <style jsx global>{`
+        @keyframes memo-breathe {
+          0%, 100% { transform: scale(1); opacity: 0.35; }
+          50% { transform: scale(1.07); opacity: 0.7; }
+        }
 
-      {/* MAIN */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* NAV */}
-        <div className="h-16 flex-none flex items-center justify-between px-8 border-b border-memo-divider">
-          <div className="font-heading font-semibold text-xl">MemoMind</div>
+        @media (prefers-reduced-motion: reduce) {
+          [class*="memo-breathe"] { animation: none !important; }
+        }
+      `}</style>
+
+      <header className="border-b border-memo-divider/80">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
+          <a href="/dashboard" className="font-heading text-xl font-semibold">
+            MemoMind
+          </a>
+
+          <nav className="hidden items-center gap-8 text-sm text-memo-neutral-700 md:flex">
+            <a href="/library" className="transition-colors hover:text-memo-connection-600">
+              Library
+            </a>
+            <a href="/journey" className="transition-colors hover:text-memo-connection-600">
+              Journey
+            </a>
+          </nav>
+
           <div className="relative">
             <button
               type="button"
-              onClick={() => setProfileOpen((v) => !v)}
-              className="flex items-center gap-2 p-1"
+              onClick={() => setProfileOpen((open) => !open)}
+              className="flex items-center gap-2 rounded-full p-1 transition-colors hover:bg-memo-surface"
+              aria-expanded={profileOpen}
+              aria-label="Open profile menu"
             >
-              <div className="w-8 h-8 rounded-full border border-memo-divider bg-memo-surface flex items-center justify-center font-heading font-semibold text-[13px]">
-                {userName[0]}
-              </div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-memo-neutral-700">
-                <polyline points="6 9 12 15 18 9" />
+              <span className="grid h-9 w-9 place-items-center rounded-full border border-memo-divider bg-memo-surface font-heading text-sm font-semibold">
+                {userName.charAt(0).toUpperCase()}
+              </span>
+              <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 text-memo-neutral-700" aria-hidden="true">
+                <path d="m7 10 5 5 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
+
             {profileOpen && (
-              <div className="absolute right-0 top-11 w-[200px] bg-memo-bg border border-memo-divider rounded-md shadow-md p-1.5 z-10">
-                <div className="px-3 py-2 text-sm rounded hover:bg-memo-connection-100 cursor-pointer">Settings</div>
-                <div className="h-px bg-memo-divider my-1" />
-                <div className="px-3 py-2 text-sm rounded hover:bg-memo-connection-100 cursor-pointer">Sign out</div>
+              <div className="absolute right-0 top-12 z-20 w-48 rounded-xl border border-memo-divider bg-memo-surface p-2 shadow-[0_20px_50px_rgba(42,36,31,0.12)]">
+                <a href="/settings" className="block rounded-lg px-3 py-2 text-sm hover:bg-memo-connection-100">
+                  Settings
+                </a>
+                <button type="button" className="block w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-memo-connection-100">
+                  Sign out
+                </button>
               </div>
             )}
           </div>
         </div>
+      </header>
 
-        {/* CONTENT — conversation removed */}
-        <div className="flex-1 flex flex-col items-center overflow-hidden min-h-0">
-          <div className="w-full max-w-[720px] flex-none pt-6 px-6">
-            <h2 className="font-heading font-semibold text-[22px]">
-              {greeting ?? "Welcome"}, {userName}.
-            </h2>
+      <section className="relative overflow-hidden px-6 pb-24 pt-14 lg:px-10 lg:pt-20">
+        <Image
+          src="/tree.png"
+          alt=""
+          width={900}
+          height={900}
+          aria-hidden="true"
+          draggable={false}
+          className="pointer-events-none absolute left-1/2 top-0 w-[760px] -translate-x-1/2 select-none opacity-[0.055] mix-blend-multiply"
+        />
 
-            {phase === "day1" && (
-              <div className="mt-4 border border-memo-connection-300 bg-memo-connection-100 rounded-[10px] px-5 py-4">
-                <div className="text-[11px] tracking-wider uppercase text-memo-neutral-700 mb-1.5">
-                  {MORNING_PRACTICE_TITLE}
-                </div>
-                <p className="text-[14px] leading-relaxed text-memo-neutral-700 mb-3">
-                  {MORNING_PRACTICE_INTRO}
-                </p>
-                <div className="text-[13px] font-medium mb-1.5">A way to start your day</div>
-                <div className="flex flex-col gap-2.5">
-                  {MORNING_PRACTICE_BODY.map((paragraph, i) => (
-                    <p key={i} className="text-[15px] leading-relaxed">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  onClick={acknowledgeDay1}
-                  className="mt-4 rounded-full border border-memo-connection-500 text-memo-connection-600 font-heading font-semibold text-[14px] px-5 py-2 hover:bg-memo-bg transition-colors"
-                >
-                  Got it
-                </button>
-              </div>
-            )}
+        <div className="relative mx-auto max-w-5xl">
+          <div className="flex flex-col items-center text-center">
+            <MemoMark />
 
-            {phase === "nudge" && (
-              <div className="mt-4 border border-memo-divider rounded-[10px] px-4 py-3.5 bg-memo-surface">
-                <div className="flex items-center justify-between gap-3">
-                  <p className="text-[15px]">
-                    Morning practice — a moment before the day starts?
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setExpanded((v) => !v)}
-                    className="text-[13px] text-memo-connection-600 whitespace-nowrap hover:underline"
-                  >
-                    {expanded ? "Hide" : "Show me"}
-                  </button>
-                </div>
-                {expanded && (
-                  <div className="flex flex-col gap-2.5 mt-3 pt-3 border-t border-memo-divider">
-                    {MORNING_PRACTICE_BODY.map((paragraph, i) => (
-                      <p key={i} className="text-[14px] leading-relaxed text-memo-neutral-700">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
-                )}
-                <button
-                  type="button"
-                  onClick={disableNudge}
-                  className="text-[12px] text-memo-neutral-700 hover:text-memo-text underline underline-offset-4 decoration-memo-divider transition-colors mt-3"
-                >
-                  Turn off this reminder
-                </button>
-              </div>
-            )}
+            <p className="mt-5 text-xs uppercase tracking-[0.3em] text-memo-neutral-700/70">Memo</p>
 
-            {phase === "settled" && (
-              <div className="mt-4 border border-memo-divider rounded-[10px] px-4 py-3.5 bg-memo-surface">
-                <div className="text-[11px] tracking-wider uppercase text-memo-neutral-700 mb-1">
-                  Today&rsquo;s reflection
-                </div>
-                <p className="text-[15px] leading-relaxed italic">{dailyLine ?? "\u00A0"}</p>
-              </div>
-            )}
+            <h1 className="mt-5 font-heading text-4xl font-normal tracking-[-0.035em] sm:text-5xl">
+              {greeting}, {userName}.
+            </h1>
+
+            <p className="mt-4 text-lg leading-8 text-memo-neutral-700">I'm Memo, your guideTogether we'll explore the wisdom of Lojong through simple conversations and daily practice..</p>
+
           </div>
 
-          {/* Everything below this point — message list, typing indicator,
-              composer — was removed. This is where the conversation, or
-              anything else, gets reintroduced next. */}
+          <section className="mx-auto mt-16 max-w-3xl border-y border-memo-divider py-12 text-center">
+            <p className="text-lg uppercase tracking-[0.3em] text-memo-neutral-700/70">{invitation.eyebrow}</p>
+            <h2 className="mt-5 font-heading text-2xl font-normal tracking-[-0.03em] sm:text-3xl">{invitation.title}</h2>
+            <div className="mx-auto mt-6 max-w-2xl space-y-4 text-lg leading-8 text-memo-neutral-700">
+              {invitation.body.map((paragraph, index) => (
+                paragraph === "" ? <div key={index} className="h-3" /> : <p key={index}>{paragraph}</p>
+              ))}
+            </div>
+            <button type="button" className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-memo-neutral-900 px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg">
+              Let's Begin
+              <ArrowIcon />
+            </button>
+          </section>
+
+          <section className="mx-auto mt-12 max-w-3xl">
+            <div className="rounded-3xl border border-memo-divider bg-memo-surface/75 p-7 sm:p-9">
+              <p className="text-xs uppercase tracking-[0.28em] text-memo-neutral-700/70">Continue your reflection</p>
+              <blockquote className="mt-5 max-w-2xl font-heading text-2xl leading-9 tracking-[-0.02em] text-memo-text">
+                “I noticed I often treat uncertainty as proof that something bad is about to happen.”
+              </blockquote>
+              <a href="/conversation" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600 transition-colors hover:text-memo-connection-700">
+                Continue where we left off
+                <ArrowIcon />
+              </a>
+            </div>
+          </section>
+
+          <section className="mx-auto mt-12 max-w-3xl">
+            <p className="text-center text-xs uppercase tracking-[0.3em] text-memo-neutral-700/70">Explore</p>
+            <div className="mt-6 grid gap-4 sm:grid-cols-3">
+              {[
+                { title: "Practices", description: "Short invitations for ordinary moments.", href: "/library/practices" },
+                { title: "Teachings", description: "Explore the ideas behind the practice.", href: "/library/teachings" },
+                { title: "Begin here", description: "A gentle introduction to Lojong and Memo.", href: "/library/begin" },
+              ].map((item) => (
+                <a key={item.title} href={item.href} className="group rounded-2xl border border-memo-divider bg-memo-surface/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-memo-connection-300 hover:bg-memo-surface hover:shadow-[0_18px_50px_rgba(42,36,31,0.07)]">
+                  <h3 className="font-heading text-xl">{item.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-memo-neutral-700">{item.description}</p>
+                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600">
+                    Explore
+                    <span className="transition-transform group-hover:translate-x-1"><ArrowIcon /></span>
+                  </span>
+                </a>
+              ))}
+            </div>
+          </section>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
