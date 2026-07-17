@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import MemoMindTourCarousel from "./MemoMindTourCarousel";
 
 
@@ -15,14 +15,6 @@ const DAILY_INVITATIONS = [
     ],
   },
 ];
-
-function getGreeting(date: Date = new Date()): string {
-  const hour = date.getHours();
-  if (hour < 12) return "Good morning";
-  if (hour < 18) return "Good afternoon";
-  return "Good evening";
-}
-
 
 function MemoMark() {
   return (
@@ -61,11 +53,7 @@ export default function MemoMindDashboard({
   userName?: string;
 }) {
   const [profileOpen, setProfileOpen] = useState(false);
-  const [greeting, setGreeting] = useState("Welcome");
-  
-  useEffect(() => {
-    setGreeting(getGreeting(new Date()));
-  }, []);
+  const [tourComplete, setTourComplete] = useState(false);
   
   const invitation = DAILY_INVITATIONS[0];
 
@@ -141,38 +129,49 @@ export default function MemoMindDashboard({
 
         <div className="relative mx-auto max-w-5xl">
           <div className="flex flex-col items-center text-center">
-            <MemoMark />
-
-            <p className="mt-5 text-xs uppercase tracking-[0.3em] text-memo-neutral-700/70">Memo</p>
-
-            <h1 className="mt-5 font-heading text-4xl font-normal tracking-[-0.035em] sm:text-5xl">
-              {greeting}, {userName}.
-            </h1>
-
-            <p className="mt-4 text-lg leading-8 text-memo-neutral-700">I'm Memo, your guideTogether we'll explore the wisdom of Lojong through simple conversations and daily practice..</p>
-            <MemoMindTourCarousel
-              onComplete={() => {
-                window.location.href = "/conversation";
-              }}
-              onSkip={() => {
-                window.location.href = "/conversation";
-              }}
-            />
-          </div>
-
-          <section className="mx-auto mt-16 max-w-3xl border-y border-memo-divider py-12 text-center">
-            <p className="text-lg uppercase tracking-[0.3em] text-memo-neutral-700/70">{invitation.eyebrow}</p>
-            <h2 className="mt-5 font-heading text-2xl font-normal tracking-[-0.03em] sm:text-3xl">{invitation.title}</h2>
-            <div className="mx-auto mt-6 max-w-2xl space-y-4 text-lg leading-8 text-memo-neutral-700">
-              {invitation.body.map((paragraph, index) => (
-                paragraph === "" ? <div key={index} className="h-3" /> : <p key={index}>{paragraph}</p>
-              ))}
+              <MemoMark />
+            
+              <p className="mt-5 text-xs uppercase tracking-[0.3em] text-memo-neutral-700/70">
+                Memo
+              </p>
+            
+              {!tourComplete && (
+                <MemoMindTourCarousel
+                  onComplete={() => setTourComplete(true)}
+                  onSkip={() => setTourComplete(true)}
+                />
+              )}
             </div>
-            <button type="button" className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-memo-neutral-900 px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg">
+
+          {tourComplete && (
+          <section className="mx-auto mt-16 max-w-3xl border-y border-memo-divider py-12 text-center">
+            <p className="text-lg uppercase tracking-[0.3em] text-memo-neutral-700/70">
+              {invitation.eyebrow}
+            </p>
+        
+            <h2 className="mt-5 font-heading text-2xl font-normal tracking-[-0.03em] sm:text-3xl">
+              {invitation.title}
+            </h2>
+        
+            <div className="mx-auto mt-6 max-w-2xl space-y-4 text-lg leading-8 text-memo-neutral-700">
+              {invitation.body.map((paragraph, index) =>
+                paragraph === "" ? (
+                  <div key={index} className="h-3" />
+                ) : (
+                  <p key={index}>{paragraph}</p>
+                ),
+              )}
+            </div>
+        
+            <button
+              type="button"
+              className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-memo-neutral-900 px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg"
+            >
               Let's Begin
               <ArrowIcon />
             </button>
           </section>
+        )}
 
           <section className="mx-auto mt-12 max-w-3xl">
             <div className="rounded-3xl border border-memo-divider bg-memo-surface/75 p-7 sm:p-9">
