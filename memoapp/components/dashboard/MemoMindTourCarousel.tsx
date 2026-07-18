@@ -45,10 +45,7 @@ function ArrowIcon({
     <svg
       viewBox="0 0 24 24"
       fill="none"
-      className={[
-        "h-4 w-4",
-        direction === "left" ? "rotate-180" : "",
-      ].join(" ")}
+      className={`h-4 w-4 ${direction === "left" ? "rotate-180" : ""}`}
       aria-hidden="true"
     >
       <path
@@ -98,23 +95,23 @@ export default function MemoMindTourCarousel({
 
   return (
     <section
-      className="mx-auto mt-10 w-full max-w-3xl border-y border-memo-divider py-12 text-center"
+      className="relative mx-auto mt-10 w-full max-w-3xl overflow-hidden rounded-[2rem] border border-white/10 bg-black/90 px-8 py-12 text-center shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:px-10"
       aria-label="Introduction to MemoMind"
     >
       <div
         key={currentSlide}
-        className="animate-[memo-tour-fade_400ms_ease-out]"
+        className="relative z-10 animate-[memo-tour-fade_400ms_ease-out]"
         aria-live="polite"
       >
-        <p className="text-sm uppercase tracking-[0.3em] text-memo-neutral-700/70">
+        <p className="text-sm uppercase tracking-[0.3em] text-white/50">
           {slide.eyebrow}
         </p>
 
-        <h2 className="mt-5 font-heading text-3xl font-normal tracking-[-0.03em] sm:text-4xl">
+        <h2 className="mt-5 font-heading text-3xl font-normal tracking-[-0.03em] text-memo-bg sm:text-4xl">
           {slide.title}
         </h2>
 
-        <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-memo-neutral-700">
+        <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/70">
           {slide.body}
         </p>
       </div>
@@ -131,8 +128,8 @@ export default function MemoMindTourCarousel({
             className={[
               "h-2.5 rounded-full transition-all duration-300",
               index === currentSlide
-                ? "w-7 bg-memo-connection-600"
-                : "w-2.5 bg-memo-divider hover:bg-memo-connection-300",
+                ? "w-7 bg-memo-connection-400"
+                : "w-2.5 bg-white/20 hover:bg-white/35",
             ].join(" ")}
             aria-label={`Go to slide ${index + 1}: ${tourSlide.eyebrow}`}
             aria-current={index === currentSlide ? "step" : undefined}
@@ -145,7 +142,7 @@ export default function MemoMindTourCarousel({
           <button
             type="button"
             onClick={handlePrevious}
-            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-memo-divider bg-memo-surface px-6 text-sm font-semibold text-memo-text transition-all duration-300 hover:-translate-y-0.5 hover:border-memo-connection-300 hover:bg-memo-connection-100"
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-6 text-sm font-semibold text-memo-bg transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10"
           >
             <ArrowIcon direction="left" />
             Previous
@@ -155,7 +152,7 @@ export default function MemoMindTourCarousel({
         <button
           type="button"
           onClick={handleContinue}
-          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-memo-neutral-900 px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg"
+          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-memo-bg px-7 text-sm font-semibold text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-lg"
         >
           {slide.actionLabel}
           <ArrowIcon />
@@ -166,7 +163,7 @@ export default function MemoMindTourCarousel({
         <button
           type="button"
           onClick={handleSkip}
-          className="mt-6 text-sm text-memo-neutral-700 underline-offset-4 transition-colors hover:text-memo-connection-600 hover:underline"
+          className="mt-6 text-sm text-white/50 underline-offset-4 transition-colors hover:text-memo-connection-300 hover:underline"
         >
           Skip introduction
         </button>

@@ -145,7 +145,7 @@ export default function MemoMindDashboard({
 
           {tourComplete && (
           <section className="mx-auto mt-16 max-w-3xl border-y border-memo-divider py-12 text-center">
-            <p className="text-lg uppercase tracking-[0.3em] text-memo-neutral-700/70">
+            <p className="text-lg uppercase tracking-[0.3em] text-memo-neutral-900/70">
               {invitation.eyebrow}
             </p>
         
@@ -153,7 +153,7 @@ export default function MemoMindDashboard({
               {invitation.title}
             </h2>
         
-            <div className="mx-auto mt-6 max-w-2xl space-y-4 text-lg leading-8 text-memo-neutral-700">
+            <div className="mx-auto mt-6 max-w-2xl space-y-4 text-lg leading-8 text-memo-neutral-800">
               {invitation.body.map((paragraph, index) =>
                 paragraph === "" ? (
                   <div key={index} className="h-3" />
