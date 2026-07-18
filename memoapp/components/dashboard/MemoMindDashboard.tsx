@@ -16,23 +16,6 @@ const DAILY_INVITATIONS = [
   },
 ];
 
-function MemoMark() {
-  return (
-    <div className="relative grid h-20 w-20 place-items-center rounded-full border border-memo-divider bg-memo-surface/90 shadow-[0_18px_60px_rgba(42,36,31,0.08)]">
-      <Image
-        src="/memomind-logo@72x.svg"
-        alt="Memo"
-        width={52}
-        height={52}
-        priority
-        className="select-none"
-        draggable={false}
-      />
-      <span className="absolute inset-0 rounded-full border border-memo-connection-300/40 animate-[memo-breathe_7s_ease-in-out_infinite]" />
-    </div>
-  );
-}
-
 function ArrowIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
@@ -60,17 +43,6 @@ export default function MemoMindDashboard({
 
   return (
     <main className="min-h-screen bg-memo-bg text-memo-text">
-      <style jsx global>{`
-        @keyframes memo-breathe {
-          0%, 100% { transform: scale(1); opacity: 0.35; }
-          50% { transform: scale(1.07); opacity: 0.7; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          [class*="memo-breathe"] { animation: none !important; }
-        }
-      `}</style>
-
       <header className="border-b border-memo-divider/80">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
           <a href="/dashboard" className="font-heading text-xl font-semibold">
@@ -129,49 +101,43 @@ export default function MemoMindDashboard({
 
         <div className="relative mx-auto max-w-5xl">
           <div className="flex flex-col items-center text-center">
-              <MemoMark />
-            
-              <p className="mt-5 text-xs uppercase tracking-[0.3em] text-memo-neutral-700/70">
-                Memo
-              </p>
-            
-              {!tourComplete && (
-                <MemoMindTourCarousel
-                  onComplete={() => setTourComplete(true)}
-                  onSkip={() => setTourComplete(true)}
-                />
-              )}
-            </div>
+            {!tourComplete && (
+              <MemoMindTourCarousel
+                onComplete={() => setTourComplete(true)}
+                onSkip={() => setTourComplete(true)}
+              />
+            )}
+          </div>
 
           {tourComplete && (
-          <section className="mx-auto mt-16 max-w-3xl border-y border-memo-divider py-12 text-center">
-            <p className="text-lg uppercase tracking-[0.3em] text-memo-neutral-900/70">
-              {invitation.eyebrow}
-            </p>
-        
-            <h2 className="mt-5 font-heading text-2xl font-normal tracking-[-0.03em] sm:text-3xl">
-              {invitation.title}
-            </h2>
-        
-            <div className="mx-auto mt-6 max-w-2xl space-y-4 text-lg leading-8 text-memo-neutral-800">
-              {invitation.body.map((paragraph, index) =>
-                paragraph === "" ? (
-                  <div key={index} className="h-3" />
-                ) : (
-                  <p key={index}>{paragraph}</p>
-                ),
-              )}
-            </div>
-        
-            <button
-              type="button"
-              className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-memo-neutral-900 px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg"
-            >
-              Let's Begin
-              <ArrowIcon />
-            </button>
-          </section>
-        )}
+            <section className="mx-auto mt-16 max-w-3xl border-y border-memo-divider py-12 text-center">
+              <p className="text-lg uppercase tracking-[0.3em] text-memo-neutral-900/70">
+                {invitation.eyebrow}
+              </p>
+
+              <h2 className="mt-5 font-heading text-2xl font-normal tracking-[-0.03em] sm:text-3xl">
+                {invitation.title}
+              </h2>
+
+              <div className="mx-auto mt-6 max-w-2xl space-y-4 text-lg leading-8 text-memo-neutral-800">
+                {invitation.body.map((paragraph, index) =>
+                  paragraph === "" ? (
+                    <div key={index} className="h-3" />
+                  ) : (
+                    <p key={index}>{paragraph}</p>
+                  ),
+                )}
+              </div>
+
+              <button
+                type="button"
+                className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-memo-neutral-900 px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg"
+              >
+                Let's Begin
+                <ArrowIcon />
+              </button>
+            </section>
+          )}
 
           <section className="mx-auto mt-12 max-w-3xl">
             <div className="rounded-3xl border border-memo-divider bg-memo-surface/75 p-7 sm:p-9">
