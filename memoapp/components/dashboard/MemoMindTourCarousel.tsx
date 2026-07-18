@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
+import { MemoLogo } from "@/components/icons/MemoLogo";
 
 type TourSlide = {
   eyebrow: string;
@@ -35,6 +37,15 @@ const TOUR_SLIDES: TourSlide[] = [
     actionLabel: "Let's Begin",
   },
 ];
+
+function MemoMark() {
+  return (
+    <div className="relative mx-auto mb-6 grid h-16 w-16 place-items-center rounded-full border border-white/10 bg-memo-bg">
+      <MemoLogo className="h-9 w-9 text-memo-text" />
+      <span className="absolute inset-0 rounded-full border border-memo-connection-300/40 animate-[memo-breathe_7s_ease-in-out_infinite]" />
+    </div>
+  );
+}
 
 function ArrowIcon({
   direction = "right",
@@ -95,14 +106,27 @@ export default function MemoMindTourCarousel({
 
   return (
     <section
-      className="relative mx-auto mt-10 w-full max-w-3xl overflow-hidden rounded-[2rem] border border-white/10 bg-black/90 px-8 py-12 text-center shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:px-10"
+      className="relative mx-auto mt-10 w-full max-w-3xl overflow-hidden rounded-[2rem] border border-white/10 bg-black/75 px-8 py-12 text-center shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:px-10"
       aria-label="Introduction to MemoMind"
     >
+      <style jsx global>{`
+        @keyframes memo-breathe {
+          0%, 100% { transform: scale(1); opacity: 0.35; }
+          50% { transform: scale(1.07); opacity: 0.7; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          [class*="memo-breathe"] { animation: none !important; }
+        }
+      `}</style>
+
       <div
         key={currentSlide}
         className="relative z-10 animate-[memo-tour-fade_400ms_ease-out]"
         aria-live="polite"
       >
+        <MemoMark />
+
         <p className="text-sm uppercase tracking-[0.3em] text-white/50">
           {slide.eyebrow}
         </p>
