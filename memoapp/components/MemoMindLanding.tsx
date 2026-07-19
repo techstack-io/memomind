@@ -3,65 +3,6 @@ import Image from "next/image";
 export default function MemoMindLandingPage() {
   return (
     <main className="min-h-screen bg-memo-bg text-memo-text">
-      {/* Navigation */}
-      <header className="w-full px-6 py-4 sm:px-8 lg:px-10">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-          <a href="#" className="mr-auto flex items-center gap-2">
-            <Image
-              src="/memomind-logo@72x.svg"
-              alt="MemoMind"
-              width={56}
-              height={56}
-              priority
-            />
-            <div className="flex items-center gap-2 min-w-0 flex-shrink-0">
-              <span className="font-heading text-xl font-bold text-memo-neutral-900">
-                MemoMind
-              </span>
-              <span className="text-[10px] tracking-widest text-memo-neutral-400 uppercase">
-                Beta
-              </span>
-            </div>
-          </a>
-
-          <nav className="hidden items-center gap-10 text-sm text-memo-neutral-700/70 md:flex">
-            <a
-              href="#how-it-works"
-              className="transition-colors duration-200 hover:text-memo-connection-600"
-            >
-              How it works
-            </a>
-            <a
-              href="#conversation"
-              className="transition-colors duration-200 hover:text-memo-connection-600"
-            >
-              A conversation
-            </a>
-            <a
-              href="#memory"
-              className="transition-colors duration-200 hover:text-memo-connection-600"
-            >
-              Memory
-            </a>
-            <a
-              href="#approach"
-              className="transition-colors duration-200 hover:text-memo-connection-600"
-            >
-              Our approach
-            </a>
-          </nav>
-
-          {/* Right: CTA Button */}
-          {/* Reducing its text size/padding slightly on mobile stops it from colliding with the logo */}
-          <a
-            href="#waitlist"
-            className="inline-flex min-h-10 items-center justify-center rounded-xl border border-memo-neutral-300 bg-memo-surface px-4 py-2 text-xs font-semibold text-memo-text transition-all sm:px-5 sm:text-sm hover:border-memo-connection-300"
-          >
-            Join the waitlist
-          </a>
-        </div>
-      </header>
-
       {/* Hero */}
       <section className="relative overflow-hidden px-6 pb-12 pt-0 lg:px-10 lg:pb-20 lg:pt-0">
         <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-0">

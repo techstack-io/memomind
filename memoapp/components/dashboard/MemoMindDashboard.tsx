@@ -3,18 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import MemoMindTourCarousel from "./MemoMindTourCarousel";
-
-
-const DAILY_INVITATIONS = [
-  {
-    eyebrow: "Slogan 41",
-    title: "Begin at the beginning. End at the end.",
-    body: [
-      "This is a wonderful place to begin our journey.Slogan 41 invites us to start the day with a commitment to be mindful, openhearted, and compassionate. At the end of the day, we pause and reflect on how things went.I’d also like to add a small moment of gratitude to the practice. It can help the day begin on a positive note, and it can be especially meaningful to practice with your children.",
-      "",
-    ],
-  },
-];
+import { MemoLogo } from "@/components/icons/MemoLogo";
 
 function ArrowIcon() {
   return (
@@ -30,6 +19,78 @@ function ArrowIcon() {
   );
 }
 
+const ENTRY_POINTS = [
+  {
+    title: "Morning gratitude",
+    description: "Today's gateway. A short guided practice to open the day with intention.",
+    href: "/practice/morning",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
+        <path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+        <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.6" />
+      </svg>
+    ),
+    featured: true,
+  },
+  {
+    title: "Talk to Memo",
+    description: "Share what's on your mind, any time of day.",
+    href: "/conversation",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
+        <path d="M4 5h16v11H8l-4 4V5z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      </svg>
+    ),
+    featured: false,
+  },
+  {
+    title: "Explore",
+    description: "Practices and teachings from the Lojong tradition.",
+    href: "/library",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
+        <path d="M4 19.5V5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+        <path d="M19 17H6a2 2 0 00-2 2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      </svg>
+    ),
+    featured: false,
+  },
+];
+
+const SIDEBAR_NAV = [
+  {
+    label: "Dashboard",
+    href: "/dashboard",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
+        <path d="M4 12l8-8 8 8M6 10v10h12V10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    active: true,
+  },
+  {
+    label: "Library",
+    href: "/library",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
+        <path d="M4 19.5V5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+        <path d="M19 17H6a2 2 0 00-2 2" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+      </svg>
+    ),
+    active: false,
+  },
+  {
+    label: "Journey",
+    href: "/journey",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
+        <path d="M3 12h4l3-8 4 16 3-8h4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    active: false,
+  },
+];
+
 export default function MemoMindDashboard({
   userName = "Dan",
 }: {
@@ -37,142 +98,104 @@ export default function MemoMindDashboard({
 }) {
   const [profileOpen, setProfileOpen] = useState(false);
   const [tourComplete, setTourComplete] = useState(false);
-  
-  const invitation = DAILY_INVITATIONS[0];
-
 
   return (
-    <main className="min-h-screen bg-memo-bg text-memo-text">
-      <header className="border-b border-memo-divider/80">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
-          <a href="/dashboard" className="font-heading text-xl font-semibold">
-            MemoMind
-          </a>
-
-          <nav className="hidden items-center gap-8 text-sm text-memo-neutral-700 md:flex">
-            <a href="/library" className="transition-colors hover:text-memo-connection-600">
-              Library
-            </a>
-            <a href="/journey" className="transition-colors hover:text-memo-connection-600">
-              Journey
-            </a>
-          </nav>
-
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setProfileOpen((open) => !open)}
-              className="flex items-center gap-2 rounded-full p-1 transition-colors hover:bg-memo-surface"
-              aria-expanded={profileOpen}
-              aria-label="Open profile menu"
-            >
-              <span className="grid h-9 w-9 place-items-center rounded-full border border-memo-divider bg-memo-surface font-heading text-sm font-semibold">
-                {userName.charAt(0).toUpperCase()}
-              </span>
-              <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 text-memo-neutral-700" aria-hidden="true">
-                <path d="m7 10 5 5 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-
-            {profileOpen && (
-              <div className="absolute right-0 top-12 z-20 w-48 rounded-xl border border-memo-divider bg-memo-surface p-2 shadow-[0_20px_50px_rgba(42,36,31,0.12)]">
-                <a href="/settings" className="block rounded-lg px-3 py-2 text-sm hover:bg-memo-connection-100">
-                  Settings
-                </a>
-                <button type="button" className="block w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-memo-connection-100">
-                  Sign out
-                </button>
+    <div className="min-h-screen bg-memo-bg text-memo-text">
+      <div className="flex">
+        {tourComplete && (
+          <aside className="hidden w-56 flex-none border-r border-memo-divider/80 bg-memo-surface/40 px-4 py-6 lg:block">
+            <a href="/dashboard" className="mb-6 flex items-center justify-center">
+              <div className="relative flex h-14 w-14 items-center justify-center rounded-full border border-memo-divider bg-memo-bg">
+                <MemoLogo className="h-8 w-8 text-memo-text" />
+                <span className="absolute inset-0 rounded-full border border-memo-connection-800 animate-[memo-breathe_7s_ease-in-out_infinite]" />
               </div>
-            )}
-          </div>
-        </div>
-      </header>
-
-      <section className="relative overflow-hidden px-6 pb-24 pt-14 lg:px-10 lg:pt-20">
-        <Image
-          src="/tree.png"
-          alt=""
-          width={900}
-          height={900}
-          aria-hidden="true"
-          draggable={false}
-          className="pointer-events-none absolute left-1/2 top-0 w-[760px] -translate-x-1/2 select-none opacity-[0.055] mix-blend-multiply"
-        />
-
-        <div className="relative mx-auto max-w-5xl">
-          <div className="flex flex-col items-center text-center">
-            {!tourComplete && (
-              <MemoMindTourCarousel
-                onComplete={() => setTourComplete(true)}
-                onSkip={() => setTourComplete(true)}
-              />
-            )}
-          </div>
-
-          {tourComplete && (
-            <section className="mx-auto mt-16 max-w-3xl border-y border-memo-divider py-12 text-center">
-              <p className="text-lg uppercase tracking-[0.3em] text-memo-neutral-900/70">
-                {invitation.eyebrow}
-              </p>
-
-              <h2 className="mt-5 font-heading text-2xl font-normal tracking-[-0.03em] sm:text-3xl">
-                {invitation.title}
-              </h2>
-
-              <div className="mx-auto mt-6 max-w-2xl space-y-4 text-lg leading-8 text-memo-neutral-800">
-                {invitation.body.map((paragraph, index) =>
-                  paragraph === "" ? (
-                    <div key={index} className="h-3" />
-                  ) : (
-                    <p key={index}>{paragraph}</p>
-                  ),
-                )}
-              </div>
-
-              <button
-                type="button"
-                className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-memo-neutral-900 px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg"
-              >
-                Let's Begin
-                <ArrowIcon />
-              </button>
-            </section>
-          )}
-
-          <section className="mx-auto mt-12 max-w-3xl">
-            <div className="rounded-3xl border border-memo-divider bg-memo-surface/75 p-7 sm:p-9">
-              <p className="text-xs uppercase tracking-[0.28em] text-memo-neutral-700/70">Continue your reflection</p>
-              <blockquote className="mt-5 max-w-2xl font-heading text-2xl leading-9 tracking-[-0.02em] text-memo-text">
-                “I noticed I often treat uncertainty as proof that something bad is about to happen.”
-              </blockquote>
-              <a href="/conversation" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600 transition-colors hover:text-memo-connection-700">
-                Continue where we left off
-                <ArrowIcon />
-              </a>
-            </div>
-          </section>
-
-          <section className="mx-auto mt-12 max-w-3xl">
-            <p className="text-center text-xs uppercase tracking-[0.3em] text-memo-neutral-700/70">Explore</p>
-            <div className="mt-6 grid gap-4 sm:grid-cols-3">
-              {[
-                { title: "Practices", description: "Short invitations for ordinary moments.", href: "/library/practices" },
-                { title: "Teachings", description: "Explore the ideas behind the practice.", href: "/library/teachings" },
-                { title: "Begin here", description: "A gentle introduction to Lojong and Memo.", href: "/library/begin" },
-              ].map((item) => (
-                <a key={item.title} href={item.href} className="group rounded-2xl border border-memo-divider bg-memo-surface/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-memo-connection-300 hover:bg-memo-surface hover:shadow-[0_18px_50px_rgba(42,36,31,0.07)]">
-                  <h3 className="font-heading text-xl">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-memo-neutral-700">{item.description}</p>
-                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600">
-                    Explore
-                    <span className="transition-transform group-hover:translate-x-1"><ArrowIcon /></span>
-                  </span>
+            </a>
+            <nav className="flex flex-col gap-1">
+              {SIDEBAR_NAV.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
+                    item.active
+                      ? "bg-memo-connection-100 text-memo-connection-700 font-semibold"
+                      : "text-memo-neutral-700 hover:bg-memo-surface hover:text-memo-text"
+                  }`}
+                >
+                  {item.icon}
+                  {item.label}
                 </a>
               ))}
-            </div>
-          </section>
+            </nav>
+          </aside>
+        )}
+
+        <div className="mx-auto w-full max-w-7xl flex-1">
+          <main className="min-w-0">
+            <section className="relative min-h-[900px] overflow-hidden px-6 pb-24 pt-14 lg:px-10 lg:pt-20">
+              <Image
+                src="/tree.png"
+                alt=""
+                width={900}
+                height={900}
+                aria-hidden="true"
+                draggable={false}
+                className="pointer-events-none absolute left-1/2 top-0 w-[760px] -translate-x-1/2 select-none opacity-[0.055] mix-blend-multiply"
+              />
+
+              <div className="relative mx-auto max-w-5xl">
+                <div className="flex flex-col items-center text-center">
+                  {!tourComplete && (
+                    <MemoMindTourCarousel
+                      onComplete={() => setTourComplete(true)}
+                      onSkip={() => setTourComplete(true)}
+                    />
+                  )}
+                </div>
+
+                {tourComplete && (
+                  <section className="mx-auto max-w-5xl">
+                    <p className="text-center text-xs uppercase tracking-[0.3em] text-memo-neutral-700/70">
+                      Where would you like to begin?
+                    </p>
+                    <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                      {ENTRY_POINTS.map((item) => (
+                        <a
+                          key={item.title}
+                          href={item.href}
+                          className={`group rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(42,36,31,0.07)] ${
+                            item.featured
+                              ? "border-memo-connection-300 bg-[#f9f2e6] hover:border-memo-connection-500"
+                              : "border-memo-divider bg-memo-surface/70 hover:border-memo-connection-300 hover:bg-memo-surface"
+                          }`}
+                        >
+                          <div
+                            className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${
+                              item.featured ? "bg-memo-connection-500 text-white" : "bg-memo-surface text-memo-neutral-700"
+                            }`}
+                          >
+                            {item.icon}
+                          </div>
+                          {item.featured && (
+                            <span className="ml-2 align-middle text-[11px] font-semibold uppercase tracking-wide text-memo-connection-600">
+                              Recommended Path
+                            </span>
+                          )}
+                          <h3 className="mt-4 font-heading text-xl">{item.title}</h3>
+                          <p className="mt-2 text-sm leading-6 text-memo-neutral-700">{item.description}</p>
+                          <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600">
+                            {item.featured ? "Begin" : "Open"}
+                            <span className="transition-transform group-hover:translate-x-1"><ArrowIcon /></span>
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                  </section>
+                )}
+              </div>
+            </section>
+          </main>
         </div>
-      </section>
-    </main>
+      </div>
+    </div>
   );
 }
