@@ -7,8 +7,8 @@ import DandelionAnimation from "@/components/DandelionAnimation";
 const slides = [
   {
     eyebrow: "Welcome",
-    title: "Memo is a companion for the mind.",
-    body: "Rooted in the Lojong tradition, Memo offers small daily practices that soften how you meet the world — one breath, one thought at a time.",
+    title: "Training in the Preliminaries.",
+    body: "To quiet the noise of daily life, you must first establish a stable foundation. Slogan 1 introduces the Four Reminders, profound realizations that shift your perspective on life.",
   },
   {
     eyebrow: "How it works",
@@ -104,7 +104,7 @@ export default function MemoMindTourCarousel({
                 </>
               ) : (
                 <>
-                  Continue
+                  the four reminders
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </>
               )}
