@@ -11,14 +11,24 @@ const slides = [
     body: "To quiet the noise of daily life, you must first establish a stable foundation. Slogan 1 introduces the Four Reminders, profound realizations that shift your perspective on life.",
   },
   {
-    eyebrow: "How it works",
-    title: "Short practices. Real presence.",
-    body: "Each morning begins with a gateway practice. Throughout the day, return to Memo to reflect, converse, or simply pause.",
+    eyebrow: "Reminder 1",
+    title: "Prescious Life",
+    body: "We must appreciate the rare, valuable gift of human existence and the unique fortune of having the time and space to train our minds.",
   },
   {
-    eyebrow: "Your rhythm",
-    title: "No streaks. No pressure.",
-    body: "You set the pace. Memo remembers where you've been and gently offers what might serve you next.",
+    eyebrow: "Reminder 2",
+    title: "Impermanence",
+    body: "We must accept the absolute reality of change, knowing that life is fragile and death can strike suddenly without warning.",
+  },
+  {
+    eyebrow: "Reminder 3",
+    title: "Karma",
+    body: "We must recognize that every choice we make—good or bad—acts as a seed that binds us to the natural law of cause and effect.",
+  },
+  {
+    eyebrow: "Reminder 4",
+    title: "Suffering",
+    body: "We must acknowledge that pain and dissatisfaction are inevitable, universal struggles shared by ourselves and all living beings.",
   },
 ];
 
