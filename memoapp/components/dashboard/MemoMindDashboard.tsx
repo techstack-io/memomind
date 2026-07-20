@@ -24,7 +24,7 @@ const ENTRY_POINTS = [
   },
   {
     title: "Habit",
-    description: "Your mind is already trained by habit. Mind training is the intentional process of carving new ones.",
+    description: "Your mind is already trained by habit. Every self-critical thought is just a well-worn groove. Mind training is the intentional process of carving new ones.",
     href: "/library",
     icon: Repeat,
     featured: false,
