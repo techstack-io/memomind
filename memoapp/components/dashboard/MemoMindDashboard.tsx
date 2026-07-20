@@ -9,9 +9,7 @@ import {
   Dumbbell,
   LayoutGrid,
   MessageCircle,
-  Repeat
-  Sparkles,
-  Sunrise,
+  Repeat,
 } from "lucide-react";
 import MemoMindTourCarousel from "@/components/dashboard/MemoMindTourCarousel";
 import { MemoLogo } from "@/components/icons/MemoLogo";
