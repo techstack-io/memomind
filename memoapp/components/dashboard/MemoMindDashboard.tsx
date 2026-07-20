@@ -5,6 +5,7 @@ import { useState } from "react";
 import {
   ArrowUpRight,
   BookOpen,
+  BrickWall,
   Compass,
   Dumbbell,
   LayoutGrid,
@@ -15,6 +16,13 @@ import MemoMindTourCarousel from "@/components/dashboard/MemoMindTourCarousel";
 import { MemoLogo } from "@/components/icons/MemoLogo";
 
 const ENTRY_POINTS = [
+  {
+    title: "Foundation",
+    description: "Training in the preliminaries means taking full ownership of your life. It’s about dropping the self-pity, looking at your reality with radical honesty, and making a firm commitment to train your mind—starting right where you are.",
+    href: "/conversation",
+    icon: BrickWall,
+    featured: false,
+  },
   {
     title: "Seize the Moment",
     description: "Mind training isn't about feeling calm or faking positivity. It’s about turning every moment, pleasant or painful, into raw material for growth.",
