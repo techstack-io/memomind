@@ -20,9 +20,16 @@ doubt, this module is written to over-trigger, not under-trigger.
 
 from __future__ import annotations
 
+import logging
 import re
 from dataclasses import dataclass
 from typing import Final
+
+from openai import AsyncOpenAI, OpenAIError
+
+from app.settings import get_settings
+
+logger = logging.getLogger(__name__)
 
 
 SAFETY_RESPONSE: Final[str] = (
@@ -111,7 +118,18 @@ SAFETY_PATTERNS: Final[tuple[SafetyPattern, ...]] = (
             r"(?:can'?t|cannot)\s+go\s+on|don'?t\s+want\s+to\s+be\s+"
             r"(?:here|alive)\s+anymore|better\s+off\s+dead|"
             r"end(?:ing)?\s+it\s+all|kill\s+myself|hurt\s+myself|"
-            r"harm\s+myself)\b"
+            r"harm\s+myself|"
+            # Hopelessness / "no point" phrasing — added after a live
+            # Moderation API test confirmed both layers missed "I feel
+            # completely hopeless and don't see the point anymore."
+            # Anchored to "anymore" / "in life" / "of it all" etc. rather
+            # than matching bare "point" or "hopeless" alone, to avoid
+            # false-positiving on mundane complaints like "I don't see the
+            # point of this meeting" or "this printer is hopeless."
+            r"feel(?:ing)?\s+(?:completely\s+)?hopeless|"
+            r"don'?t\s+see\s+(?:the\s+)?point\s+(?:anymore|in\s+(?:anything|life|living)|of\s+(?:anything|it\s+all))|"
+            r"what'?s\s+the\s+point\s+(?:anymore|of\s+(?:anything|living))|"
+            r"nothing\s+matters\s+anymore)\b"
         ),
     ),
 )
@@ -146,5 +164,90 @@ def check_safety_override(message: str) -> tuple[bool, str | None]:
     for safety_pattern in SAFETY_PATTERNS:
         if safety_pattern.expression.search(normalized_message):
             return True, safety_pattern.name
+
+    return False, None
+
+
+# --- Layer 2: OpenAI Moderation API -----------------------------------------
+#
+# The regex layer above is the always-on, zero-dependency, zero-latency
+# floor — it never goes down and never costs anything. This second layer
+# is a genuine model-based classifier, run alongside it, that catches what
+# regex structurally can't: indirect language, non-English phrasing, and
+# novel phrasings no one thought to write a pattern for.
+#
+# This is additive, not a replacement. If this call fails or times out
+# (network issue, rate limit, provider outage), it fails OPEN — meaning it
+# does not block the user, and does not raise. The regex layer still runs
+# regardless and remains the guaranteed backstop. A moderation-API outage
+# should degrade the safety system, not take the whole app down with it.
+#
+# NOTE: moderation is general-purpose — it also flags violence, hate, and
+# sexual content, which are out of scope for this hard override. Only the
+# self-harm-relevant categories below are treated as a safety override;
+# other flagged categories are ignored here (they may still be worth
+# logging separately, just not as a hard block on this path).
+
+_SELF_HARM_CATEGORIES: Final[tuple[str, ...]] = (
+    "self-harm",
+    "self-harm/intent",
+    "self-harm/instructions",
+)
+
+_moderation_client = AsyncOpenAI(api_key=get_settings().openai_api_key)
+
+
+async def check_moderation_api(message: str) -> tuple[bool, list[str]]:
+    """Check a message against OpenAI's Moderation API.
+
+    Returns:
+        A tuple containing:
+        - True and the list of matched self-harm-relevant category names
+          when flagged.
+        - False and an empty list when clear, OR when the API call itself
+          failed (fail-open — see module note above).
+
+    NOTE: verify "omni-moderation-latest" is still the current recommended
+    moderation model against OpenAI's docs before shipping — model names
+    on this endpoint have changed before (e.g. from text-moderation-latest).
+    """
+
+    if not message.strip():
+        return False, []
+
+    try:
+        response = await _moderation_client.moderations.create(
+            model="omni-moderation-latest",
+            input=message,
+        )
+    except OpenAIError:
+        logger.exception("Moderation API call failed; failing open for this turn.")
+        return False, []
+    except Exception:
+        logger.exception("Unexpected error calling Moderation API; failing open.")
+        return False, []
+
+    result = response.results[0]
+    categories = result.categories.model_dump()
+
+    matched = [name for name in _SELF_HARM_CATEGORIES if categories.get(name)]
+    return bool(matched), matched
+
+
+async def check_safety(message: str) -> tuple[bool, str | None]:
+    """Run both safety layers and return a single combined verdict.
+
+    This is the function callers (e.g. conversation_service.py) should use
+    — it runs the free, instant regex check first, and only calls out to
+    the Moderation API if the regex layer didn't already flag the message.
+    """
+
+    flagged, matched_name = check_safety_override(message)
+    if flagged:
+        return True, matched_name
+
+    moderation_flagged, moderation_categories = await check_moderation_api(message)
+    if moderation_flagged:
+        return True, f"moderation:{','.join(moderation_categories)}"
 
     return False, None

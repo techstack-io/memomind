@@ -1,216 +1,123 @@
 "use client";
 
 import { useState } from "react";
-import { MemoLogo } from "@/components/icons/MemoLogo";
+import { ArrowRight, Check } from "lucide-react";
+import DandelionAnimation from "@/components/DandelionAnimation";
 
-type TourSlide = {
-  eyebrow: string;
-  title: string;
-  body: string;
-  actionLabel: string;
-};
-
-const TOUR_SLIDES: TourSlide[] = [
+const slides = [
   {
     eyebrow: "Welcome",
-    title: "I'm Memo.",
-    body: "Together we'll explore Lojong through simple conversations and daily practice.",
-    actionLabel: "Continue",
+    title: "Memo is a companion for the mind.",
+    body: "Rooted in the Lojong tradition, Memo offers small daily practices that soften how you meet the world — one breath, one thought at a time.",
   },
   {
-    eyebrow: "Begin each day",
-    title: "Start with intention.",
-    body: "Begin the day with a Lojong teaching, a moment of gratitude, and a simple intention for how you want to meet the day.",
-    actionLabel: "Continue",
+    eyebrow: "How it works",
+    title: "Short practices. Real presence.",
+    body: "Each morning begins with a gateway practice. Throughout the day, return to Memo to reflect, converse, or simply pause.",
   },
   {
-    eyebrow: "Talk with me",
-    title: "Share what is on your mind.",
-    body: "Together, we'll explore ordinary challenges through mindfulness, compassion, and the wisdom of Lojong.",
-    actionLabel: "Continue",
-  },
-  {
-    eyebrow: "End with reflection",
-    title: "Pause and look back.",
-    body: "At the end of the day, reflect on what you noticed, how you responded, and what the day helped you understand.",
-    actionLabel: "Let's Begin",
+    eyebrow: "Your rhythm",
+    title: "No streaks. No pressure.",
+    body: "You set the pace. Memo remembers where you've been and gently offers what might serve you next.",
   },
 ];
 
-function MemoMark() {
-  return (
-    <div className="relative mx-auto mb-6 grid h-16 w-16 place-items-center rounded-full border border-memo-divider bg-memo-bg">
-      <MemoLogo className="h-9 w-9 text-memo-text" />
-      <span className="absolute inset-0 rounded-full border border-memo-connection-300/40 animate-[memo-breathe_7s_ease-in-out_infinite]" />
-    </div>
-  );
-}
-
-function ArrowIcon({
-  direction = "right",
-}: {
-  direction?: "left" | "right";
-}) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className={`h-4 w-4 ${direction === "left" ? "rotate-180" : ""}`}
-      aria-hidden="true"
-    >
-      <path
-        d="M5 12h14M13 6l6 6-6 6"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 type MemoMindTourCarouselProps = {
-  onComplete?: () => void;
-  onSkip?: () => void;
+  onComplete: () => void;
+  onSkip: () => void;
 };
 
 export default function MemoMindTourCarousel({
   onComplete,
   onSkip,
 }: MemoMindTourCarouselProps) {
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  const slide = TOUR_SLIDES[currentSlide];
-  const isFirstSlide = currentSlide === 0;
-  const isLastSlide = currentSlide === TOUR_SLIDES.length - 1;
-
-  function handleContinue() {
-    if (isLastSlide) {
-      onComplete?.();
-      return;
-    }
-
-    setCurrentSlide((slideIndex) => slideIndex + 1);
-  }
-
-  function handlePrevious() {
-    if (isFirstSlide) return;
-
-    setCurrentSlide((slideIndex) => slideIndex - 1);
-  }
-
-  function handleSkip() {
-    onSkip?.();
-  }
+  const [i, setI] = useState(0);
+  const slide = slides[i];
+  const isLast = i === slides.length - 1;
 
   return (
-    <section
-      className="relative mx-auto mt-10 w-full max-w-3xl overflow-hidden rounded-[2rem] border border-white/60 bg-white/50 px-8 py-12 text-center shadow-[0_24px_70px_rgba(42,36,31,0.16)] sm:px-10"
-      aria-label="Introduction to MemoMind"
-    >
-      <style jsx global>{`
-        @keyframes memo-breathe {
-          0%, 100% { transform: scale(1); opacity: 0.35; }
-          50% { transform: scale(1.07); opacity: 0.7; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          [class*="memo-breathe"] { animation: none !important; }
-        }
-      `}</style>
-
-      <div
-        key={currentSlide}
-        className="relative z-10 animate-[memo-tour-fade_400ms_ease-out]"
-        aria-live="polite"
-      >
-        <MemoMark />
-
-        <p className="text-sm uppercase tracking-[0.3em] text-memo-neutral-700/70">
-          {slide.eyebrow}
-        </p>
-
-        <h2 className="mt-5 font-heading text-3xl font-normal tracking-[-0.03em] sm:text-4xl">
-          {slide.title}
-        </h2>
-
-        <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-memo-neutral-700">
-          {slide.body}
-        </p>
+    <div className="grid items-center gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+      <div className="relative overflow-hidden rounded-3xl border border-memo-divider bg-memo-surface p-8 shadow-[0_24px_70px_rgba(42,36,31,0.12)] sm:p-12">
+        <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-memo-connection-500 opacity-[0.08] blur-3xl" />
+  
+        <div className="pointer-events-none absolute -bottom-32 -left-16 h-72 w-72 rounded-full bg-memo-neutral-500 opacity-[0.08] blur-3xl" />
+  
+        <div className="relative flex flex-col gap-8">
+          <div className="flex items-center justify-between">
+            <span className="text-xs uppercase tracking-[0.22em] text-memo-neutral-700">
+              {slide.eyebrow}
+            </span>
+  
+            <button
+              type="button"
+              onClick={onSkip}
+              className="text-xs uppercase tracking-[0.18em] text-memo-neutral-700 transition-colors hover:text-memo-text"
+            >
+              Skip
+            </button>
+          </div>
+  
+          <div className="max-w-2xl space-y-5">
+            <h2 className="font-heading text-3xl leading-[1.1] text-memo-text sm:text-4xl md:text-4xl">
+              {slide.title}
+            </h2>
+  
+            <p className="text-base leading-relaxed text-memo-neutral-700 sm:text-lg">
+              {slide.body}
+            </p>
+          </div>
+  
+          <div className="flex items-center justify-between pt-4">
+            <div className="flex items-center gap-2">
+              {slides.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setI(idx)}
+                  aria-label={`Go to slide ${idx + 1}`}
+                  aria-current={idx === i ? "step" : undefined}
+                  className={`h-1.5 rounded-full transition-all ${
+                    idx === i
+                      ? "w-8 bg-memo-text"
+                      : "w-1.5 bg-memo-divider hover:bg-memo-neutral-500"
+                  }`}
+                />
+              ))}
+            </div>
+  
+            <button
+              type="button"
+              onClick={() => {
+                if (isLast) {
+                  onComplete();
+                  return;
+                }
+  
+                setI((current) => current + 1);
+              }}
+              className="group inline-flex items-center gap-2 rounded-full bg-memo-text px-5 py-2.5 text-sm font-medium text-memo-bg transition-transform hover:scale-[1.02] active:scale-[0.98]"
+            >
+              {isLast ? (
+                <>
+                  Enter
+                  <Check className="h-4 w-4" />
+                </>
+              ) : (
+                <>
+                  Continue
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </>
+              )}
+            </button>
+          </div>
+        </div>
       </div>
-
-      <div
-        className="mt-8 flex items-center justify-center gap-2"
-        aria-label={`Slide ${currentSlide + 1} of ${TOUR_SLIDES.length}`}
-      >
-        {TOUR_SLIDES.map((tourSlide, index) => (
-          <button
-            key={tourSlide.eyebrow}
-            type="button"
-            onClick={() => setCurrentSlide(index)}
-            className={[
-              "h-2.5 rounded-full transition-all duration-300",
-              index === currentSlide
-                ? "w-7 bg-memo-connection-600"
-                : "w-2.5 bg-memo-divider hover:bg-memo-connection-300",
-            ].join(" ")}
-            aria-label={`Go to slide ${index + 1}: ${tourSlide.eyebrow}`}
-            aria-current={index === currentSlide ? "step" : undefined}
-          />
-        ))}
+  
+      <div className="mx-auto flex w-full max-w-sm items-center justify-center opacity-40">
+        <div className="aspect-square w-full">
+          <DandelionAnimation />
+        </div>
       </div>
-
-      <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        {!isFirstSlide && (
-          <button
-            type="button"
-            onClick={handlePrevious}
-            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-memo-divider bg-white px-6 text-sm font-semibold text-memo-text transition-all duration-300 hover:-translate-y-0.5 hover:bg-memo-connection-100"
-          >
-            <ArrowIcon direction="left" />
-            Previous
-          </button>
-        )}
-
-        <button
-          type="button"
-          onClick={handleContinue}
-          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-memo-neutral-900 px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg"
-        >
-          {slide.actionLabel}
-          <ArrowIcon />
-        </button>
-      </div>
-
-      {!isLastSlide && (
-        <button
-          type="button"
-          onClick={handleSkip}
-          className="mt-6 text-sm text-memo-neutral-700 underline-offset-4 transition-colors hover:text-memo-connection-600 hover:underline"
-        >
-          Skip introduction
-        </button>
-      )}
-
-      <style jsx>{`
-        @keyframes memo-tour-fade {
-          from {
-            opacity: 0;
-            transform: translateY(8px);
-          }
-
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          [class*="memo-tour-fade"] {
-            animation: none !important;
-          }
-        }
-      `}</style>
-    </section>
+    </div>
   );
 }

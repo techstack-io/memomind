@@ -1,200 +1,186 @@
 "use client";
 
-import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
-import MemoMindTourCarousel from "./MemoMindTourCarousel";
+import {
+  ArrowUpRight,
+  BookOpen,
+  Compass,
+  LayoutGrid,
+  MessageCircle,
+  Sparkles,
+  Sunrise,
+} from "lucide-react";
+import MemoMindTourCarousel from "@/components/dashboard/MemoMindTourCarousel";
 import { MemoLogo } from "@/components/icons/MemoLogo";
-
-function ArrowIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
-      <path
-        d="M5 12h14M13 6l6 6-6 6"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 const ENTRY_POINTS = [
   {
     title: "Morning gratitude",
-    description: "Today's gateway. A short guided practice to open the day with intention.",
+    description:
+      "Today's gateway. A short guided practice to open the day with intention.",
     href: "/practice/morning",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
-        <path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-        <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.6" />
-      </svg>
-    ),
+    icon: Sunrise,
     featured: true,
   },
   {
     title: "Talk to Memo",
     description: "Share what's on your mind, any time of day.",
     href: "/conversation",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
-        <path d="M4 5h16v11H8l-4 4V5z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-      </svg>
-    ),
+    icon: MessageCircle,
     featured: false,
   },
   {
     title: "Explore",
     description: "Practices and teachings from the Lojong tradition.",
     href: "/library",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
-        <path d="M4 19.5V5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-        <path d="M19 17H6a2 2 0 00-2 2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-      </svg>
-    ),
+    icon: Sparkles,
     featured: false,
   },
-];
+] as const;
 
 const SIDEBAR_NAV = [
-  {
-    label: "Dashboard",
-    href: "/dashboard",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
-        <path d="M4 12l8-8 8 8M6 10v10h12V10" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-    active: true,
-  },
-  {
-    label: "Library",
-    href: "/library",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
-        <path d="M4 19.5V5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
-        <path d="M19 17H6a2 2 0 00-2 2" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-      </svg>
-    ),
-    active: false,
-  },
-  {
-    label: "Journey",
-    href: "/journey",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
-        <path d="M3 12h4l3-8 4 16 3-8h4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-    active: false,
-  },
-];
+  { label: "Dashboard", href: "/dashboard", icon: LayoutGrid, active: true },
+  { label: "Library", href: "/library", icon: BookOpen, active: false },
+  { label: "Journey", href: "/journey", icon: Compass, active: false },
+] as const;
+
+type MemoMindDashboardProps = {
+  userName?: string;
+};
 
 export default function MemoMindDashboard({
   userName = "Dan",
-}: {
-  userName?: string;
-}) {
-  const [profileOpen, setProfileOpen] = useState(false);
+}: MemoMindDashboardProps) {
   const [tourComplete, setTourComplete] = useState(false);
 
   return (
     <div className="min-h-screen bg-memo-bg text-memo-text">
-      <div className="flex">
+      <div className="mx-auto flex min-h-screen w-full max-w-[1400px] gap-8 px-4 py-6 sm:px-6 lg:px-8">
         {tourComplete && (
-          <aside className="hidden w-56 flex-none border-r border-memo-divider/80 bg-memo-surface/40 px-4 py-6 lg:block">
-            <a href="/dashboard" className="mb-6 flex items-center justify-center">
-              <div className="relative flex h-14 w-14 items-center justify-center rounded-full border border-memo-divider bg-memo-bg">
-                <MemoLogo className="h-8 w-8 text-memo-text" />
-                <span className="absolute inset-0 rounded-full border border-memo-connection-800 animate-[memo-breathe_7s_ease-in-out_infinite]" />
-              </div>
-            </a>
-            <nav className="flex flex-col gap-1">
-              {SIDEBAR_NAV.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
-                    item.active
-                      ? "bg-memo-connection-100 text-memo-connection-700 font-semibold"
-                      : "text-memo-neutral-700 hover:bg-memo-surface hover:text-memo-text"
-                  }`}
-                >
-                  {item.icon}
-                  {item.label}
-                </a>
-              ))}
-            </nav>
+          <aside className="sticky top-6 hidden h-[calc(100vh-3rem)] w-60 shrink-0 flex-col justify-between rounded-3xl border border-memo-divider bg-memo-surface p-5 md:flex">
+            <div className="space-y-8">
+              <nav
+                className="flex flex-col gap-1"
+                aria-label="Dashboard navigation"
+              >
+                {SIDEBAR_NAV.map((item) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      aria-current={item.active ? "page" : undefined}
+                      className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
+                        item.active
+                          ? "bg-memo-connection-100 font-semibold text-memo-connection-700"
+                          : "text-memo-neutral-700 hover:bg-memo-neutral-100 hover:text-memo-text"
+                      }`}
+                    >
+                      <Icon className="h-4 w-4" strokeWidth={1.75} />
+                      <span>{item.label}</span>
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+
+            <div className="rounded-2xl border border-memo-divider bg-memo-bg/60 p-4">
+              <p className="font-heading text-sm leading-snug text-memo-text">
+                &ldquo;First, train in the preliminaries.&rdquo;
+              </p>
+              <p className="mt-2 text-xs text-memo-neutral-700">
+                Lojong · Slogan 1
+              </p>
+            </div>
           </aside>
         )}
 
-        <div className="mx-auto w-full max-w-7xl flex-1">
-          <main className="min-w-0">
-            <section className="relative min-h-[900px] overflow-hidden px-6 pb-24 pt-14 lg:px-10 lg:pt-20">
-              <Image
-                src="/tree.png"
-                alt=""
-                width={900}
-                height={900}
-                aria-hidden="true"
-                draggable={false}
-                className="pointer-events-none absolute left-1/2 top-0 w-[760px] -translate-x-1/2 select-none opacity-[0.055] mix-blend-multiply"
-              />
+        <main>
 
-              <div className="relative mx-auto max-w-5xl">
-                <div className="flex flex-col items-center text-center">
-                  {!tourComplete && (
-                    <MemoMindTourCarousel
-                      onComplete={() => setTourComplete(true)}
-                      onSkip={() => setTourComplete(true)}
-                    />
-                  )}
-                </div>
+          {!tourComplete ? (
+            <MemoMindTourCarousel
+              onComplete={() => setTourComplete(true)}
+              onSkip={() => setTourComplete(true)}
+            />
+          ) : (
+            <div className="space-y-12">
+              <section className="max-w-3xl">
+                <p className="text-sm uppercase tracking-[0.22em] text-memo-connection-600">
+                  Good morning, {userName}
+                </p>
 
-                {tourComplete && (
-                  <section className="mx-auto max-w-5xl">
-                    <p className="text-center text-xs uppercase tracking-[0.3em] text-memo-neutral-700/70">
-                      Where would you like to begin?
-                    </p>
-                    <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                      {ENTRY_POINTS.map((item) => (
-                        <a
-                          key={item.title}
-                          href={item.href}
-                          className={`group rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(42,36,31,0.07)] ${
+                <h1 className="mt-4 font-heading text-4xl leading-[1.05] text-slate-700 sm:text-5xl md:text-4xl">
+                  Where should we begin?
+                </h1>
+
+                <p className="mt-5 max-w-xl text-base leading-relaxed text-memo-neutral-700">
+                  Choose the path that meets you where
+                  you are—there is no wrong entry.
+                </p>
+              </section>
+
+              <section className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                {ENTRY_POINTS.map((item) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <Link
+                      key={item.title}
+                      href={item.href}
+                      className={`group relative flex min-h-80 flex-col justify-between overflow-hidden rounded-3xl border p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(42,36,31,0.07)] ${
+                        item.featured
+                          ? "border-memo-connection-300 bg-memo-connection-100/60 hover:border-memo-connection-500"
+                          : "border-memo-divider bg-memo-surface/70 hover:border-memo-connection-300 hover:bg-memo-surface"
+                      }`}
+                    >
+                      {item.featured && (
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-memo-connection-500/10 via-transparent to-transparent" />
+                      )}
+
+                      <div className="relative flex items-start justify-between gap-4">
+                        <div
+                          className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl ${
                             item.featured
-                              ? "border-memo-connection-300 bg-[#f9f2e6] hover:border-memo-connection-500"
-                              : "border-memo-divider bg-memo-surface/70 hover:border-memo-connection-300 hover:bg-memo-surface"
+                              ? "bg-memo-connection-500 text-white"
+                              : "bg-memo-neutral-100 text-memo-text"
                           }`}
                         >
-                          <div
-                            className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${
-                              item.featured ? "bg-memo-connection-500 text-white" : "bg-memo-surface text-memo-neutral-700"
-                            }`}
-                          >
-                            {item.icon}
-                          </div>
-                          {item.featured && (
-                            <span className="ml-2 align-middle text-[11px] font-semibold uppercase tracking-wide text-memo-connection-600">
-                              Recommended Path
-                            </span>
-                          )}
-                          <h3 className="mt-4 font-heading text-xl">{item.title}</h3>
-                          <p className="mt-2 text-sm leading-6 text-memo-neutral-700">{item.description}</p>
-                          <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600">
-                            {item.featured ? "Begin" : "Open"}
-                            <span className="transition-transform group-hover:translate-x-1"><ArrowIcon /></span>
+                          <Icon className="h-5 w-5" strokeWidth={1.75} />
+                        </div>
+
+                        {item.featured && (
+                          <span className="rounded-full border border-memo-connection-300 bg-memo-connection-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-memo-connection-700">
+                            Recommended
                           </span>
-                        </a>
-                      ))}
-                    </div>
-                  </section>
-                )}
-              </div>
-            </section>
-          </main>
-        </div>
+                        )}
+                      </div>
+
+                      <div className="relative mt-14">
+                        <h2 className="font-heading text-2xl leading-tight text-memo-text">
+                          {item.title}
+                        </h2>
+
+                        <p className="mt-2 text-sm leading-relaxed text-memo-neutral-700">
+                          {item.description}
+                        </p>
+
+                        <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-memo-connection-600">
+                          {item.featured ? "Begin" : "Open"}
+                          <ArrowUpRight
+                            className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                            strokeWidth={2}
+                          />
+                        </span>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </section>
+            </div>
+          )}
+        </main>
       </div>
     </div>
   );
