@@ -16,16 +16,8 @@ import { MemoLogo } from "@/components/icons/MemoLogo";
 
 const ENTRY_POINTS = [
   {
-    title: "Morning gratitude",
-    description:
-      "Today's gateway. A short guided practice to open the day with intention.",
-    href: "/practice/morning",
-    icon: Sunrise,
-    featured: true,
-  },
-  {
-    title: "Talk to Memo",
-    description: "Share what's on your mind, any time of day.",
+    title: "Seize the Moment",
+    description: "Mind training isn't about feeling calm or faking positivity. It’s about turning every moment, pleasant or painful, into raw material for growth.",
     href: "/conversation",
     icon: MessageCircle,
     featured: false,
@@ -116,8 +108,7 @@ export default function MemoMindDashboard({
                 </h1>
 
                 <p className="mt-5 max-w-xl text-base leading-relaxed text-memo-neutral-700">
-                  Choose the path that meets you where
-                  you are—there is no wrong entry.
+                  Grounding Before Growth
                 </p>
               </section>
 
