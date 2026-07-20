@@ -6,8 +6,10 @@ import {
   ArrowUpRight,
   BookOpen,
   Compass,
+  Dumbbell,
   LayoutGrid,
   MessageCircle,
+  Repeat
   Sparkles,
   Sunrise,
 } from "lucide-react";
@@ -19,14 +21,14 @@ const ENTRY_POINTS = [
     title: "Seize the Moment",
     description: "Mind training isn't about feeling calm or faking positivity. It’s about turning every moment, pleasant or painful, into raw material for growth.",
     href: "/conversation",
-    icon: MessageCircle,
+    icon: Dumbbell,
     featured: false,
   },
   {
-    title: "Explore",
-    description: "Practices and teachings from the Lojong tradition.",
+    title: "Habit",
+    description: "Your mind is already trained by habit. Mind training is the intentional process of carving new ones.",
     href: "/library",
-    icon: Sparkles,
+    icon: Repeat,
     featured: false,
   },
 ] as const;
