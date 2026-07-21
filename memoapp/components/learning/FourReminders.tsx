@@ -145,19 +145,6 @@ export default function FourReminders() {
                 Before transforming difficult experiences, establish a
                 foundation for practice.
               </p>
-              <Image
-                src="/opening.jpeg"
-                alt="Hand-drawn tree illustration"
-                width={900}
-                height={900}
-                draggable={false}
-                priority
-                className="
-                  h-auto
-                  w-full
-                  select-none
-                "
-              />
             </header>
 
             <section className="mt-10 border-t border-memo-divider pt-8">
