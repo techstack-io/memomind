@@ -57,6 +57,7 @@ export default function MemoMindLandingPage() {
                 width={900}
                 height={900}
                 draggable={false}
+                priority
                 className="
                   memo-tree
                   h-auto

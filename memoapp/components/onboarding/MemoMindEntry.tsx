@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import AgeGateModal from "./AgeGateModal";
-import MemoMindDashboard from "./MemoMindDashboard";
+import MemoMindDashboard from "../dashboard/MemoMindDashboard";
 
 const AGE_CONFIRMED_KEY = "memomind_age_confirmed";
 

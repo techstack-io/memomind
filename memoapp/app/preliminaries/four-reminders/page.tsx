@@ -1,5 +1,5 @@
 import FourReminders from "@/components/learning/FourReminders";
 
-export default function Page() {
+export default function FourRemindersPage() {
   return <FourReminders />;
 }

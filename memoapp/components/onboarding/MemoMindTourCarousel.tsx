@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ArrowRight, Check } from "lucide-react";
-import DandelionAnimation from "@/components/DandelionAnimation";
+import DandelionAnimation from "@/components/animations/DandelionAnimation";
 
 const slides = [
   {

@@ -11,13 +11,14 @@ function AppNavbar({ userName = "Dan" }: { userName?: string }) {
     <header className="w-full px-6 py-4 sm:px-8 lg:px-10">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
         <a href="/dashboard" className="mr-auto flex items-center gap-2">
-          <Image
-            src="/memomind-logo@72x.svg"
-            alt="MemoMind"
-            width={56}
-            height={56}
-            priority
-          />
+        <Image
+          src="/memomind-logo@72x.svg"
+          alt="MemoMind"
+          width={56}
+          height={56}
+          className="h-14 w-14"
+          priority
+        />
           <div className="flex min-w-0 flex-shrink-0 items-center gap-2">
             <span className="font-heading text-xl font-bold text-memo-neutral-900">
               MemoMind

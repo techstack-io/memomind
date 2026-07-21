@@ -2,32 +2,28 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import Pill from "@/components/ui/pill";
 import {
   ArrowUpRight,
   BookOpen,
-  BrickWall,
   Compass,
-  Dumbbell,
   LayoutGrid,
-  MessageCircle,
   Repeat,
 } from "lucide-react";
-import MemoMindTourCarousel from "@/components/dashboard/MemoMindTourCarousel";
+import MemoMindTourCarousel from "@/components/onboarding/MemoMindTourCarousel";
 import { MemoLogo } from "@/components/icons/MemoLogo";
 
 const ENTRY_POINTS = [
   {
-    title: "Foundation",
+    title: "Train in the Preliminaries",
     description: "Training in the preliminaries means taking full ownership of your life. It’s about dropping the self-pity, looking at your reality with radical honesty, and making a firm commitment to train your mind—starting right where you are.",
-    href: "/conversation",
-    icon: BrickWall,
+    href: "/preliminaries/four-reminders",
     featured: false,
   },
   {
     title: "Seize the Moment",
     description: "Mind training isn't about feeling calm or faking positivity. It’s about turning every moment, pleasant or painful, into raw material for growth.",
     href: "/conversation",
-    icon: Dumbbell,
     featured: false,
   },
   {
@@ -85,15 +81,6 @@ export default function MemoMindDashboard({
                 })}
               </nav>
             </div>
-
-            <div className="rounded-2xl border border-memo-divider bg-memo-bg/60 p-4">
-              <p className="font-heading text-sm leading-snug text-memo-text">
-                &ldquo;First, train in the preliminaries.&rdquo;
-              </p>
-              <p className="mt-2 text-xs text-memo-neutral-700">
-                Lojong · Slogan 1
-              </p>
-            </div>
           </aside>
         )}
 
@@ -128,7 +115,7 @@ export default function MemoMindDashboard({
                     <Link
                       key={item.title}
                       href={item.href}
-                      className={`group relative flex min-h-80 flex-col justify-between overflow-hidden rounded-3xl border p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(42,36,31,0.07)] ${
+                      className={`group relative flex min-h-80 flex-col overflow-hidden rounded-3xl border p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(42,36,31,0.07)] ${
                         item.featured
                           ? "border-memo-connection-300 bg-memo-connection-100/60 hover:border-memo-connection-500"
                           : "border-memo-divider bg-memo-surface/70 hover:border-memo-connection-300 hover:bg-memo-surface"
@@ -139,15 +126,6 @@ export default function MemoMindDashboard({
                       )}
 
                       <div className="relative flex items-start justify-between gap-4">
-                        <div
-                          className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl ${
-                            item.featured
-                              ? "bg-memo-connection-500 text-white"
-                              : "bg-memo-neutral-100 text-memo-text"
-                          }`}
-                        >
-                          <Icon className="h-5 w-5" strokeWidth={1.75} />
-                        </div>
 
                         {item.featured && (
                           <span className="rounded-full border border-memo-connection-300 bg-memo-connection-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-memo-connection-700">
@@ -156,7 +134,11 @@ export default function MemoMindDashboard({
                         )}
                       </div>
 
-                      <div className="relative mt-14">
+                      <div className="relative">
+                        {item.title === "Train in the Preliminaries" && (
+                          <Pill className="mb-3">Slogan 1</Pill>
+                        )}
+
                         <h2 className="font-heading text-2xl leading-tight text-memo-text">
                           {item.title}
                         </h2>
