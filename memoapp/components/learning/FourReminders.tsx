@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowLeft,
   BookOpen,
@@ -144,6 +145,24 @@ export default function FourReminders() {
                 Before transforming difficult experiences, establish a
                 foundation for practice.
               </p>
+              <Image
+                src="/opening.jpeg"
+                alt="Hand-drawn tree illustration"
+                width={900}
+                height={900}
+                draggable={false}
+                priority
+                className="
+                  memo-tree
+                  h-auto
+                  w-full
+                  select-none
+                  mix-blend-multiply
+                  opacity-30
+                  contrast-90
+                  brightness-105
+                "
+              />
             </header>
 
             <section className="mt-10 border-t border-memo-divider pt-8">
