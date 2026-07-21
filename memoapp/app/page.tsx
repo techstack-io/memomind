@@ -1,7 +1,5 @@
-// app/dashboard/page.tsx
+import MemoMindLanding from "@/components/landing/MemoMindLanding";
 
-import MemoMindDashboard from "@/components/landing/MemoMindLanding";
-
-export default function DashboardPage() {
+export default function Page() {
   return <MemoMindLanding />;
 }
