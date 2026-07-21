@@ -61,7 +61,6 @@ export default function MemoMindDashboard({
                 aria-label="Dashboard navigation"
               >
                 {SIDEBAR_NAV.map((item) => {
-                  const Icon = item.icon;
 
                   return (
                     <Link
@@ -109,7 +108,6 @@ export default function MemoMindDashboard({
 
               <section className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
                 {ENTRY_POINTS.map((item) => {
-                  const Icon = item.icon;
 
                   return (
                     <Link
