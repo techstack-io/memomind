@@ -73,7 +73,7 @@ export default function MemoMindDashboard({
                           : "text-memo-neutral-700 hover:bg-memo-neutral-100 hover:text-memo-text"
                       }`}
                     >
-                      <Icon className="h-4 w-4" strokeWidth={1.75} />
+
                       <span>{item.label}</span>
                     </Link>
                   );
