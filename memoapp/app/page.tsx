@@ -1,5 +1,7 @@
-import FourReminders from "@/components/learning/FourReminders";
+// app/dashboard/page.tsx
 
-export default function Page() {
-  return <FourReminders />;
+import MemoMindDashboard from "@/components/dashboard/MemoMindDashboard";
+
+export default function DashboardPage() {
+  return <MemoMindDashboard />;
 }
