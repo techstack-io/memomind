@@ -153,14 +153,9 @@ export default function FourReminders() {
                 draggable={false}
                 priority
                 className="
-                  memo-tree
                   h-auto
                   w-full
                   select-none
-                  mix-blend-multiply
-                  opacity-30
-                  contrast-90
-                  brightness-105
                 "
               />
             </header>
