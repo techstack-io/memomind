@@ -1,29 +1,33 @@
 type ChatMessageProps = {
-  role: "user" | "assistant";
+  role: "assistant" | "user";
   content: string;
 };
 
+function MemoAvatar() {
+  return (
+    <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-memo-divider font-heading font-semibold text-memo-connection-700">
+      M
+    </div>
+  );
+}
+
 export function ChatMessage({ role, content }: ChatMessageProps) {
-  if (role === "user") {
+  if (role === "assistant") {
     return (
-      <li className="ms-auto flex max-w-lg gap-x-2 sm:gap-x-4">
-        <div className="grow space-y-3 text-end">
-          <div className="inline-flex flex-col justify-end">
-            <div className="inline-block rounded-2xl bg-ink p-4 shadow-sm">
-              <p className="text-sm leading-6 text-cream">{content}</p>
-            </div>
-          </div>
-        </div>
+      <li className="flex items-start gap-3.5">
+        <MemoAvatar />
+
+        <p className="text-[17px] leading-relaxed text-memo-text">
+          {content}
+        </p>
       </li>
     );
   }
 
   return (
-    <li className="me-11 flex max-w-lg gap-x-2 sm:gap-x-4">
-      <div>
-        <div className="space-y-3 rounded-2xl border border-border bg-card p-4">
-          <p className="text-sm leading-6 text-ink">{content}</p>
-        </div>
+    <li className="flex justify-end">
+      <div className="max-w-[80%] rounded-xl border border-memo-divider bg-memo-neutral-100 px-[18px] py-3.5 text-[17px] leading-relaxed text-memo-text">
+        {content}
       </div>
     </li>
   );

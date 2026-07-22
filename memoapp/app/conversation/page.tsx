@@ -1,5 +1,6 @@
 import AppSidebar from "@/components/layout/AppSidebar";
 import Conversation from "@/components/chat/Conversation";
+import { ConversationSidebar } from "@/components/chat/ConversationSidebar";
 
 export default function ConversationPage() {
   return (
@@ -8,7 +9,10 @@ export default function ConversationPage() {
         <AppSidebar />
 
         <main className="min-w-0 flex-1 py-4 md:py-8">
-          <Conversation />
+          <div className="flex h-[calc(100vh-7rem)] overflow-hidden rounded-[28px] border border-memo-divider bg-memo-surface">
+            <ConversationSidebar />
+            <Conversation />
+          </div>
         </main>
       </div>
     </div>

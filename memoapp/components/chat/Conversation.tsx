@@ -15,13 +15,12 @@ export default function Conversation() {
     {
       id: "welcome",
       role: "assistant",
-      content: "Hello. I'm Memo. When you're ready, let's chat.",
+      content: "Good to see you again. What's present for you today?",
     },
   ]);
 
   function handleSend(content: string) {
     const trimmed = content.trim();
-
     if (!trimmed) return;
 
     setMessages((current) => [
@@ -35,19 +34,35 @@ export default function Conversation() {
   }
 
   return (
-    <section className="mx-auto w-full max-w-3xl">
-      <ul className="space-y-5">
-        {messages.map((message) => (
-          <ChatMessage
-            key={message.id}
-            role={message.role}
-            content={message.content}
-          />
-        ))}
-      </ul>
+    <section className="flex min-h-[calc(100vh-3rem)] flex-col">
+      <header className="flex items-center justify-between border-b border-memo-divider px-8 py-4">
+        <div>
+          <h1 className="font-heading text-xl font-semibold text-memo-text">
+            New reflection
+          </h1>
 
-      <div className="mt-6">
-        <ChatComposer onSend={handleSend} />
+          <p className="text-[13px] text-memo-neutral-700">
+            with Memo · today
+          </p>
+        </div>
+      </header>
+
+      <div className="flex-1 overflow-y-auto py-9">
+        <ul className="mx-auto flex max-w-[720px] flex-col gap-7 px-8">
+          {messages.map((message) => (
+            <ChatMessage
+              key={message.id}
+              role={message.role}
+              content={message.content}
+            />
+          ))}
+        </ul>
+      </div>
+
+      <div className="shrink-0 px-8 pb-7 pt-5">
+        <div className="mx-auto max-w-[720px]">
+          <ChatComposer onSend={handleSend} />
+        </div>
       </div>
     </section>
   );
