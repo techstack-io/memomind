@@ -31,7 +31,7 @@ export default function MemoMindLandingPage() {
             </p>
 
             <h1 className="mt-6 font-heading text-6xl font-normal leading-[0.98] tracking-[-0.045em] sm:text-7xl lg:text-[68px]">
-              Hello, <span className="italic text-memo-connection-600">Dan</span>
+              Welcome to <span className="italic text-memo-connection-600">Memo</span>
             </h1>
 
             <p className="mt-4 max-w-xl text-xl leading-9 text-memo-neutral-700">
