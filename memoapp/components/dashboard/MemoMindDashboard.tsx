@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import AppSidebar from "@/components/layout/AppSidebar";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BookOpen, Compass, Mountain } from "lucide-react";
 
 type MemoMindDashboardProps = {
   userName?: string;
