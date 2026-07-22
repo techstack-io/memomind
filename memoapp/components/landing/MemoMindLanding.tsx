@@ -4,16 +4,16 @@ export default function MemoMindLandingPage() {
   return (
     <main className="min-h-screen bg-memo-bg text-memo-text">
       {/* Hero */}
-      <section className="relative overflow-hidden px-6 pb-12 pt-0 lg:px-10 lg:pb-20 lg:pt-0">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-0">
+      <section className="relative overflow-hidden px-6 py-12 lg:px-10 lg:py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
           
           {/* Left: Hero text */}
-          <div className="relative z-10 text-left lg:-translate-y-12">
+          <div className="relative z-10 text-left">
             <p className="text-xs uppercase tracking-[0.34em] text-memo-neutral-700/80 sm:text-sm">
               Inspired by Lojong mind training
             </p>
 
-            <h1 className="mt-10 font-heading text-6xl font-normal leading-[0.98] tracking-[-0.045em] sm:text-7xl lg:text-[68px]">
+            <h1 className="mt-6 font-heading text-6xl font-normal leading-[0.98] tracking-[-0.045em] sm:text-7xl lg:text-[68px]">
               Meet{" "}
               <span className="italic text-memo-connection-600">
                 Memo
@@ -24,7 +24,7 @@ export default function MemoMindLandingPage() {
               Thoughtful conversations rooted in timeless wisdom.
             </p>
 
-            <div className="mt-10 flex flex-col items-start gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row">
               <a
                 href="#waitlist"
                 className="inline-flex min-h-12 items-center justify-center rounded-xl bg-memo-neutral-900 px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg"
@@ -41,36 +41,21 @@ export default function MemoMindLandingPage() {
             </div>
           </div>
 
-          {/* Right: Editorial illustration */}
-          <div className="relative flex items-center justify-center pt-0 lg:justify-start lg:pt-20">
-            <div
-              className="
-                relative
-                w-full
-                max-w-[700px]
-                lg:-translate-x-16
-              "
-            >
-              <Image
-                src="/tree.png"
-                alt="Hand-drawn tree illustration"
-                width={900}
-                height={900}
-                draggable={false}
-                priority
-                className="
-                  memo-tree
-                  h-auto
-                  w-full
-                  select-none
-                  mix-blend-multiply
-                  opacity-30
-                  contrast-90
-                  brightness-105
-                "
-              />
+          {/* Right: Video illustration */}
+          <div className="relative flex items-center justify-center">
+            <div className="relative w-full overflow-hidden rounded-2xl border border-memo-divider bg-memo-surface shadow-lg aspect-[16/9]">
+              <video
+                autoPlay
+                muted
+                playsInline
+                className="h-full w-full object-cover select-none"
+              >
+                <source src="/animations/hero-animated-2.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </div>
           </div>
+
         </div>
       </section>
 
