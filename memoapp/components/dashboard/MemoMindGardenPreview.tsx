@@ -1,105 +1,144 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-function ArrowIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className="h-4 w-4"
-      aria-hidden="true"
-    >
-      <path
-        d="M5 12h14M13 6l6 6-6 6"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
+type PreferredPath = "memo" | "foundations";
 
-export default function MemoMindGardenPreview() {
+export default function MemoMindLandingPage() {
+  const router = useRouter();
+  const [rememberChoice, setRememberChoice] = useState(false);
+
+  function choosePath(path: PreferredPath) {
+    if (rememberChoice) {
+      localStorage.setItem("memomind:preferredPath", path);
+    } else {
+      localStorage.removeItem("memomind:preferredPath");
+    }
+
+    router.push(path === "memo" ? "/dashboard" : "/preliminaries");
+  }
+
   return (
     <main className="min-h-screen bg-memo-bg text-memo-text">
-      <div className="mx-auto flex min-h-screen max-w-7xl items-center px-6 py-12 lg:px-10">
-        <section className="grid w-full overflow-hidden rounded-3xl border border-memo-divider bg-memo-surface shadow-[0_24px_70px_rgba(42,36,31,0.08)] lg:grid-cols-2">
-          <div className="flex flex-col justify-center px-8 py-12 sm:px-12 lg:px-16">
-            <p className="text-xs uppercase tracking-[0.3em] text-memo-neutral-700/70">
-              Your Practice
+      {/* Hero */}
+      <section className="relative overflow-hidden px-6 py-12 lg:px-10 lg:py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
+          {/* Left: Hero text */}
+          <div className="relative z-10 text-left">
+            <p className="text-xs uppercase tracking-[0.34em] text-memo-neutral-700/80 sm:text-sm">
+              Inspired by Lojong mind training
             </p>
 
-            <h1 className="mt-5 max-w-lg font-heading text-4xl font-normal tracking-[-0.04em] sm:text-5xl">
-              A quiet place shaped by the moments you remember.
+            <h1 className="mt-6 font-heading text-6xl font-normal leading-[0.98] tracking-[-0.045em] sm:text-7xl lg:text-[68px]">
+              Meet <span className="italic text-memo-connection-600">Memo</span>
             </h1>
 
-            <p className="mt-6 max-w-lg text-lg leading-8 text-memo-neutral-700">
-              Each reflection can become part of your landscape. Over time,
-              meaningful moments will quietly find their place here.
+            <p className="mt-4 max-w-xl text-xl leading-9 text-memo-neutral-700">
+              Thoughtful conversations rooted in timeless wisdom.
             </p>
 
-            <div className="mt-10 border-t border-memo-divider pt-8">
-              <p className="text-xs uppercase tracking-[0.28em] text-memo-neutral-700/70">
-                Today&apos;s Lens
-              </p>
+            <p className="mt-5 text-sm text-memo-neutral-700">
+              Choose how you would like to begin.
+            </p>
 
-              <h2 className="mt-3 font-heading text-2xl">
-                Right Intention
-              </h2>
-
-              <p className="mt-4 max-w-md leading-7 text-memo-neutral-700">
-                Look beyond the action and notice the care that gave rise to
-                it.
-              </p>
-            </div>
-
-            <div className="mt-10 flex flex-wrap items-center gap-5">
+            <div className="mt-5 flex flex-col items-start gap-3 sm:flex-row">
               <button
                 type="button"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-memo-neutral-900 px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg"
+                onClick={() => choosePath("memo")}
+                className="inline-flex min-h-12 items-center justify-center rounded-xl bg-memo-neutral-900 px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-lg"
               >
-                Enter the Landscape
-                <ArrowIcon />
+                Talk with Memo
               </button>
 
-              <Link
-                href="/dashboard"
-                className="text-sm font-semibold text-memo-connection-600 transition-colors hover:text-memo-connection-700"
+              <button
+                type="button"
+                onClick={() => choosePath("foundations")}
+                className="inline-flex min-h-12 items-center justify-center rounded-xl border border-memo-neutral-300 bg-memo-surface/80 px-7 text-sm font-semibold text-memo-text transition-all duration-300 hover:-translate-y-0.5 hover:border-memo-connection-300 hover:bg-memo-surface hover:shadow-md"
               >
-                Back to Memo
-              </Link>
+                Begin with Foundations
+              </button>
+            </div>
+
+            <label className="mt-4 flex w-fit cursor-pointer items-center gap-2 text-sm text-memo-neutral-700">
+              <input
+                type="checkbox"
+                checked={rememberChoice}
+                onChange={(event) => setRememberChoice(event.target.checked)}
+                className="size-4 rounded border-memo-neutral-300 accent-memo-neutral-900"
+              />
+              Remember my choice for next time
+            </label>
+          </div>
+
+          {/* Right: Video illustration */}
+          <div className="relative flex items-center justify-center">
+            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-memo-surface">
+              <video
+                autoPlay
+                muted
+                playsInline
+                preload="auto"
+                className="h-full w-full object-cover"
+              >
+                <source
+                  src="/animations/hero-animated-2.mp4"
+                  type="video/mp4"
+                />
+                Your browser does not support the video tag.
+              </video>
+
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 rounded-2xl border border-black/5 shadow-[inset_0_0_10px_rgba(38,31,26,0.12),inset_0_2px_4px_rgba(38,31,26,0.08),inset_0_-1px_2px_rgba(255,255,255,0.28)]"
+              />
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="relative min-h-[460px] lg:min-h-[720px]">
-            <Image
-              src="/memomind-landscape.jpeg"
-              alt="A colorful contemplative landscape with mountains, trees, and water"
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-            />
+      <section id="conversation" className="scroll-mt-24 px-6 pb-24 lg:px-10">
+        <div className="mx-auto max-w-7xl border-y border-memo-divider py-16">
+          <p className="text-xs uppercase tracking-[0.28em] text-memo-neutral-700/80">
+            How Memo works
+          </p>
 
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-transparent lg:from-memo-surface/20" />
+          <div className="mt-10 grid gap-10 md:grid-cols-3">
+            <div>
+              <p className="text-sm text-memo-connection-600">01</p>
+              <h2 className="mt-4 font-heading text-2xl">
+                Share what is present
+              </h2>
+              <p className="mt-3 leading-7 text-memo-neutral-700">
+                Begin with an ordinary moment, concern, relationship, or
+                recurring pattern.
+              </p>
+            </div>
 
-            <button
-              type="button"
-              aria-label="Open a memory"
-              className="absolute left-[38%] top-[57%] h-5 w-5 rounded-full border-2 border-white/80 bg-white/70 shadow-[0_0_20px_rgba(255,255,255,0.95)] transition-transform hover:scale-125"
-            />
+            <div>
+              <p className="text-sm text-memo-connection-600">02</p>
+              <h2 className="mt-4 font-heading text-2xl">
+                Notice what lies beneath
+              </h2>
+              <p className="mt-3 leading-7 text-memo-neutral-700">
+                Memo reflects the feelings, intentions, and habits shaping the
+                experience.
+              </p>
+            </div>
 
-            <button
-              type="button"
-              aria-label="Open another memory"
-              className="absolute left-[70%] top-[35%] h-4 w-4 rounded-full border-2 border-white/80 bg-white/60 shadow-[0_0_18px_rgba(255,255,255,0.9)] transition-transform hover:scale-125"
-            />
+            <div>
+              <p className="text-sm text-memo-connection-600">03</p>
+              <h2 className="mt-4 font-heading text-2xl">
+                Turn reflection into practice
+              </h2>
+              <p className="mt-3 leading-7 text-memo-neutral-700">
+                A relevant Lojong teaching or contemplative practice is
+                introduced when it is genuinely useful.
+              </p>
+            </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </main>
   );
 }
