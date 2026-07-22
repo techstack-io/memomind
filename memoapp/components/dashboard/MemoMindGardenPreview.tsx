@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from 'next/image
+import Image from "next/image";
 
 type PreferredPath = "memo" | "foundations";
 
-export default function MemoMindLandingPage() {
+export default function MemoMindGardenPreview() {
   const router = useRouter();
   const [rememberChoice, setRememberChoice] = useState(false);
 
@@ -22,17 +22,18 @@ export default function MemoMindLandingPage() {
 
   return (
     <main className="min-h-screen bg-memo-bg text-memo-text">
-      {/* Hero */}
+      {/* Hero Section */}
       <section className="relative overflow-hidden px-6 py-12 lg:px-10 lg:py-20">
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
-          {/* Left: Hero text */}
+          
+          {/* Left: Text & CTA */}
           <div className="relative z-10 text-left">
             <p className="text-xs uppercase tracking-[0.34em] text-memo-neutral-700/80 sm:text-sm">
-              Inspired by Lojong mind training
+              Welcome to the Garden Preview
             </p>
 
             <h1 className="mt-6 font-heading text-6xl font-normal leading-[0.98] tracking-[-0.045em] sm:text-7xl lg:text-[68px]">
-              Meet <span className="italic text-memo-connection-600">Memo</span>
+              Hello, <span className="italic text-memo-connection-600">Dan</span>
             </h1>
 
             <p className="mt-4 max-w-xl text-xl leading-9 text-memo-neutral-700">
@@ -72,66 +73,24 @@ export default function MemoMindLandingPage() {
             </label>
           </div>
 
-          {/* Right: Video illustration */}
-          {/* Right: Square image illustration to replace the video */}
+          {/* Right: Square Memo Bot Illustration */}
           <div className="relative flex items-center justify-center">
-            {/* 1:1 Square container */}
-            <div className="relative aspect-square w-full max-w-md overflow-hidden rounded-2xl bg-memo-surface shadow-inner">
+            <div className="relative aspect-square w-full max-w-md overflow-hidden rounded-2xl bg-memo-surface">
               <Image
-                src="/chat/memo-bot.jpeg" // Direct path relative to the public/ folder
-                alt="Memo emblem"
-                [cite_start]fill // Fills the aspect-square container automatically [cite: 219, 220]
-                [cite_start]priority // Loads immediately for hero performance [cite: 221]
-                [cite_start]className="object-cover" // Crops cleanly without distortion [cite: 214]
+                src="/chat/memo-bot.jpeg" // Resolves to public/chat/memo-bot.jpeg
+                alt="Memo Bot emblem"
+                fill
+                priority
+                className="object-cover"
               />
-              
-              {/* Ambient overlay matching dark mode design */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 rounded-2xl border border-black/5 shadow-[inset_0_0_10px_rgba(38,31,26,0.12),inset_0_2px_4px_rgba(38,31,26,0.08),inset_0_-1px_2px_rgba(255,255,255,0.28)]"
+              />
             </div>
           </div>
-        </div>
-      </section>
 
-      <section id="conversation" className="scroll-mt-24 px-6 pb-24 lg:px-10">
-        <div className="mx-auto max-w-7xl border-y border-memo-divider py-16">
-          <p className="text-xs uppercase tracking-[0.28em] text-memo-neutral-700/80">
-            How Memo works
-          </p>
-
-          <div className="mt-10 grid gap-10 md:grid-cols-3">
-            <div>
-              <p className="text-sm text-memo-connection-600">01</p>
-              <h2 className="mt-4 font-heading text-2xl">
-                Share what is present
-              </h2>
-              <p className="mt-3 leading-7 text-memo-neutral-700">
-                Begin with an ordinary moment, concern, relationship, or
-                recurring pattern.
-              </p>
-            </div>
-
-            <div>
-              <p className="text-sm text-memo-connection-600">02</p>
-              <h2 className="mt-4 font-heading text-2xl">
-                Notice what lies beneath
-              </h2>
-              <p className="mt-3 leading-7 text-memo-neutral-700">
-                Memo reflects the feelings, intentions, and habits shaping the
-                experience.
-              </p>
-            </div>
-
-            <div>
-              <p className="text-sm text-memo-connection-600">03</p>
-              <h2 className="mt-4 font-heading text-2xl">
-                Turn reflection into practice
-              </h2>
-              <p className="mt-3 leading-7 text-memo-neutral-700">
-                A relevant Lojong teaching or contemplative practice is
-                introduced when it is genuinely useful.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
     </main>
