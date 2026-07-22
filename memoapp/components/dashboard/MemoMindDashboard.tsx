@@ -144,6 +144,132 @@ export default function MemoMindDashboard({
                 </div>
               </Link>
             </section>
+            <section className="mt-14 border-t border-memo-divider pt-10">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-memo-connection-600">
+                  Explore Further
+                </p>
+            
+                <h2 className="mt-3 font-heading text-3xl tracking-[-0.025em] text-slate-700">
+                  Continue your practice.
+                </h2>
+            
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-memo-neutral-700">
+                  Return to the foundations, explore a teaching, or review the themes
+                  emerging across your reflections.
+                </p>
+              </div>
+            
+              <div className="mt-7 grid gap-5 md:grid-cols-3">
+                <Link
+                  href="/preliminaries/four-reminders"
+                  className="group flex flex-col rounded-[24px] border border-memo-divider bg-memo-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:border-memo-connection-300 hover:shadow-[0_18px_45px_rgba(42,36,31,0.08)]"
+                >
+                  <div className="flex items-center gap-2 text-memo-connection-600">
+                    <Mountain
+                      className="h-4 w-4"
+                      strokeWidth={1.8}
+                      aria-hidden="true"
+                    />
+            
+                    <span className="text-xs font-semibold uppercase tracking-[0.16em]">
+                      Foundations
+                    </span>
+                  </div>
+            
+                  <h3 className="mt-5 font-heading text-2xl tracking-[-0.02em] text-slate-700">
+                    Continue the Four Reminders
+                  </h3>
+            
+                  <p className="mt-3 text-sm leading-6 text-memo-neutral-700">
+                    Strengthen the grounding that supports deeper reflection and everyday
+                    practice.
+                  </p>
+            
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600">
+                    Continue
+            
+                    <ArrowRight
+                      className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                      strokeWidth={1.8}
+                      aria-hidden="true"
+                    />
+                  </span>
+                </Link>
+            
+                <Link
+                  href="/library"
+                  className="group flex flex-col rounded-[24px] border border-memo-divider bg-memo-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:border-memo-connection-300 hover:shadow-[0_18px_45px_rgba(42,36,31,0.08)]"
+                >
+                  <div className="flex items-center gap-2 text-memo-connection-600">
+                    <BookOpen
+                      className="h-4 w-4"
+                      strokeWidth={1.8}
+                      aria-hidden="true"
+                    />
+            
+                    <span className="text-xs font-semibold uppercase tracking-[0.16em]">
+                      Library
+                    </span>
+                  </div>
+            
+                  <h3 className="mt-5 font-heading text-2xl tracking-[-0.02em] text-slate-700">
+                    Explore a teaching
+                  </h3>
+            
+                  <p className="mt-3 text-sm leading-6 text-memo-neutral-700">
+                    Browse practices, teachings, and contemplations connected to ordinary
+                    life.
+                  </p>
+            
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600">
+                    Browse Library
+            
+                    <ArrowRight
+                      className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                      strokeWidth={1.8}
+                      aria-hidden="true"
+                    />
+                  </span>
+                </Link>
+            
+                <Link
+                  href="/journey"
+                  className="group flex flex-col rounded-[24px] border border-memo-divider bg-memo-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:border-memo-connection-300 hover:shadow-[0_18px_45px_rgba(42,36,31,0.08)]"
+                >
+                  <div className="flex items-center gap-2 text-memo-connection-600">
+                    <Compass
+                      className="h-4 w-4"
+                      strokeWidth={1.8}
+                      aria-hidden="true"
+                    />
+            
+                    <span className="text-xs font-semibold uppercase tracking-[0.16em]">
+                      Journey
+                    </span>
+                  </div>
+            
+                  <h3 className="mt-5 font-heading text-2xl tracking-[-0.02em] text-slate-700">
+                    Review what is emerging
+                  </h3>
+            
+                  <p className="mt-3 text-sm leading-6 text-memo-neutral-700">
+                    Revisit the themes, patterns, and shifts taking shape across your
+                    reflections.
+                  </p>
+            
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600">
+                    View Journey
+            
+                    <ArrowRight
+                      className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                      strokeWidth={1.8}
+                      aria-hidden="true"
+                    />
+                  </span>
+                </Link>
+              </div>
+            </section>
           </div>
         </main>
       </div>
