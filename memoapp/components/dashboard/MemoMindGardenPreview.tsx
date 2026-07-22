@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from 'next/image
 
 type PreferredPath = "memo" | "foundations";
 
@@ -74,16 +75,17 @@ export default function MemoMindLandingPage() {
           {/* Right: Video illustration */}
           {/* Right: Square image illustration to replace the video */}
           <div className="relative flex items-center justify-center">
-            {/* Container now forces a 1:1 square aspect ratio */}
+            {/* 1:1 Square container */}
             <div className="relative aspect-square w-full max-w-md overflow-hidden rounded-2xl bg-memo-surface shadow-inner">
-              <img
-                src="/illustrations/memo-logo-sculpture.jpeg" // Path to your uploaded image file
-                alt="Memo: Contextual Lojong Translation Engine emblem"
-                loading="eager" // Important for hero image optimization
-                className="h-full w-full object-cover" // object-cover ensures the square emblem scales without distortion
+              <Image
+                src="/chat/memo-bot.jpeg" // Direct path relative to the public/ folder
+                alt="Memo emblem"
+                [cite_start]fill // Fills the aspect-square container automatically [cite: 219, 220]
+                [cite_start]priority // Loads immediately for hero performance [cite: 221]
+                [cite_start]className="object-cover" // Crops cleanly without distortion [cite: 214]
               />
               
-              {/* Minimalist ambient gradient overlay matching image tone */}
+              {/* Ambient overlay matching dark mode design */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
             </div>
           </div>
