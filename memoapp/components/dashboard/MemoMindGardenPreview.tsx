@@ -72,26 +72,19 @@ export default function MemoMindLandingPage() {
           </div>
 
           {/* Right: Video illustration */}
+          {/* Right: Square image illustration to replace the video */}
           <div className="relative flex items-center justify-center">
-            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-memo-surface">
-              <video
-                autoPlay
-                muted
-                playsInline
-                preload="auto"
-                className="h-full w-full object-cover"
-              >
-                <source
-                  src="/animations/hero-animated-2.mp4"
-                  type="video/mp4"
-                />
-                Your browser does not support the video tag.
-              </video>
-
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 rounded-2xl border border-black/5 shadow-[inset_0_0_10px_rgba(38,31,26,0.12),inset_0_2px_4px_rgba(38,31,26,0.08),inset_0_-1px_2px_rgba(255,255,255,0.28)]"
+            {/* Container now forces a 1:1 square aspect ratio */}
+            <div className="relative aspect-square w-full max-w-md overflow-hidden rounded-2xl bg-memo-surface shadow-inner">
+              <img
+                src="/illustrations/memo-logo-sculpture.jpeg" // Path to your uploaded image file
+                alt="Memo: Contextual Lojong Translation Engine emblem"
+                loading="eager" // Important for hero image optimization
+                className="h-full w-full object-cover" // object-cover ensures the square emblem scales without distortion
               />
+              
+              {/* Minimalist ambient gradient overlay matching image tone */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
             </div>
           </div>
         </div>
