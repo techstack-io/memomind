@@ -27,7 +27,7 @@ export default function MemoMindLandingPage() {
           {/* Left: Hero text */}
           <div className="relative z-10 text-left">
             <p className="text-xs uppercase tracking-[0.34em] text-memo-neutral-700/80 sm:text-sm">
-              Welcome to the Chat Dashboard
+              Inspired by Lojong Mindtraining
             </p>
 
             <h1 className="mt-6 font-heading text-6xl font-normal leading-[0.98] tracking-[-0.045em] sm:text-7xl lg:text-[68px]">
