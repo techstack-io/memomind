@@ -55,7 +55,7 @@ export default function AppSidebar() {
               aria-current={isActive ? "page" : undefined}
               className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
                 isActive
-                  ? "bg-memo-connection-100 font-semibold text-memo-connection-700"
+                  ? "bg[#FAC5BC] font-semibold text-memo-connection-700"
                   : "text-memo-neutral-700 hover:bg-memo-neutral-100 hover:text-memo-text"
               }`}
             >
