@@ -62,7 +62,7 @@ export function ReflectionSidebar() {
       <div className="p-4">
         <Link
           href="/conversation"
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-memo-connection-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-memo-connection-700"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#FAC5BC] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#F7B3A7]"
         >
           <Plus className="h-4 w-4" aria-hidden="true" />
           New Reflection
