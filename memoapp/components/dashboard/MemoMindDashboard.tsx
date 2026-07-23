@@ -24,8 +24,8 @@ export default function MemoMindDashboard({
                   Good morning, {userName}
                 </p>
 
-                <h1 className="mt-4 max-w-2xl font-heading text-4xl leading-[1.05] tracking-[-0.035em] text-slate-700 sm:text-5xl">
-                  Bring whatever is present.
+                <h1 className="mt-4 max-w-2xl font-heading text-4xl leading-[1.05] tracking-[-0.035em] text-slate-700 sm:text-4xl">
+                  ...bring the present moment.
                 </h1>
 
                 <p className="mt-4 max-w-xl text-base leading-relaxed text-memo-neutral-700">

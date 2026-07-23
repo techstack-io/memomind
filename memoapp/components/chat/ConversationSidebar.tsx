@@ -75,7 +75,7 @@ export function ConversationSidebar() {
                   : "hover:bg-memo-neutral-100",
               ].join(" ")}
             >
-              <p className="mb-1 font-semibold text-memo-text">
+              <p className="mb-1 text-memo-text">
                 {conversation.title}
               </p>
 
