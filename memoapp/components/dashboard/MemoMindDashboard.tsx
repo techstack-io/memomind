@@ -17,7 +17,7 @@ export default function MemoMindDashboard({
 
         <main className="min-w-0 flex-1 py-4 md:py-8">
           <div className="mx-auto max-w-6xl">
-            <section className="grid gap-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-start">
+           <section className="grid gap-8 lg:grid-cols-[minmax(0,1.35fr)_1px_minmax(280px,0.55fr)] lg:items-start">
               {/* Main reflection column */}
               <div>
                 <p className="text-sm uppercase tracking-[0.22em] text-memo-connection-600">
@@ -82,13 +82,19 @@ export default function MemoMindDashboard({
 
                     <Link
                       href="/preliminaries/four-reminders"
-                      className="inline-flex min-h-11 items-center justify-center rounded-xl border border-memo-divider bg-memo-bg px-6 text-sm font-semibold text-memo-text transition-all duration-300 hover:-translate-y-0.5 hover:border-memo-connection-300 hover:bg-memo-surface"
+                      className="group mt-8 w-full max-w-[340px] justify-self-center overflow-hidden rounded-[28px] border border-memo-divider bg-memo-surface transition-all duration-300 hover:-translate-y-1 hover:border-memo-connection-300 hover:shadow-[0_18px_50px_rgba(42,36,31,0.08)] lg:justify-self-end"
                     >
                       Begin Foundations
                     </Link>
                   </div>
                 </div>
               </div>
+
+             {/* Vertical divider */}
+              <div
+                aria-hidden="true"
+                className="hidden h-3/4 min-h-[520px] self-start bg-memo-divider/30 lg:block"
+              />
 
               {/* Continue-reading column */}
               <Link
