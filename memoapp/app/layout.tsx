@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { HexclaveProvider, HexclaveTheme } from "@hexclave/next";
 import { hexclaveServerApp } from "@/hexclave/server";
 import { AppNavbar } from "@/components/layout/AppNavbar";
@@ -13,11 +14,22 @@ export default function RootLayout({
       <body>
         <HexclaveProvider app={hexclaveServerApp}>
           <HexclaveTheme>
-            <AppNavbar />
+            <Suspense fallback={<NavbarLoading />}>
+              <AppNavbar />
+            </Suspense>
+
             {children}
           </HexclaveTheme>
         </HexclaveProvider>
       </body>
     </html>
+  );
+}
+
+function NavbarLoading() {
+  return (
+    <header className="w-full px-6 py-4 sm:px-8 lg:px-10">
+      <div className="mx-auto h-14 max-w-7xl" />
+    </header>
   );
 }

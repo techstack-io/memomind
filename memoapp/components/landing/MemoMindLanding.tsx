@@ -39,7 +39,7 @@ export default function MemoMindLandingPage() {
   
     if (!user) {
       localStorage.setItem("memomind:pendingPath", path);
-      await app.redirectToSignUp();
+      await app.redirectToSignIn();
       return;
     }
   
