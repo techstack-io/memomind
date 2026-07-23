@@ -1,21 +1,48 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useHexclaveApp, useUser } from "@hexclave/next";
 
 type PreferredPath = "memo" | "foundations";
 
 export default function MemoMindLandingPage() {
   const router = useRouter();
+
+  const app = useHexclaveApp();
+  const user = useUser();
+
+  useEffect(() => {
+    if (!user) return;
+  
+    const pendingPath = localStorage.getItem("memomind:pendingPath");
+  
+    if (pendingPath === "memo") {
+      localStorage.removeItem("memomind:pendingPath");
+      router.replace("/dashboard");
+    }
+  
+    if (pendingPath === "foundations") {
+      localStorage.removeItem("memomind:pendingPath");
+      router.replace("/preliminaries");
+    }
+  }, [user, router]);
+
   const [rememberChoice, setRememberChoice] = useState(false);
 
-  function choosePath(path: PreferredPath) {
+  async function choosePath(path: PreferredPath) {
     if (rememberChoice) {
       localStorage.setItem("memomind:preferredPath", path);
     } else {
       localStorage.removeItem("memomind:preferredPath");
     }
-
+  
+    if (!user) {
+      localStorage.setItem("memomind:pendingPath", path);
+      await app.redirectToSignUp();
+      return;
+    }
+  
     router.push(path === "memo" ? "/dashboard" : "/preliminaries");
   }
 
