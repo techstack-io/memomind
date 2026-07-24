@@ -42,7 +42,7 @@ export function ConversationSidebar() {
   return (
     <aside className="hidden w-[260px] shrink-0 border-r border-memo-divider bg-memo-surface lg:flex lg:flex-col">
       <div className="border-b border-memo-divider p-5">
-        <button className="flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-memo-connection-500 text-sm font-semibold text-memo-connection-700 transition-colors hover:bg-memo-connection-100">
+        <button className="flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-memo-connection-500 text-sm font-semibold text-memo-connection-700 transition-colors hover:bg-memo-connection-100 bg-black">
           <Plus className="h-4 w-4" />
           New reflection
         </button>

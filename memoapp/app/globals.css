@@ -1,5 +1,9 @@
-@import "tailwindcss";
-@config "../tailwind.config.ts";
+@import "tailwindcss"; 
+@config "../tailwind.config.ts"; 
+
+/* 📄 FORCE TAILWIND V4 TO SCAN YOUR COMPONENT DIRECTORIES */
+@source "../app/**/*.{ts,tsx}";
+@source "../components/**/*.{ts,tsx}";
 
 @theme inline {
   /* Typography */
@@ -7,28 +11,65 @@
   --font-heading: var(--font-manrope);
 
   /* Core surfaces */
-  --color-memo-bg: #fbf7f2;
-  --color-memo-surface: #fffaf4;
-  --color-memo-text: #2a241f;
-  --color-memo-divider: #dfd2c5;
+  --color-memo-bg: #f6f4ef;
+  --color-memo-surface: #fcfbf8;
+  --color-memo-surface-raised: #ffffff;
+  --color-memo-text: #252923;
+  --color-memo-divider: #d8d5cc;
 
   /* Neutral palette */
-  --color-memo-neutral-100: #f6eee7;
-  --color-memo-neutral-300: #e8dcd1;
-  --color-memo-neutral-500: #9d8f84;
-  --color-memo-neutral-700: #6f6259;
-  --color-memo-neutral-900: #2a241f;
+  --color-memo-neutral-50: #fbfaf7;
+  --color-memo-neutral-100: #efede7;
+  --color-memo-neutral-200: #e5e2da;
+  --color-memo-neutral-300: #d8d5cc;
+  --color-memo-neutral-500: #8a8982;
+  --color-memo-neutral-700: #5f625c;
+  --color-memo-neutral-900: #252923;
 
-  /* Copper accents */
-  --color-memo-connection-100: #f8e8df;
-  --color-memo-connection-300: #e9bca8;
-  --color-memo-connection-500: #d37b5b;
-  --color-memo-connection-600: #c76849;
-  --color-memo-connection-700: #a95138;
+  /* Primary sage */
+  --color-memo-primary-50: #f2f5f1;
+  --color-memo-primary-100: #e3eadf;
+  --color-memo-primary-200: #cbd7c8;
+  --color-memo-primary-300: #aabda8;
+  --color-memo-primary-500: #647a67;
+  --color-memo-primary-600: #586d5c;
+  --color-memo-primary-700: #4f6453;
+  --color-memo-primary-800: #405145;
+  --color-memo-primary-900: #303d34;
+
+  /* Secondary plum */
+  --color-memo-secondary-50: #f8f4f7;
+  --color-memo-secondary-100: #f0e7ed;
+  --color-memo-secondary-200: #e1d2dc;
+  --color-memo-secondary-300: #ccb5c3;
+  --color-memo-secondary-500: #8a687c;
+  --color-memo-secondary-600: #7b5d70;
+  --color-memo-secondary-700: #715465;
+  --color-memo-secondary-800: #5d4554;
+
+  /* Semantic colors */
+  --color-memo-success-100: #e7efe8;
+  --color-memo-success-700: #4f6f56;
+
+  --color-memo-warning-100: #f6eddc;
+  --color-memo-warning-700: #8d6b34;
+
+  --color-memo-danger-100: #f7e7e5;
+  --color-memo-danger-700: #9a514f;
+
+  --color-memo-info-100: #e6edf2;
+  --color-memo-info-700: #506f83;
+
+  /* Temporary compatibility aliases */
+  --color-memo-connection-100: #e3eadf;
+  --color-memo-connection-300: #aabda8;
+  --color-memo-connection-500: #647a67;
+  --color-memo-connection-600: #586d5c;
+  --color-memo-connection-700: #4f6453;
 }
 
-:root {
-  color-scheme: light;
+:root { 
+  color-scheme: light; 
 }
 
 * {
