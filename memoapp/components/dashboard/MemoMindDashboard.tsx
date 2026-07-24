@@ -125,7 +125,7 @@ export default function MemoMindDashboard({
                   </p>
 
                   <h1 className="mt-4 max-w-2xl font-heading text-4xl leading-[1.05] tracking-[-0.035em] text-slate-700">
-                    ...bring the present moment.
+                    Have a look around.
                   </h1>
 
                   <p className="mt-4 max-w-xl text-base leading-relaxed text-memo-neutral-700">
