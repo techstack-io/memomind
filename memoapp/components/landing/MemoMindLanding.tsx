@@ -72,14 +72,14 @@ export default function MemoMindLandingPage() {
 
   useEffect(() => {
     if (!user) return;
-
+  
     const pendingPath = localStorage.getItem("memomind:pendingPath");
-
+  
     if (pendingPath === "memo") {
       localStorage.removeItem("memomind:pendingPath");
-      router.replace("/dashboard");
+      router.replace("/conversation");
     }
-
+  
     if (pendingPath === "foundations") {
       localStorage.removeItem("memomind:pendingPath");
       router.replace("/preliminaries");
@@ -99,7 +99,7 @@ export default function MemoMindLandingPage() {
       return;
     }
 
-    router.push(path === "memo" ? "/dashboard" : "/preliminaries");
+    router.push(path === "memo" ? "/conversation" : "/preliminaries");
   }
 
   return (

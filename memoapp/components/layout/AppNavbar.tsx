@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useHexclaveApp, useUser } from "@hexclave/next";
+import Link from "next/link";
 
 export function AppNavbar() {
   const [profileOpen, setProfileOpen] = useState(false);
@@ -25,7 +26,7 @@ export function AppNavbar() {
   return (
     <header className="w-full px-6 py-4 sm:px-8 lg:px-10">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-        <a href="/dashboard" className="mr-auto flex items-center gap-2">
+        <Link href="/" className="mr-auto flex items-center gap-2">
           <Image
             src="/memomind-logo@72x.svg"
             alt="MemoMind"
@@ -35,17 +36,16 @@ export function AppNavbar() {
             priority
           />
 
-          <div className="flex min-w-0 flex-shrink-0 items-center gap-2">
-            <span className="font-heading text-xl font-bold text-memo-neutral-900">
-              MemoMind
-            </span>
-
-            <span className="text-[10px] uppercase tracking-widest text-memo-neutral-400">
-              Beta
-            </span>
-          </div>
-        </a>
-
+        <div className="flex min-w-0 flex-shrink-0 items-center gap-2">
+          <span className="font-heading text-xl font-bold text-memo-neutral-900">
+            MemoMind
+          </span>
+          <span className="text-[10px] uppercase tracking-widest text-memo-neutral-400">
+            Beta
+          </span>
+        </div>
+        </Link>
+          
         <nav className="hidden items-center gap-10 text-sm text-memo-neutral-700/70 md:flex">
           <a
             href="/dashboard"
