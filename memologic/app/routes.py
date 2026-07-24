@@ -1,5 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
+from app.auth import get_current_user_id
 from app.schemas.conversation import (
     ConversationRequest,
     ConversationResponse,
@@ -26,5 +27,6 @@ async def health() -> dict[str, str]:
 )
 async def conversation(
     request: ConversationRequest,
+    user_id: str = Depends(get_current_user_id),
 ) -> ConversationResponse:
-    return create_reply(request)
+    return await create_reply(request)

@@ -1,3 +1,5 @@
+import logging
+
 from langchain_openai import ChatOpenAI
 
 from app.schemas.conversation import (
@@ -8,6 +10,7 @@ from app.services.safety import SAFETY_RESPONSE, check_safety
 from app.settings import get_settings
 
 settings = get_settings()
+logger = logging.getLogger(__name__)
 
 model = ChatOpenAI(
     model=settings.openai_model,
@@ -33,7 +36,7 @@ async def create_reply(
     flagged, matched = await check_safety(request.message)
 
     if flagged:
-        # TODO: record `matched` in structured safety telemetry.
+        logger.warning("Safety override triggered.", extra={"matched": matched})
         return ConversationResponse(reply=SAFETY_RESPONSE)
 
     try:
@@ -44,7 +47,9 @@ async def create_reply(
             ]
         )
     except Exception:
-        # Log the exception internally without exposing provider details.
+        # Log the exception internally without exposing provider details
+        # to the user.
+        logger.exception("conversation_model_call_failed")
         return ConversationResponse(
             reply=(
                 "I'm having trouble responding right now. "
