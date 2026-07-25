@@ -24,28 +24,26 @@ MemoMind's AI does two structurally different jobs. They're easy to conflate int
 5. **Generation** — the selected prompt path is sent to the model to produce the actual reply.
 6. **Memory evaluation runs independently, after the reply logic is decided** — not blocking the response. If the user has memory enabled, the conversation is queued for separate evaluation, regardless of which of the three paths was taken above.
 
-### Retrieval architecture: vector embeddings, not a single LLM judgment call
+### Retrieval architecture: hybrid — vector search narrows, one LLM call judges
 
-**Original plan (superseded):** hand the model a compact Tier 1 index (`id`, `title`, `retrieval_signals`, `core_principles` per entry, ~60–70 tokens each) in every prompt and let it reason directly over the whole list to pick the best match — reasonable given Lojong's corpus size (~59 slogans) in isolation, keeping the system to roughly two LLM calls per turn (a judgment call, then a generation call).
+**Original plan (superseded):** hand the model a compact Tier 1 index (`id`, `title`, `retrieval_signals`, `core_principles` per entry, ~60–70 tokens each) in every prompt and let it reason directly over the whole list to pick the best match — reasonable given Lojong's corpus size (~59 slogans) in isolation, keeping the system to roughly two LLM calls per turn.
 
-**Why this was revisited:** the actual corpus is a genuinely open-ended, multi-tradition knowledge base (Lojong + Four Brahma-viharas + Eightfold Path + mindfulness + impermanence + dependent origination), not a bounded ~59-entry set. Waiting to reactively hit a corpus-size tripwire (originally proposed at ~150–200 entries) before switching architectures would mean re-architecting retrieval *after* the router, the Tier 1 shape, and dependent code are already built around the smaller-scale assumption. Better to build for the intended scale now, while the corpus is still small.
+**Why this was revisited (round 1 — pure vector search):** the actual corpus is a genuinely open-ended, multi-tradition knowledge base (Lojong + Four Brahma-viharas + Eightfold Path + mindfulness + impermanence + dependent origination), not a bounded ~59-entry set. Waiting to reactively hit a corpus-size tripwire (originally proposed at ~150–200 entries) before switching architectures would mean re-architecting retrieval *after* dependent code is already built around the smaller-scale assumption. There was also a concrete cost driver: an LLM-reasoning judgment call over a growing Tier 1 index adds a third, expensive API call per message on top of safety moderation and reply generation.
 
-There was also a concrete cost driver: an LLM-reasoning judgment call over a growing Tier 1 index adds a third API call per message (on top of safety moderation and reply generation), and it's the most expensive and slowest of the three as the index grows.
+**Why this was revisited again (round 2 — hybrid):** pure vector top-1 matching has a real failure mode. High similarity between a user's words and a slogan's tags does not mean that slogan is actually the right fit — similarity is lexical/semantic closeness, not editorial correctness, and nothing in a similarity score distinguishes "genuinely the best match" from "just shares vocabulary."
 
-**Decision:** move to vector-embedding-based retrieval.
-- Each Tier 1 entry (`retrieval_signals` + `core_principles` text) is embedded once, at authoring time, and stored (pgvector on the existing Railway Postgres).
-- Per message, only the user's message is embedded — one cheap embedding API call, not a chat completion.
-- Similarity search runs as a DB query, not an LLM call, to find the top 1–2 candidates.
-- Only then is the full Tier 2 payload fetched for the winner(s) and fed into the generation call.
+**Decision: hybrid pipeline.**
+1. Embed the user's message (one cheap embedding call).
+2. Vector similarity search against all stored slogan embeddings — a DB query, not an LLM call — returns the top 3–5 candidate `id`s and scores.
+3. Fetch those candidates' Tier 1 entries (title, `retrieval_signals`, `core_principles`) and hand them, with the user's message, to one LLM call that reasons over just this shortlist and picks the actual best fit — the same kind of judgment the original all-corpus design called for, now scoped to a handful of candidates so it stays cheap.
+4. Fetch the winner's Tier 2 content.
+5. Generation call.
 
-**Per-message API call comparison (worst case):**
-- No routing at all: 2 calls — Moderation API + reply generation.
-- LLM-reasoning judgment call over Tier 1: 3 calls, and the 3rd is the most expensive/slowest.
-- Vector-embedding routing (chosen): 3 calls, but the 3rd is a cheap embedding call, not a chat completion.
+This makes it **three API calls total for retrieval + generation** (embedding, reasoning-over-shortlist, generation) plus the safety-moderation call when triggered — up from two calls in the original pure-vector version, but nowhere near the cost of reasoning over the full corpus, since the reasoning step only ever sees 3–5 entries.
 
-This replaces only the candidate-selection mechanism. The rest of the pipeline — confidence routing, Tier 2 fetch for the winner, the generation call, safety-as-hard-override — is unchanged.
+Each Tier 1 entry (`retrieval_signals` + `core_principles` text) is embedded once at authoring time and stored (pgvector on the existing Railway Postgres). The rest of the pipeline — confidence routing, Tier 2 fetch, safety-as-hard-override — is unchanged.
 
-**Open follow-up:** a shared, enforced vocabulary/taxonomy for `emotions`/`patterns`/`contexts` matters here — embedding quality depends on consistent language in `retrieval_signals`, arguably even more than an LLM-reasoning approach would have needed, since embeddings are more sensitive to exact wording than a model reasoning about meaning.
+**Open follow-up:** a shared, enforced vocabulary/taxonomy for `emotions`/`patterns`/`contexts` matters here — embedding quality depends on consistent language in `retrieval_signals`, arguably even more than pure LLM-reasoning would have needed, since embeddings are more sensitive to exact wording than a model reasoning about meaning.
 
 ### Retrieval signal crossover is expected, not a bug
 
@@ -65,7 +63,7 @@ This is a different job with different constraints:
 
 **Canonical example:** a birthday-morning log entry — buying a cake and making a birthday breakfast for one child, then buying a brownie for the other child so he wouldn't feel left out — doesn't get one tag. It's identified as (at least) two separate moments: the birthday preparation mapping to **Metta** (loving-kindness) and **Mudita** (sympathetic joy), and the brownie decision mapping separately to **Karuṇā** (compassion / preventing suffering before it occurs).
 
-**This pipeline is multi-tradition, not Lojong-only.** The Knowledge Base spans Lojong, the Four Brahma-viharas, and other frameworks, each in the same unified JSON schema under `memologic/knowledge/wisdom/<tradition>/`. Extraction needs to reason across all of them, not just Lojong.
+**This pipeline is multi-tradition, not Lojong-only.** The Knowledge Base spans Lojong, the Four Brahma-viharas, and other frameworks, each in the same unified schema under `memologic/knowledge/wisdom/<tradition>/`. Extraction needs to reason across all of them, not just Lojong.
 
 **Architecture:** same pattern as conversation retrieval — hand the model the day's breadcrumbs plus a compact cross-tradition index of concepts, let it reason directly and return structured, categorized moments. One call, structured output, no need for a separate multi-stage analysis chain unless a concrete pressure (corpus size, reuse, cost) shows up later.
 
@@ -119,7 +117,7 @@ This sits underneath, and is more granular than, the app-wide crisis detection l
 ## Open Design Questions / Limits Not Yet Locked In
 
 - **Confidence thresholds** (currently placeholder values) need real calibration once ranking scores exist from actual usage.
-- ~~**Corpus size tripwire** for reconsidering embeddings/vector search~~ — **Decided:** moved to vector-embedding-based retrieval proactively (see "Retrieval architecture" above).
-- **Shared vocabulary/taxonomy** for `retrieval_signals` (`emotions`/`patterns`/`contexts`) — not yet enforced anywhere; needed for reliable embedding-based matching as more slogans/traditions are authored.
+- ~~**Corpus size tripwire** for reconsidering embeddings/vector search~~ — **Decided:** moved to a hybrid vector-search-then-LLM-judgment pipeline (see "Retrieval architecture" above).
+- **Shared vocabulary/taxonomy** for `retrieval_signals` (`emotions`/`patterns`/`contexts`) — not yet enforced anywhere; needed for reliable embedding-based candidate narrowing as more slogans/traditions are authored.
 - **Reflection frequency per conversation** — whether to cap how often a reflection is offered in a single session, so MemoMind doesn't start to feel like a fortune-cookie dispenser.
 - **Depth/readiness gating** — whether Reflection Objects need a field beyond `difficulty: introductory` to represent how "deep" or overtly Buddhist a concept is, so retrieval can hold back subtler content (e.g., bodhicitta) until a user has sufficient history with the app.
