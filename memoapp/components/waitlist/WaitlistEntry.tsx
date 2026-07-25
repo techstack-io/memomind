@@ -2,12 +2,7 @@
 
 import { useState } from "react";
 import Script from "next/script";
-// TODO: point this at wherever your Navbar's logo mark actually lives.
-// I don't have your Navbar.tsx in context yet — once you paste it, I'll
-// swap this for the exact import (e.g. `import { BrandMark } from
-// "@/components/Navbar"` if it's exported from there, or a new shared
-// component if it's worth extracting).
-import MemoLogo from "@/components/icons/MemoLogo";
+import Image from "next/image";
 
 function LaunchListEmbed() {
   return (
@@ -34,7 +29,13 @@ export default function WaitlistEntry() {
     <main className="min-h-screen bg-memo-50 text-memo-900">
       <div className="mx-auto flex max-w-2xl flex-col items-center px-6 py-20 text-center">
         {/* Logo mark only — no nav links, this page is a dead end on purpose */}
-        <MemoLogo className="h-10 w-10 text-memo-700" />
+        <Image
+          src="/memomind-logo@72x.svg"
+          alt="MemoMind"
+          width={40}
+          height={40}
+          priority
+        />
 
         {/* Hero */}
         <h1 className="mt-10 font-[Cormorant_Garamond] text-4xl leading-tight text-memo-900 sm:text-5xl">
