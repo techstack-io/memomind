@@ -15,6 +15,9 @@ class Settings(BaseSettings):
     # Hexclave (auth)
     hexclave_project_id: str
 
+    # Database (Neon)
+    database_url: str
+
     # CORS
     cors_origins: str = "http://localhost:3000"
 
