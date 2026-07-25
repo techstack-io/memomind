@@ -27,6 +27,7 @@ SYSTEM_PROMPT = (
 
 async def create_reply(
     request: ConversationRequest,
+    user_id: str,
 ) -> ConversationResponse:
     # Safety is a hard override. If the message is flagged, no model,
     # retrieval, memory, or contemplative reasoning should run.
@@ -62,4 +63,7 @@ async def create_reply(
     if not isinstance(content, str):
         content = str(content)
 
+    # TODO: persist this turn (request.message, content) against user_id
+    # once ConversationTurn/UserMemory models exist, and load recent
+    # history into the message list above before calling the model.
     return ConversationResponse(reply=content)
