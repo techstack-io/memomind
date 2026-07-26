@@ -28,54 +28,36 @@ export default function WaitlistEntry() {
   return (
     <main className="min-h-screen bg-memo-50 text-memo-900">
       <div className="mx-auto flex max-w-2xl flex-col items-center px-6 py-20 text-center">
-        {/* Logo mark only — no nav links, this page is a dead end on purpose */}
-        <Image
-          src="/memomind-logo@72x.svg"
-          alt="MemoMind"
-          width={40}
-          height={40}
-          priority
-        />
+        <div className="flex min-w-0 items-center gap-2">
+          {/* Logo mark only — no nav links, this page is a dead end on purpose */}
+          <Image
+            src="/memomind-logo@72x.svg"
+            alt="MemoMind"
+            width={40}
+            height={40}
+            priority
+          />
+
+          <span className="truncate font-heading text-lg font-bold text-memo-neutral-900 sm:text-xl">
+            Memomind
+          </span>
+
+          <span className="inline-flex items-center rounded-full bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 inset-ring inset-ring-gray-500/10">
+        Coming Soon
+      </span>
+        </div>
 
         {/* Hero */}
-        <h1 className="mt-10 font-[Cormorant_Garamond] text-4xl leading-tight text-memo-900 sm:text-5xl">
-          A quiet place to notice your day.
+        <h1 className="mt-10 font-[Cormorant_Garamond] text-4xl leading-tight text-memo-900 sm:text-4xl">
+          Are you ready to train your mind?
         </h1>
         <p className="mt-5 max-w-md font-[Lora] text-lg text-memo-connection-700">
-          MemoMind is a small, reflective space — a few minutes in the
-          morning, a few notes through the day, a few minutes in the
-          evening. We're opening it to a small group first.
+        MemoMind is a reflective AI companion inspired by Lojong, the Tibetan Buddhist practice of training the mind through compassion, awareness, and everyday experience.
         </p>
+        <h2 className="mt-10 font-[Cormorant_Garamond] text-2xl leading-tight text-memo-900 sm:text-2xl">Join the waitlist and begin training your mind.</h2>
 
         {/* Three-beat explainer — quiet, text-led, not a step-flow.
             Order isn't the point here; the rhythm is. */}
-        <div className="mt-14 flex w-full max-w-md flex-col gap-6 text-left">
-          <div>
-            <p className="font-[Manrope] text-sm font-medium text-memo-700">
-              Morning
-            </p>
-            <p className="mt-1 font-[Lora] text-memo-connection-700">
-              A small moment of gratitude to start the day.
-            </p>
-          </div>
-          <div>
-            <p className="font-[Manrope] text-sm font-medium text-memo-700">
-              Through the day
-            </p>
-            <p className="mt-1 font-[Lora] text-memo-connection-700">
-              Jot things down as they happen — no pressure to make sense
-              of them yet.
-            </p>
-          </div>
-          <div>
-            <p className="font-[Manrope] text-sm font-medium text-memo-700">
-              Evening
-            </p>
-            <p className="mt-1 font-[Lora] text-memo-connection-700">
-              A short reflection, looking back over what the day held.
-            </p>
-          </div>
-        </div>
 
         {/* Signup */}
         <div className="mt-16 flex w-full flex-col items-center gap-4">

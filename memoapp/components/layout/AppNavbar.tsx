@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { useHexclaveApp, useUser } from "@hexclave/next";
 
 const navigationItems = [
@@ -21,11 +22,14 @@ const navigationItems = [
 ];
 
 export function AppNavbar() {
+  const pathname = usePathname();
   const [profileOpen, setProfileOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const app = useHexclaveApp();
   const user = useUser();
+
+  if (pathname === "/waitlist") return null;
 
   const userLabel =
     user?.displayName?.trim() ||
