@@ -293,7 +293,7 @@ export default function MemoMindLandingPage() {
             variants={sectionItem}
             className="text-[10px] uppercase tracking-[0.22em] text-memo-neutral-700/80 sm:text-xs sm:tracking-[0.28em]"
           >
-            How Ren works
+            How mettavia works
           </motion.p>
 
           <div className="mt-8 grid gap-0 sm:mt-10 md:grid-cols-3 md:gap-8 lg:gap-12">
@@ -306,7 +306,7 @@ export default function MemoMindLandingPage() {
               </p>
 
               <h2 className="mt-3 font-heading text-xl leading-tight sm:mt-4 sm:text-2xl">
-                Share what is present
+                Met with metta
               </h2>
 
               <p className="mt-3 text-[15px] leading-7 text-memo-neutral-700 sm:text-base">
@@ -342,13 +342,11 @@ export default function MemoMindLandingPage() {
               </p>
 
               <h2 className="mt-3 font-heading text-xl leading-tight sm:mt-4 sm:text-2xl">
-                Turn reflection into practice
+                Grounded in metta
               </h2>
 
               <p className="mt-3 text-[15px] leading-7 text-memo-neutral-700 sm:text-base">
-                A relevant Lojong teaching or contemplative
-                practice is introduced when it is genuinely
-                useful.
+              grounded in metta — the practice of loving-kindness
               </p>
             </motion.article>
           </div>
