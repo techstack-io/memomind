@@ -32,14 +32,14 @@ export default function WaitlistEntry() {
           {/* Logo mark only — no nav links, this page is a dead end on purpose */}
           <Image
             src="/memomind-logo@72x.svg"
-            alt="MemoMind"
+            alt="mettavia"
             width={40}
             height={40}
             priority
           />
 
           <span className="truncate font-heading text-lg font-bold text-memo-neutral-900 sm:text-xl">
-            Memomind
+            mettavia
           </span>
 
           <span className="inline-flex items-center rounded-full bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 inset-ring inset-ring-gray-500/10">
@@ -52,7 +52,7 @@ export default function WaitlistEntry() {
           Are you ready to train your mind?
         </h1>
         <p className="mt-5 max-w-md font-[Lora] text-lg text-memo-connection-700">
-        MemoMind is a reflective AI companion inspired by Lojong, the Tibetan Buddhist practice of training the mind through compassion, awareness, and everyday experience.
+        mettavia is a reflective AI companion inspired by Lojong, the Tibetan Buddhist practice of training the mind through compassion, awareness, and everyday experience.
         </p>
         <h2 className="mt-10 font-[Cormorant_Garamond] text-2xl leading-tight text-memo-900 sm:text-2xl">Join the waitlist and begin training your mind.</h2>
 
