@@ -123,26 +123,26 @@ export default function MemoMindLandingPage() {
           >
             <motion.p
               variants={heroItem}
-              className="text-[10px] uppercase tracking-[0.22em] text-memo-neutral-700/80 sm:text-xs sm:tracking-[0.3em] lg:text-sm lg:tracking-[0.34em]"
+              className="text-[10px] uppercase tracking-[0.22em] text-memo-neutral-700/80 sm:text-xs sm:tracking-[0.3em] lg:text-xs lg:tracking-[0.34em]"
             >
               Inspired by Lojong Mind Training
             </motion.p>
 
             <motion.h1
               variants={heroItem}
-              className="mt-4 font-heading text-[clamp(3rem,12vw,62px)] font-normal leading-[0.96] tracking-[-0.045em] sm:mt-6"
+              className="mt-4 font-heading text-[clamp(2rem,12vw,48px)] font-normal leading-[0.96] tracking-[-0.045em] sm:mt-6"
             >
-              welcome my name is {" "}
+              Hello, my name is {" "}
               <span className="italic text-memo-connection-600">
-                Ren
+                Ana
               </span>
             </motion.h1>
 
             <motion.p
               variants={heroItem}
-              className="mt-3 max-w-xl text-lg leading-7 text-memo-neutral-700 sm:mt-4 sm:text-xl sm:leading-9"
+              className="mt-3 max-w-xl text-lg leading-7 text-memo-neutral-700 sm:mt-4 sm:text-md sm:leading-9"
             >
-              your conversational guide inside Mettavia
+             I'll be your conversational guide inside Mettavia
             </motion.p>
 
             <motion.p
@@ -181,7 +181,7 @@ export default function MemoMindLandingPage() {
                 }}
                 className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-memo-neutral-900 px-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-black sm:w-auto sm:px-7"
               >
-                Talk with Ren
+                Talk with Ana
               </motion.button>
 
               <motion.button
