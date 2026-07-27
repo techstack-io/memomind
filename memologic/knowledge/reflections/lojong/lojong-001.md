@@ -1,0 +1,38 @@
+---
+id: lojong-001
+title: "Beginning Where You Are"
+difficulty: introductory
+retrieval_signals:
+  emotions:
+    - overwhelmed
+    - discouraged
+    - uncertain
+    - helpless
+  patterns:
+    - catastrophizing
+    - external_blame
+    - self_pity
+    - feeling_stuck
+  contexts:
+    - work
+    - relationships
+    - health
+    - major_life_transition
+core_principles:
+  - acceptance
+  - personal_agency
+  - impermanence
+  - honest_self_reflection
+---
+
+## Memo Interpretation
+
+_TODO: not yet authored_
+
+## Conversation Guidance
+
+_TODO: not yet authored_
+
+## Safety
+
+_TODO: not yet authored_

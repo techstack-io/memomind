@@ -69,7 +69,7 @@ export function AppNavbar() {
         >
           <Image
             src="/memomind-logo@72x.svg"
-            alt="MemoMind"
+            alt="mettavia"
             width={56}
             height={56}
             className="h-11 w-11 shrink-0 sm:h-14 sm:w-14"
@@ -78,7 +78,7 @@ export function AppNavbar() {
 
           <div className="flex min-w-0 items-center gap-2">
             <span className="truncate font-heading text-lg font-bold text-memo-neutral-900 sm:text-xl">
-              MemoMind
+              Mettavia
             </span>
 
             <span className="hidden text-[10px] uppercase tracking-widest text-memo-neutral-400 xs:inline">
