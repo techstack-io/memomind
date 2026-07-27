@@ -132,9 +132,9 @@ export default function MemoMindLandingPage() {
               variants={heroItem}
               className="mt-4 font-heading text-[clamp(3rem,12vw,62px)] font-normal leading-[0.96] tracking-[-0.045em] sm:mt-6"
             >
-              welcome to{" "}
+              welcome my name is {" "}
               <span className="italic text-memo-connection-600">
-                memo
+                Ren
               </span>
             </motion.h1>
 
@@ -142,7 +142,7 @@ export default function MemoMindLandingPage() {
               variants={heroItem}
               className="mt-3 max-w-xl text-lg leading-7 text-memo-neutral-700 sm:mt-4 sm:text-xl sm:leading-9"
             >
-              your conversational guide inside Memomind
+              your conversational guide inside Mettavia
             </motion.p>
 
             <motion.p
@@ -181,7 +181,7 @@ export default function MemoMindLandingPage() {
                 }}
                 className="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-memo-neutral-900 px-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-black sm:w-auto sm:px-7"
               >
-                Talk with Memo
+                Talk with Ren
               </motion.button>
 
               <motion.button
@@ -293,7 +293,7 @@ export default function MemoMindLandingPage() {
             variants={sectionItem}
             className="text-[10px] uppercase tracking-[0.22em] text-memo-neutral-700/80 sm:text-xs sm:tracking-[0.28em]"
           >
-            How Memo works
+            How Ren works
           </motion.p>
 
           <div className="mt-8 grid gap-0 sm:mt-10 md:grid-cols-3 md:gap-8 lg:gap-12">
