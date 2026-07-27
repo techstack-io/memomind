@@ -38,7 +38,7 @@ export default function WaitlistEntry() {
             priority
           />
 
-          <span className="truncate font-heading text-lg font-bold text-memo-neutral-900 sm:text-xl">
+          <span className="truncate font-heading text-lg font-bold text-memo-neutral-900 sm:text-3xl">
             mettavia
           </span>
 
