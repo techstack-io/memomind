@@ -11,6 +11,7 @@ from app.knowledge_schema.taxonomy import (
     ContextTag,
     CorePrincipleTag,
     EmotionTag,
+    MindTrainingPoint,
     PatternTag,
 )
 
@@ -27,3 +28,4 @@ class ReflectionFrontmatter(BaseModel):
     difficulty: str
     retrieval_signals: RetrievalSignals
     core_principles: list[CorePrincipleTag]
+    point: MindTrainingPoint | None = None
