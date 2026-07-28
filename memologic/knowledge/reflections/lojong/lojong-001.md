@@ -31,6 +31,15 @@ Before anything else in this practice, there's a first move that has to happen �
 
 Think of it like putting on a pair of polarized sunglasses before walking out into blinding light. The sunglasses don't change the sun, the road, or the traffic. What they change is your ability to see clearly through the glare. Without them, the glare is all you can perceive — reflex, reaction, squinting against whatever's too bright to look at directly. With them on, the same world is suddenly navigable. Nothing out there changed. What changed is what was standing between you and seeing it plainly.
 
+The glasses are easy to put on for a moment and just as easy to take back off the second things get uncomfortable — the second acceptance feels too hard, or responsibility feels like too much to carry. What keeps them on isn't willpower. It's remembering what's actually true. Traditionally, four things are held in mind. These are what are called The Four Reminders:
+
+The rarity and preciousness of human life.
+The certainty of change and, eventually, death — impermanence.
+The weight of our own actions, and how they shape what comes next — karma.
+The quiet suffering of living on autopilot, reacting instead of seeing.
+
+Take these seriously enough, and long enough, and they change how you see everything else. They're worth sitting with more fully in the library — for now, know that together, they're what stops you from setting the glasses back down.
+
 The preliminaries are that first shift — before Tonglen, before working with difficult people, before any of the slogans that come later, you have to be willing to take off the glare and look. And the glare, for most of us, is made of two things: old pain we haven't actually looked at, and the reflex to make sense of it through blame or self-pity instead of ownership.
 
 This starts with acceptance — not resignation, and not agreement that what happened was fine. Acceptance here means being willing to see your life exactly as it is, without the distortion of "this shouldn't have happened" or "if only things had gone differently." Whatever you're carrying — the divorce, the loss, the years you spent somewhere you didn't want to be — happened. Accepting that isn't giving up. It's putting the glasses on.
