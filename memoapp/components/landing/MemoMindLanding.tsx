@@ -130,7 +130,7 @@ export default function MemoMindLandingPage() {
 
             <motion.h1
               variants={heroItem}
-              className="mt-4 font-heading text-[clamp(2rem,12vw,48px)] font-normal leading-[0.96] tracking-[-0.045em] sm:mt-6"
+              className="mt-4 font-heading text-[clamp(2rem,10vw,48px)] font-normal leading-[0.96] tracking-[-0.045em] sm:mt-6"
             >
               Hello, my name is {" "}
               <span className="italic text-memo-connection-600">
@@ -140,7 +140,7 @@ export default function MemoMindLandingPage() {
 
             <motion.p
               variants={heroItem}
-              className="mt-3 max-w-xl text-lg leading-7 text-memo-neutral-700 sm:mt-4 sm:text-md sm:leading-9"
+              className="mt-3 max-w-xl text-md leading-7 text-memo-neutral-700 sm:mt-4 sm:text-md sm:leading-9"
             >
              I'll be your conversational guide inside Mettavia
             </motion.p>

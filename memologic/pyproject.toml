@@ -5,6 +5,7 @@ description = "A production-ready Retrieval-Augmented Generation (RAG) applicati
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "alembic>=1.18.5",
     "asyncpg>=0.31.0",
     "black>=26.5.1",
     "fastapi>=0.139.0",
