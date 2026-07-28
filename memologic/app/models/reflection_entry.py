@@ -31,3 +31,4 @@ class ReflectionEntry(Base):
     memo_interpretation: Mapped[str] = mapped_column(Text)
     conversation_guidance: Mapped[str] = mapped_column(Text)
     safety: Mapped[str | None] = mapped_column(Text, nullable=True)
+    
