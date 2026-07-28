@@ -12,12 +12,18 @@ the full practice engine: Four Brahma-viharas, Eightfold Path,
 mindfulness, impermanence, and dependent origination. Adding a new tag is
 a deliberate edit here, not something any slogan/entry file can invent on
 its own -- that's the point.
+
+Note: MindTrainingPoint below is structural metadata about a slogan's
+place in the traditional Lojong outline, not a retrieval signal like the
+enums above it -- it doesn't describe a user's situation, it describes
+the source material itself.
 """
 
 from enum import StrEnum
 
 
 class EmotionTag(StrEnum):
+    ...
     # Original (Lojong)
     OVERWHELMED = "overwhelmed"
     DISCOURAGED = "discouraged"
@@ -109,3 +115,16 @@ class CorePrincipleTag(StrEnum):
     # Dependent origination
     INTERCONNECTEDNESS = "interconnectedness"
     NON_ATTACHMENT = "non_attachment"
+    
+class MindTrainingPoint(StrEnum):
+    """The seven points structuring the 59 Chekawa Lojong slogans.
+    Lojong-specific -- entries from other traditions leave this unset.
+    """
+
+    RESOLVE_TO_BEGIN = "resolve_to_begin"
+    TRAIN_IN_EMPATHY_AND_COMPASSION = "train_in_empathy_and_compassion"
+    TRANSFORM_UNFAVORABLE_CIRCUMSTANCES = "transform_unfavorable_circumstances"
+    INTEGRATE_PRACTICE_INTO_DAILY_LIFE = "integrate_practice_into_daily_life"
+    EVALUATE_THE_TRAINED_MIND = "evaluate_the_trained_mind"
+    COMMITMENTS_OF_MIND_TRAINING = "commitments_of_mind_training"
+    GUIDELINES_FOR_MIND_TRAINING = "guidelines_for_mind_training"
