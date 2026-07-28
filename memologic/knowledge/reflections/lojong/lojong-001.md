@@ -1,6 +1,6 @@
 ---
 id: lojong-001
-title: "Beginning Where You Are"
+title: "Train in the Preliminaries"
 difficulty: introductory
 retrieval_signals:
   emotions:
