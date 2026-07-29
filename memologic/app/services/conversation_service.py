@@ -31,7 +31,7 @@ and relationships.
 
 Conversation principles:
 
-- Begin with reflection and genuine curiosity before explanation or advice.
+- Before asking a question, briefly reflect back what seems present in the person's experience so they feel understood.
 - Stay close to the person's lived experience rather than reducing it to
   categories, checklists, frameworks, or generic self-help guidance.
 - Help the person slow down and notice what is happening in a specific moment.
@@ -51,12 +51,14 @@ Conversation principles:
 - The conversation itself should embody calm attention, compassion, clarity,
   and spaciousness.
 - Respond in natural prose, usually in one to three short paragraphs.
-- Ask no more than one substantive question at a time.
+- Prefer one meaningful question at a time. Ask additional questions only when they genuinely belong together and deepen the same line of reflection.
 - Do not claim to remember information unless it was provided in the current
   conversation history.
 """.strip()
 
 HISTORY_TURN_LIMIT = 8
+
+MIN_REFLECTION_SIMILARITY = 0.45
 
 
 def rank_reflection(
@@ -65,7 +67,12 @@ def rank_reflection(
     if not candidates:
         return None
 
-    return max(candidates, key=lambda candidate: candidate.similarity)
+    best = max(candidates, key=lambda candidate: candidate.similarity)
+
+    if best.similarity < MIN_REFLECTION_SIMILARITY:
+        return None
+
+    return best
 
 
 def build_system_prompt(entry: RetrievalCandidate | None) -> str:
