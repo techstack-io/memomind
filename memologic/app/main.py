@@ -6,6 +6,8 @@ from app.settings import Settings
 
 settings = Settings()
 
+print("CORS origins:", settings.cors_origins_list)
+
 app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
