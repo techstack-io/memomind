@@ -11,16 +11,12 @@ const nextConfig: NextConfig = {
             value: "joinmettavia.online",
           },
         ],
-        destination: "/waitlist",
-        permanent: false,
-      },
-      {
-        source: "/:path*",
-        has: [
+        // DO NOT redirect if the user is already requesting /waitlist
+        missing: [
           {
-            type: "host",
-            value: "www.joinmettavia.online",
-          },
+            type: "header",
+            key: "x-invoke-path", // or handle via source regex below
+          }
         ],
         destination: "/waitlist",
         permanent: false,
@@ -28,5 +24,3 @@ const nextConfig: NextConfig = {
     ];
   },
 };
-
-export default nextConfig;
