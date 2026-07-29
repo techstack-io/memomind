@@ -16,6 +16,7 @@ function SendFoxEmbed() {
     containerRef.current.appendChild(script);
   }, []);
 
+
   return <div ref={containerRef} className="w-full max-w-sm" />;
 }
 
