@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      {
+        source: "/waitlist",
+        destination: "https://www.joinmettavia.online/",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
