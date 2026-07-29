@@ -4,7 +4,24 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: "/",
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "joinmettavia.online",
+          },
+        ],
+        destination: "/waitlist",
+        permanent: false,
+      },
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "www.joinmettavia.online",
+          },
+        ],
         destination: "/waitlist",
         permanent: false,
       },
