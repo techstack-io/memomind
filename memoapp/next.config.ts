@@ -4,19 +4,24 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: "/:path*",
+        // Match everything EXCEPT /waitlist (and subpaths of waitlist)
+        source: "/((?!waitlist).*)",
         has: [
           {
             type: "host",
             value: "joinmettavia.online",
           },
         ],
-        // DO NOT redirect if the user is already requesting /waitlist
-        missing: [
+        destination: "/waitlist",
+        permanent: false,
+      },
+      {
+        source: "/((?!waitlist).*)",
+        has: [
           {
-            type: "header",
-            key: "x-invoke-path", // or handle via source regex below
-          }
+            type: "host",
+            value: "www.joinmettavia.online",
+          },
         ],
         destination: "/waitlist",
         permanent: false,
@@ -24,3 +29,5 @@ const nextConfig: NextConfig = {
     ];
   },
 };
+
+export default nextConfig;
