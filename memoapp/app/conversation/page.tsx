@@ -13,6 +13,7 @@ import {
 import AppSidebar from "@/components/layout/AppSidebar";
 import { ChatComposer } from "@/components/chat/ChatComposer";
 import { ChatMessage } from "@/components/chat/ChatMessage";
+import { hexclaveClientApp } from "@/hexclave/client";
 
 type Message = {
   id: string;
@@ -98,10 +99,12 @@ export default function ConversationPage() {
     {
       id: "welcome",
       role: "assistant",
-      eyebrow: "A reflection with Memo",
-      content: "Good to see you again. What’s present for you today?",
+      eyebrow: "A reflection with Ana",
+      content: "Good to see you again. What's present for you today?",
     },
   ]);
+
+  const user = hexclaveClientApp.useUser();
 
   const shouldReduceMotion = useReducedMotion();
   const initialState = shouldReduceMotion ? "visible" : "hidden";
@@ -115,18 +118,57 @@ export default function ConversationPage() {
     );
   }, [query]);
 
-  function handleSend(content: string) {
+  async function handleSend(content: string) {
     const trimmed = content.trim();
     if (!trimmed) return;
 
-    setMessages((currentMessages) => [
-      ...currentMessages,
-      {
-        id: crypto.randomUUID(),
-        role: "user",
-        content: trimmed,
-      },
-    ]);
+    const userMessage: Message = {
+      id: crypto.randomUUID(),
+      role: "user",
+      content: trimmed,
+    };
+    setMessages((current) => [...current, userMessage]);
+
+    if (!user) return;
+
+    const { accessToken } = await user.getAuthJson();
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/conversations`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-stack-access-token": accessToken ?? "",
+          },
+          body: JSON.stringify({ message: trimmed }),
+        }
+      );
+
+      if (!response.ok) throw new Error("Request failed");
+
+      const data = await response.json();
+
+      setMessages((current) => [
+        ...current,
+        {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content: data.reply,
+        },
+      ]);
+    } catch (error) {
+      setMessages((current) => [
+        ...current,
+        {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content:
+            "I'm having trouble responding right now. Please try again in a moment.",
+        },
+      ]);
+    }
   }
 
   return (
@@ -243,7 +285,7 @@ export default function ConversationPage() {
               New Reflection
             </p>
             <h1 className="mt-1 text-xl font-semibold tracking-tight text-memo-text">
-              A conversation with Memo
+              A conversation with Ana
             </h1>
           </motion.header>
 
