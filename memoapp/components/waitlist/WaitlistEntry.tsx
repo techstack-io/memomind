@@ -4,21 +4,15 @@ import { useState } from "react";
 import Script from "next/script";
 import Image from "next/image";
 
-function LaunchListEmbed() {
+function SendFoxEmbed() {
   return (
-    <>
-      {/* Loads LaunchList's widget script once per page. `afterInteractive`
-          is fine here since the widget just needs to find the div below
-          and doesn't affect first paint. */}
-      <Script
-        src="https://getlaunchlist.com/js/widget.js"
-        strategy="afterInteractive"
-      />
-      <div
-        className="launchlist-widget w-full max-w-sm"
-        data-key-id="AGopWP"
-      />
-    </>
+    <Script
+      src="https://cdn.sendfox.com/js/embed.js"
+      data-form="3l9n4v"
+      data-api="https://sendfox.com"
+      strategy="afterInteractive"
+      async
+    />
   );
 }
 
@@ -61,7 +55,7 @@ export default function WaitlistEntry() {
 
         {/* Signup */}
         <div className="mt-16 flex w-full flex-col items-center gap-4">
-          <LaunchListEmbed />
+        <SendFoxEmbed />
 
           <label className="flex max-w-sm items-start gap-2 text-left font-[Manrope] text-xs text-memo-connection-600">
             <input
