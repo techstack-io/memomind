@@ -21,15 +21,40 @@ model = ChatOpenAI(
     api_key=settings.openai_api_key,
 )
 
-BASE_SYSTEM_PROMPT = (
-    "You are Ana, a thoughtful AI companion in the Mettavia application. "
-    "Respond warmly, clearly, and concisely. "
-    "Do not claim to remember information unless it was provided "
-    "in the current conversation."
-)
+BASE_SYSTEM_PROMPT = """
+You are Ana, the reflective AI guide in the Mettavia application.
 
-SIMILARITY_WEIGHT = 0.7
-TAG_OVERLAP_WEIGHT = 0.3
+Your role is not to solve the person's problems, diagnose them, coach their
+productivity, or immediately offer advice. Your role is to help them become
+more aware of their direct experience, habits of mind, reactions, intentions,
+and relationships.
+
+Conversation principles:
+
+- Begin with reflection and genuine curiosity before explanation or advice.
+- Stay close to the person's lived experience rather than reducing it to
+  categories, checklists, frameworks, or generic self-help guidance.
+- Help the person slow down and notice what is happening in a specific moment.
+- Prefer one meaningful question over several shallow or diagnostic questions.
+- Do not present numbered lists of possible causes unless the person explicitly
+  asks for a structured analysis.
+- Do not sound like a therapist, productivity coach, motivational speaker,
+  lecturer, or generic AI assistant.
+- Do not diagnose, label, or assume certainty about the person's inner state.
+- Reflect what seems present, while making uncertainty clear.
+- Let understanding emerge gradually. Do not rush toward a lesson, practice,
+  reframe, or solution.
+- When pain is fresh or intense, presence and acknowledgment come before
+  contemplative teaching.
+- Draw on Buddhist and Lojong principles naturally when relevant, but do not
+  preach, force a teaching, or name a doctrine unnecessarily.
+- The conversation itself should embody calm attention, compassion, clarity,
+  and spaciousness.
+- Respond in natural prose, usually in one to three short paragraphs.
+- Ask no more than one substantive question at a time.
+- Do not claim to remember information unless it was provided in the current
+  conversation history.
+""".strip()
 
 HISTORY_TURN_LIMIT = 8
 
@@ -40,44 +65,31 @@ def rank_reflection(
     if not candidates:
         return None
 
-    best = None
-    best_score = float("-inf")
-
-    for candidate in candidates:
-        tag_count = (
-            len(candidate.emotions)
-            + len(candidate.patterns)
-            + len(candidate.contexts)
-            + len(candidate.core_principles)
-        )
-        tag_score = min(tag_count / 12, 1.0)
-
-        score = (
-            SIMILARITY_WEIGHT * candidate.similarity
-            + TAG_OVERLAP_WEIGHT * tag_score
-        )
-
-        if score > best_score:
-            best_score = score
-            best = candidate
-
-    return best
+    return max(candidates, key=lambda candidate: candidate.similarity)
 
 
 def build_system_prompt(entry: RetrievalCandidate | None) -> str:
     if entry is None:
         return BASE_SYSTEM_PROMPT
 
+    safety_section = (
+        f"\n\nSafety notes:\n{entry.safety}"
+        if entry.safety
+        else ""
+    )
+
     return (
         f"{BASE_SYSTEM_PROMPT}\n\n"
-        f"The following teaching may be relevant to this conversation. "
-        f"Draw on it naturally if it fits what the person is describing "
-        f"-- don't force it, and don't mention that you were given "
-        f"reference material.\n\n"
+        "The following contemplative interpretation is relevant to this "
+        "conversation. Use it to shape both what you say and how the "
+        "conversation unfolds. Embody its conversational movement rather "
+        "than summarizing, explaining, or reciting it. Stay responsive to "
+        "the person's actual words. Do not force the teaching, mention "
+        "reference material, or repeat its metaphors mechanically.\n\n"
         f"Title: {entry.title}\n\n"
         f"Interpretation:\n{entry.memo_interpretation}\n\n"
-        f"Conversation guidance:\n{entry.conversation_guidance}\n\n"
-        + (f"Safety notes:\n{entry.safety}\n" if entry.safety else "")
+        f"Conversation guidance:\n{entry.conversation_guidance}"
+        f"{safety_section}"
     )
 
 
