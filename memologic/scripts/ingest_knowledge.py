@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 client = AsyncOpenAI(api_key=settings.openai_api_key)
 
-KNOWLEDGE_ROOT = Path(__file__).resolve().parent.parent / "knowledge" / "wisdom"
+KNOWLEDGE_ROOT = Path(__file__).resolve().parent.parent / "knowledge" / "reflections"
 EMBEDDING_MODEL = "text-embedding-3-small"
 
 

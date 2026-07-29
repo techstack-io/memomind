@@ -26,6 +26,10 @@ class ReflectionEntry(Base):
     contexts: Mapped[list[str]] = mapped_column(ARRAY(String), default=list)
 
     core_principles: Mapped[list[str]] = mapped_column(ARRAY(String), default=list)
+    
+    # Structural metadata, Lojong-only -- which of the 7 points a slogan
+    # belongs to. Null for every other tradition's entries.
+    point: Mapped[str | None] = mapped_column(String, nullable=True)
 
     # Full prose sections, stored as-is — no further parsing/structure.
     memo_interpretation: Mapped[str] = mapped_column(Text)

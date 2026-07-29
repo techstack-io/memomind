@@ -4,8 +4,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: "/waitlist",
-        destination: "http://www.joinmettavia.online/",
+        source: "/",
+        destination: "/waitlist",
         permanent: false,
       },
     ];

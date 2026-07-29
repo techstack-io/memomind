@@ -15,6 +15,7 @@ from alembic import context
 from app.models.base import Base
 from app.models.reflection_entry import ReflectionEntry  # noqa: F401
 from app.models.reflection_embedding import ReflectionEmbedding  # noqa: F401
+from app.models.conversation_turn import ConversationTurn  # noqa: F401
 from app.settings import get_settings
 
 # this is the Alembic Config object, which provides
