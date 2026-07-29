@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/waitlist",
-        destination: "https://www.joinmettavia.online/",
+        destination: "http://www.joinmettavia.online/",
         permanent: false,
       },
     ];
