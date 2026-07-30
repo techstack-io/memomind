@@ -262,6 +262,12 @@ async def create_reply(
 
     best_entry = rank_reflection(candidates)
 
+    if best_entry is not None:
+        logger.info("=== Selected Reflection ===")
+        logger.info(best_entry.model_dump_json(indent=2))
+    else:
+        logger.info("=== No Reflection Selected ===")
+
     reflection_plan: ReflectionPlan | None = None
 
     if best_entry is not None:
@@ -271,6 +277,9 @@ async def create_reply(
                 reflection=best_entry,
                 history=history,
             )
+
+            logger.info("=== Reflection Plan ===")
+            logger.info(reflection_plan.model_dump_json(indent=2))
         except Exception:
             logger.exception(
                 "reflection_plan_generation_failed",
@@ -291,6 +300,9 @@ async def create_reply(
         *history_messages,
         ("human", request.message),
     ]
+
+    logger.info("=== Final System Prompt ===")
+    logger.info(system_prompt)
 
     try:
         result = await response_model.ainvoke(messages)
