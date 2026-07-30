@@ -9,14 +9,19 @@ from app.schemas.conversation import (
     ConversationRequest,
     ConversationResponse,
 )
-from app.services.retrieval_service import RetrievalCandidate, retrieve_candidates
+from app.schemas.reflection_plan import ReflectionPlan
+from app.services.reflection_reasoning_service import build_reflection_plan
+from app.services.retrieval_service import (
+    RetrievalCandidate,
+    retrieve_candidates,
+)
 from app.services.safety import SAFETY_RESPONSE, check_safety
 from app.settings import get_settings
 
 settings = get_settings()
 logger = logging.getLogger(__name__)
 
-model = ChatOpenAI(
+response_model = ChatOpenAI(
     model=settings.openai_model,
     api_key=settings.openai_api_key,
 )
@@ -31,7 +36,8 @@ and relationships.
 
 Conversation principles:
 
-- Before asking a question, briefly reflect back what seems present in the person's experience so they feel understood.
+- Before asking a question, briefly reflect back what seems present in the
+  person's experience so they feel understood.
 - Stay close to the person's lived experience rather than reducing it to
   categories, checklists, frameworks, or generic self-help guidance.
 - Help the person slow down and notice what is happening in a specific moment.
@@ -41,7 +47,7 @@ Conversation principles:
 - Do not sound like a therapist, productivity coach, motivational speaker,
   lecturer, or generic AI assistant.
 - Do not diagnose, label, or assume certainty about the person's inner state.
-- Reflect what seems present, while making uncertainty clear.
+- Reflect what seems present while making uncertainty clear.
 - Let understanding emerge gradually. Do not rush toward a lesson, practice,
   reframe, or solution.
 - When pain is fresh or intense, presence and acknowledgment come before
@@ -51,23 +57,33 @@ Conversation principles:
 - The conversation itself should embody calm attention, compassion, clarity,
   and spaciousness.
 - Respond in natural prose, usually in one to three short paragraphs.
-- Prefer one meaningful question at a time. Ask additional questions only when they genuinely belong together and deepen the same line of reflection.
+- Prefer one meaningful question at a time. Ask additional questions only when
+  they genuinely belong together and deepen the same line of reflection.
+- Ask open questions that invite observation rather than offering possible
+  answers or predefined categories.
+- Let the person's own language shape the direction of the conversation.
 - Do not claim to remember information unless it was provided in the current
   conversation history.
 """.strip()
 
 HISTORY_TURN_LIMIT = 8
-
 MIN_REFLECTION_SIMILARITY = 0.45
+
+ConversationHistory = list[tuple[str, str]]
 
 
 def rank_reflection(
     candidates: list[RetrievalCandidate],
 ) -> RetrievalCandidate | None:
+    """Return the highest-ranked reflection above the similarity threshold."""
+
     if not candidates:
         return None
 
-    best = max(candidates, key=lambda candidate: candidate.similarity)
+    best = max(
+        candidates,
+        key=lambda candidate: candidate.similarity,
+    )
 
     if best.similarity < MIN_REFLECTION_SIMILARITY:
         return None
@@ -75,7 +91,15 @@ def rank_reflection(
     return best
 
 
-def build_system_prompt(entry: RetrievalCandidate | None) -> str:
+def build_fallback_system_prompt(
+    entry: RetrievalCandidate | None,
+) -> str:
+    """Build the original single-stage prompt used as a fallback.
+
+    This path is used when no Reflection Plan is available, either because
+    no reflection met the similarity threshold or reflection analysis failed.
+    """
+
     if entry is None:
         return BASE_SYSTEM_PROMPT
 
@@ -100,11 +124,75 @@ def build_system_prompt(entry: RetrievalCandidate | None) -> str:
     )
 
 
+def format_markdown_list(items: list[str]) -> str:
+    """Format Reflection Plan list fields as Markdown."""
+
+    if not items:
+        return "- None specified"
+
+    return "\n".join(f"- {item}" for item in items)
+
+
+def format_reflection_plan(plan: ReflectionPlan) -> str:
+    """Render the structured Reflection Plan as Markdown for the response model."""
+
+    return "\n".join(
+        [
+            "## Internal Reflection Plan",
+            "",
+            f"**Reflection ID:** {plan.reflection_id}",
+            "",
+            "### Contemplative Lens",
+            plan.contemplative_lens,
+            "",
+            "### User Dynamic",
+            plan.user_dynamic,
+            "",
+            "### Core Insight",
+            plan.core_insight,
+            "",
+            "### Conversation Movement",
+            plan.conversation_movement,
+            "",
+            "### Relevant Elements",
+            format_markdown_list(plan.relevant_elements),
+            "",
+            "### Avoid",
+            format_markdown_list(plan.avoid),
+        ]
+    )
+
+
+def build_response_prompt(plan: ReflectionPlan) -> str:
+    """Build Ana's final response prompt from the internal Reflection Plan."""
+
+    reflection_plan_markdown = format_reflection_plan(plan)
+
+    return (
+        f"{BASE_SYSTEM_PROMPT}\n\n"
+        "Use the following internal Reflection Plan to guide your response. "
+        "The plan has already interpreted the selected Lojong reflection in "
+        "the context of the person's current experience.\n\n"
+        "Do not mention the Reflection Plan, its fields, the retrieval process, "
+        "or any internal source material. Do not reproduce the plan mechanically. "
+        "Express its understanding naturally in Ana's voice while remaining "
+        "responsive to the person's actual words.\n\n"
+        f"{reflection_plan_markdown}"
+    )
+
+
 async def load_recent_history(
     session: AsyncSession,
     user_id: str,
     limit: int = HISTORY_TURN_LIMIT,
-) -> list[tuple[str, str]]:
+) -> ConversationHistory:
+    """Load recent stored exchanges in chronological order.
+
+    Each item contains one complete user-and-Ana exchange:
+
+        (user_message, assistant_reply)
+    """
+
     stmt = (
         select(ConversationTurn)
         .where(
@@ -118,12 +206,24 @@ async def load_recent_history(
     result = await session.execute(stmt)
     turns = list(reversed(result.scalars().all()))
 
-    history: list[tuple[str, str]] = []
-    for turn in turns:
-        history.append(("human", turn.message))
-        history.append(("assistant", turn.reply))
+    return [
+        (turn.message, turn.reply)
+        for turn in turns
+    ]
 
-    return history
+
+def build_history_messages(
+    history: ConversationHistory,
+) -> list[tuple[str, str]]:
+    """Convert stored exchanges into LangChain-compatible chat messages."""
+
+    messages: list[tuple[str, str]] = []
+
+    for user_message, assistant_reply in history:
+        messages.append(("human", user_message))
+        messages.append(("assistant", assistant_reply))
+
+    return messages
 
 
 async def create_reply(
@@ -131,33 +231,72 @@ async def create_reply(
     user_id: str,
     session: AsyncSession,
 ) -> ConversationResponse:
+    """Process a message through safety, retrieval, reasoning, and synthesis."""
+
     flagged, matched = await check_safety(request.message)
 
     if flagged:
-        logger.warning("Safety override triggered.", extra={"matched": matched})
+        logger.warning(
+            "Safety override triggered.",
+            extra={"matched": matched},
+        )
         return ConversationResponse(reply=SAFETY_RESPONSE)
 
     try:
-        candidates = await retrieve_candidates(session, request.message)
+        history = await load_recent_history(
+            session=session,
+            user_id=user_id,
+        )
+    except Exception:
+        logger.exception("history_load_failed")
+        history = []
+
+    try:
+        candidates = await retrieve_candidates(
+            session=session,
+            query=request.message,
+        )
     except Exception:
         logger.exception("retrieval_failed")
         candidates = []
 
     best_entry = rank_reflection(candidates)
-    system_prompt = build_system_prompt(best_entry)
+
+    reflection_plan: ReflectionPlan | None = None
+
+    if best_entry is not None:
+        try:
+            reflection_plan = await build_reflection_plan(
+                message=request.message,
+                reflection=best_entry,
+                history=history,
+            )
+        except Exception:
+            logger.exception(
+                "reflection_plan_generation_failed",
+                extra={
+                    "reflection_entry_id": best_entry.id,
+                },
+            )
+
+    if reflection_plan is not None:
+        system_prompt = build_response_prompt(reflection_plan)
+    else:
+        system_prompt = build_fallback_system_prompt(best_entry)
+
+    history_messages = build_history_messages(history)
+
+    messages = [
+        ("system", system_prompt),
+        *history_messages,
+        ("human", request.message),
+    ]
 
     try:
-        history = await load_recent_history(session, user_id)
-    except Exception:
-        logger.exception("history_load_failed")
-        history = []
-
-    messages = [("system", system_prompt), *history, ("human", request.message)]
-
-    try:
-        result = await model.ainvoke(messages)
+        result = await response_model.ainvoke(messages)
     except Exception:
         logger.exception("conversation_model_call_failed")
+
         return ConversationResponse(
             reply=(
                 "I'm having trouble responding right now. "
@@ -175,8 +314,13 @@ async def create_reply(
             user_id=user_id,
             message=request.message,
             reply=content,
-            reflection_entry_id=best_entry.id if best_entry else None,
+            reflection_entry_id=(
+                best_entry.id
+                if best_entry is not None
+                else None
+            ),
         )
+
         session.add(turn)
         await session.commit()
     except Exception:

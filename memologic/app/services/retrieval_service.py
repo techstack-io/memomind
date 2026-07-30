@@ -3,8 +3,10 @@ we agreed on. Embeds a query, runs a pgvector cosine-similarity search
 against reflection_embeddings joined to reflection_entries, and returns
 the top-k candidates with a similarity score attached.
 
-Nothing downstream of this module (rank_reflection, conversation_service)
-should ever see a raw embedding -- only these lightweight candidates.
+Nothing downstream of this module -- including rank_reflection,
+reflection_reasoning_service, and conversation_service -- should ever see
+a raw embedding. Downstream services receive only lightweight retrieval
+candidates containing reflection content, metadata, and similarity.
 """
 
 from dataclasses import dataclass, field
@@ -39,7 +41,13 @@ class RetrievalCandidate:
 
 
 async def embed_query(text: str) -> list[float]:
-    response = await client.embeddings.create(model=EMBEDDING_MODEL, input=text)
+    """Convert a retrieval query into an embedding vector."""
+
+    response = await client.embeddings.create(
+        model=EMBEDDING_MODEL,
+        input=text,
+    )
+
     return response.data[0].embedding
 
 
@@ -48,17 +56,29 @@ async def retrieve_candidates(
     query: str,
     top_k: int = 5,
 ) -> list[RetrievalCandidate]:
-    """Embed `query` and return the top_k closest reflection entries by
-    cosine similarity. Similarity is 1 - cosine_distance, so 1.0 is an
-    exact match and 0.0 is orthogonal/unrelated.
+    """Return the reflection entries most similar to the retrieval query.
+
+    The query is embedded and compared with stored reflection embeddings
+    using pgvector cosine distance. Similarity is calculated as
+    1 - cosine_distance, where 1.0 represents an exact match and values
+    closer to 0.0 represent increasingly unrelated entries.
     """
+
     query_embedding = await embed_query(query)
 
-    distance = ReflectionEmbedding.embedding.cosine_distance(query_embedding)
+    distance = ReflectionEmbedding.embedding.cosine_distance(
+        query_embedding
+    )
 
     stmt = (
-        select(ReflectionEntry, distance.label("distance"))
-        .join(ReflectionEmbedding, ReflectionEmbedding.entry_id == ReflectionEntry.id)
+        select(
+            ReflectionEntry,
+            distance.label("distance"),
+        )
+        .join(
+            ReflectionEmbedding,
+            ReflectionEmbedding.entry_id == ReflectionEntry.id,
+        )
         .order_by(distance)
         .limit(top_k)
     )
@@ -66,7 +86,16 @@ async def retrieve_candidates(
     result = await session.execute(stmt)
 
     candidates: list[RetrievalCandidate] = []
-    for entry, dist in result.all():
+
+    for entry, raw_distance in result.all():
+        similarity = max(
+            0.0,
+            min(
+                1.0,
+                1.0 - float(raw_distance),
+            ),
+        )
+
         candidates.append(
             RetrievalCandidate(
                 id=entry.id,
@@ -74,12 +103,12 @@ async def retrieve_candidates(
                 memo_interpretation=entry.memo_interpretation,
                 conversation_guidance=entry.conversation_guidance,
                 safety=entry.safety,
-                emotions=entry.emotions,
-                patterns=entry.patterns,
-                contexts=entry.contexts,
-                core_principles=entry.core_principles,
+                emotions=entry.emotions or [],
+                patterns=entry.patterns or [],
+                contexts=entry.contexts or [],
+                core_principles=entry.core_principles or [],
                 point=entry.point,
-                similarity=1 - dist,
+                similarity=similarity,
             )
         )
 
