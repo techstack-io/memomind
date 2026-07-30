@@ -21,55 +21,62 @@ export function ChatMessage({
     ? false
     : {
         opacity: 0,
-        y: 12,
-        scale: 0.985,
+        y: 10,
       };
 
   const animate = {
     opacity: 1,
     y: 0,
-    scale: 1,
   };
 
   if (role === "user") {
     return (
-      <motion.li
+      <motion.div
         initial={initial}
         animate={animate}
         transition={{
-          duration: 0.45,
+          duration: 0.4,
           ease,
         }}
         className="flex justify-end"
       >
-        <div className="max-w-[82%] rounded-[18px] bg-[#29241f] px-5 py-4 text-[16px] leading-7 text-white shadow-sm md:max-w-[72%]">
-          {content}
+        <div className="max-w-[82%] rounded-2xl rounded-tr-sm border border-memo-divider bg-memo-surface-raised px-5 py-3.5 shadow-[0_1px_0_rgba(0,0,0,0.02)] md:max-w-[72%]">
+          <p className="whitespace-pre-line text-[15px] leading-relaxed text-memo-text">
+            {content}
+          </p>
         </div>
-      </motion.li>
+      </motion.div>
     );
   }
 
   return (
-    <motion.li
+    <motion.div
       initial={initial}
       animate={animate}
       transition={{
-        duration: 0.6,
+        duration: 0.5,
         ease,
       }}
-      className="flex justify-start"
+      className="flex gap-4"
     >
-      <article className="w-full max-w-[640px] rounded-[18px] border border-memo-divider bg-memo-background px-5 py-5 md:px-6">
-        {eyebrow && (
-          <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-memo-connection-700">
-            {eyebrow}
-          </p>
-        )}
+      <div
+        aria-hidden="true"
+        className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-memo-divider bg-memo-surface-raised"
+      >
+        <span className="font-serif text-base leading-none text-memo-secondary-500">
+          a
+        </span>
+      </div>
 
-        <p className="text-[16px] leading-7 text-memo-neutral-700">
+      <article className="max-w-2xl border-l border-memo-secondary-300/70 pl-4">
+        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-memo-neutral-500">
+          {eyebrow ?? "Ana"}
+        </p>
+
+        <p className="mt-2 whitespace-pre-line text-[15px] leading-relaxed text-memo-text">
           {content}
         </p>
       </article>
-    </motion.li>
+    </motion.div>
   );
 }
