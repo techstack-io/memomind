@@ -1,9 +1,9 @@
 """Ingest knowledge-base .md files into Postgres.
 
 Walks knowledge/reflections/<tradition>/<id>.md, validates each file's
-frontmatter against ReflectionFrontmatter, embeds the reflection content
-and retrieval metadata via OpenAI's text-embedding-3-small, and upserts
-rows into reflection_entries and reflection_embeddings.
+frontmatter against ReflectionFrontmatter, embeds the reflection's concise
+retrieval summary via OpenAI's text-embedding-3-small, and upserts rows into
+reflection_entries and reflection_embeddings.
 
 Usage:
     uv run python -m scripts.ingest_knowledge
@@ -70,7 +70,7 @@ def split_sections(body: str) -> dict[str, str]:
 
 
 def normalize_metadata_value(value: object) -> str:
-    """Convert an enum or string metadata value into embedding-friendly text."""
+    """Convert an enum or string into embedding-friendly text."""
 
     raw_value = getattr(value, "value", value)
 
@@ -79,29 +79,8 @@ def normalize_metadata_value(value: object) -> str:
 
 def build_embedding_text(
     parsed: ReflectionFrontmatter,
-    body: str,
 ) -> str:
-    """Build the complete text used to create the reflection embedding."""
-
-    core_principles = ", ".join(
-        normalize_metadata_value(principle)
-        for principle in parsed.core_principles
-    )
-
-    emotions = ", ".join(
-        normalize_metadata_value(emotion)
-        for emotion in parsed.retrieval_signals.emotions
-    )
-
-    patterns = ", ".join(
-        normalize_metadata_value(pattern)
-        for pattern in parsed.retrieval_signals.patterns
-    )
-
-    contexts = ", ".join(
-        normalize_metadata_value(context)
-        for context in parsed.retrieval_signals.contexts
-    )
+    """Build concise text used to create the reflection embedding."""
 
     slogan_number = getattr(parsed, "slogan_number", None)
     point = getattr(parsed, "point", None)
@@ -112,19 +91,17 @@ def build_embedding_text(
         else ""
     )
 
+    retrieval_summary = parsed.retrieval_summary.strip()
+
     return "\n".join(
         [
             f"Title: {parsed.title}",
             f"Slogan number: {slogan_number or ''}",
             f"Point: {point_text}",
-            f"Core principles: {core_principles}",
-            f"Emotions: {emotions}",
-            f"Patterns: {patterns}",
-            f"Contexts: {contexts}",
             "",
-            body.strip(),
+            retrieval_summary,
         ]
-    )
+    ).strip()
 
 
 async def embed(text: str) -> list[float]:
@@ -180,13 +157,28 @@ async def ingest_file(path: Path) -> None:
 
     embedding_text = build_embedding_text(
         parsed=parsed,
-        body=post.content,
     )
 
-    embedding_vector = await embed(embedding_text)
+    logger.warning(
+        "=== EMBEDDING TEXT ===\n%s",
+        embedding_text,
+    )
 
-    slogan_number = getattr(parsed, "slogan_number", None)
-    point = getattr(parsed, "point", None)
+    embedding_vector = await embed(
+        embedding_text,
+    )
+
+    slogan_number = getattr(
+        parsed,
+        "slogan_number",
+        None,
+    )
+
+    point = getattr(
+        parsed,
+        "point",
+        None,
+    )
 
     point_value = (
         getattr(point, "value", point)
@@ -215,7 +207,9 @@ async def ingest_file(path: Path) -> None:
     ]
 
     async with AsyncSessionLocal() as session:
-        entry_stmt = pg_insert(ReflectionEntry).values(
+        entry_stmt = pg_insert(
+            ReflectionEntry
+        ).values(
             id=parsed.id,
             slogan_number=slogan_number,
             title=parsed.title,
@@ -233,10 +227,14 @@ async def ingest_file(path: Path) -> None:
         entry_stmt = entry_stmt.on_conflict_do_update(
             index_elements=["id"],
             set_={
-                "slogan_number": entry_stmt.excluded.slogan_number,
+                "slogan_number": (
+                    entry_stmt.excluded.slogan_number
+                ),
                 "title": entry_stmt.excluded.title,
                 "point": entry_stmt.excluded.point,
-                "difficulty": entry_stmt.excluded.difficulty,
+                "difficulty": (
+                    entry_stmt.excluded.difficulty
+                ),
                 "emotions": entry_stmt.excluded.emotions,
                 "patterns": entry_stmt.excluded.patterns,
                 "contexts": entry_stmt.excluded.contexts,
@@ -253,7 +251,9 @@ async def ingest_file(path: Path) -> None:
             },
         )
 
-        await session.execute(entry_stmt)
+        await session.execute(
+            entry_stmt,
+        )
 
         embedding_stmt = pg_insert(
             ReflectionEmbedding
@@ -262,17 +262,27 @@ async def ingest_file(path: Path) -> None:
             embedding=embedding_vector,
         )
 
-        embedding_stmt = embedding_stmt.on_conflict_do_update(
-            index_elements=["entry_id"],
-            set_={
-                "embedding": embedding_stmt.excluded.embedding,
-            },
+        embedding_stmt = (
+            embedding_stmt.on_conflict_do_update(
+                index_elements=["entry_id"],
+                set_={
+                    "embedding": (
+                        embedding_stmt.excluded.embedding
+                    ),
+                },
+            )
         )
 
-        await session.execute(embedding_stmt)
+        await session.execute(
+            embedding_stmt,
+        )
+
         await session.commit()
 
-    logger.info("Ingested %s", parsed.id)
+    logger.info(
+        "Ingested %s",
+        parsed.id,
+    )
 
 
 async def main() -> None:
