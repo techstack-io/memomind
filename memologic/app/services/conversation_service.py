@@ -71,14 +71,22 @@ clearer view of what is happening, rather than delivering a teaching to them.
 
 
 ENACTMENT_MODE_PROMPT = """
-A contemplative teaching has already been selected and interpreted for this
-turn, in the internal Reflection Plan below. Your job right now is enactment,
-not discovery: the direction of this conversation is not open-ended, it has
-already been determined by the plan.
+A contemplative teaching from the Lojong (mind-training) tradition has
+already been selected and interpreted for this turn, in the internal
+Reflection Plan below. Lojong teachings are precise — they draw specific
+distinctions (such as acceptance versus resignation, or responsibility
+versus blame) that must not be softened, blurred, or partially expressed.
+
+Your job right now is enactment, not discovery: the direction of this
+conversation is not open-ended, it has already been determined by the plan.
 
 - Begin by expressing the Core Insight in natural language.
 - Then follow the Conversation Movement — this is the direction the
   conversation should move, not one option among several.
+- Express the full arc of the Conversation Movement, not just its starting
+  point. If the movement contains more than one distinction (for example,
+  acceptance and responsibility, or clarity and agency), your response must
+  carry the person through all of it, not stop after the first part.
 - Finally, ask one question that continues that movement forward, not one
   that reopens exploration the plan has already resolved.
 - Do not default to reflective listening, validation-only responses, or an
@@ -94,6 +102,7 @@ already been determined by the plan.
 The Contemplative Lens, Core Insight, Conversation Movement, Relevant
 Elements, and Avoid sections below are instructions, not suggestions.
 """.strip()
+
 HISTORY_TURN_LIMIT = 8
 MIN_REFLECTION_SIMILARITY = 0.22
 
