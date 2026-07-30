@@ -260,6 +260,15 @@ async def create_reply(
         logger.exception("retrieval_failed")
         candidates = []
 
+    logger.warning("=== Retrieval Candidates ===")
+    logger.warning(
+        "\n".join(
+            f"{candidate.id}: {candidate.similarity}"
+            for candidate in candidates
+        )
+        or "NO CANDIDATES RETURNED"
+    )
+    
     best_entry = rank_reflection(candidates)
     
 
