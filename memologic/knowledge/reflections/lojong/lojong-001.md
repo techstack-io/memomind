@@ -1,5 +1,7 @@
 ---
+id: lojong-001
 title: Train in the Preliminaries
+difficulty: beginner
 slogan_number: 1
 point: resolve_to_begin
 
