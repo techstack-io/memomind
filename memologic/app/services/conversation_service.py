@@ -69,7 +69,7 @@ Conversation principles:
 """.strip()
 
 HISTORY_TURN_LIMIT = 8
-MIN_REFLECTION_SIMILARITY = 0.23
+MIN_REFLECTION_SIMILARITY = 0.22
 
 ConversationHistory = list[tuple[str, str]]
 
