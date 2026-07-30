@@ -3,7 +3,7 @@ id: lojong-001
 title: "Train in the Preliminaries"
 difficulty: introductory
 slogan_number: 1
-point: point_one
+point: resolve_to_begin
 retrieval_signals:
   emotions:
     - overwhelmed
