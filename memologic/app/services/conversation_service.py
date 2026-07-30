@@ -264,10 +264,10 @@ async def create_reply(
     
 
     if best_entry is not None:
-        logger.info("=== Selected Reflection ===")
-        logger.info(best_entry.model_dump_json(indent=2))
+        logger.warning("=== Selected Reflection ===")
+        logger.warning(best_entry.model_dump_json(indent=2))
     else:
-        logger.info("=== No Reflection Selected ===")
+        logger.warning("=== No Reflection Selected ===")
 
     reflection_plan: ReflectionPlan | None = None
 
@@ -279,8 +279,8 @@ async def create_reply(
                 history=history,
             )
 
-            logger.info("=== Reflection Plan ===")
-            logger.info(reflection_plan.model_dump_json(indent=2))
+            logger.warning("=== Reflection Plan ===")
+            logger.warning(reflection_plan.model_dump_json(indent=2))
         except Exception:
             logger.exception(
                 "reflection_plan_generation_failed",
@@ -302,8 +302,8 @@ async def create_reply(
         ("human", request.message),
     ]
 
-    logger.info("=== Final System Prompt ===")
-    logger.info(system_prompt)
+    logger.warning("=== Final System Prompt ===")
+    logger.warning(system_prompt)
 
     try:
         result = await response_model.ainvoke(messages)
