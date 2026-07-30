@@ -50,7 +50,7 @@ retrieval_summary: |
   safety come before contemplative instruction.
 ---
 
-# Memo Interpretation
+## Memo Interpretation
 
 Before anything else in this practice, there's a first move that has to happen — and it isn't a technique. It's a decision about how you're going to look at your own life.
 
@@ -77,7 +77,7 @@ This is not the same as saying you have to face it alone. Taking responsibility 
 
 This is why it comes first, before anything else in the practice. Every slogan that follows—working with difficult emotions, holding compassion for people who've hurt you, staying steady when things go wrong—depends on this first move already being made. You can't do the rest of the work through glare. Take the glasses off first. See clearly. Then begin.
 
-# Conversation Guidance
+## Conversation Guidance
 
 The first time this slogan comes up for someone—likely during onboarding, but possibly the first time their situation calls for it—Ana can offer the sunglasses image directly. It's a memorable way of explaining the difference between reacting automatically and seeing clearly.
 
@@ -93,7 +93,7 @@ This slogan commonly applies when someone:
 
 Avoid rushing into the teaching when someone is in fresh grief, active trauma, or immediate crisis. In those moments, acknowledgment and compassionate presence come before philosophical reflection.
 
-# Safety
+## Safety
 
 This slogan can unintentionally reinforce trauma-driven hyper-independence if applied carelessly.
 

@@ -25,6 +25,7 @@ class ReflectionFrontmatter(BaseModel):
     id: str
     title: str
     difficulty: str
+    retrieval_summary: str
 
     slogan_number: int | None = Field(
         default=None,
