@@ -262,8 +262,6 @@ async def create_reply(
 
     best_entry = rank_reflection(candidates)
     
-    if best_entry is not None:
-        raise RuntimeError(best_entry.model_dump_json(indent=2))
 
     if best_entry is not None:
         logger.info("=== Selected Reflection ===")
