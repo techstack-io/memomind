@@ -1,11 +1,10 @@
-"""Validates a knowledge-base .md file's frontmatter against the shared
-taxonomy in taxonomy.py. Intended to be used by the (not yet built) seed
-script, and/or a standalone validation script, before a file's tags are
-embedded and stored -- catches typos or invented tags at authoring time
-rather than letting them silently degrade retrieval later.
+"""Validate a knowledge-base Markdown file's frontmatter.
+
+This schema checks retrieval tags against the shared taxonomy before an
+entry is embedded or written to the database.
 """
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from app.knowledge_schema.taxonomy import (
     ContextTag,
@@ -17,15 +16,22 @@ from app.knowledge_schema.taxonomy import (
 
 
 class RetrievalSignals(BaseModel):
-    emotions: list[EmotionTag]
-    patterns: list[PatternTag]
-    contexts: list[ContextTag]
+    emotions: list[EmotionTag] = Field(default_factory=list)
+    patterns: list[PatternTag] = Field(default_factory=list)
+    contexts: list[ContextTag] = Field(default_factory=list)
 
 
 class ReflectionFrontmatter(BaseModel):
     id: str
     title: str
     difficulty: str
-    retrieval_signals: RetrievalSignals
-    core_principles: list[CorePrincipleTag]
+
+    slogan_number: int | None = Field(
+        default=None,
+        ge=1,
+        le=59,
+    )
     point: MindTrainingPoint | None = None
+
+    retrieval_signals: RetrievalSignals
+    core_principles: list[CorePrincipleTag] = Field(default_factory=list)

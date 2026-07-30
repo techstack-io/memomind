@@ -1,17 +1,16 @@
-"""Vector retrieval -- owns all vector math, per the retrieval boundary
-we agreed on. Embeds a query, runs a pgvector cosine-similarity search
-against reflection_embeddings joined to reflection_entries, and returns
-the top-k candidates with a similarity score attached.
+"""Vector retrieval service.
 
-Nothing downstream of this module -- including rank_reflection,
-reflection_reasoning_service, and conversation_service -- should ever see
-a raw embedding. Downstream services receive only lightweight retrieval
-candidates containing reflection content, metadata, and similarity.
+Owns all vector math within the retrieval boundary. Embeds a query, runs a
+pgvector cosine-similarity search against reflection_embeddings joined to
+reflection_entries, and returns the top-k candidates with similarity scores.
+
+Nothing downstream of this module—including rank_reflection,
+reflection_reasoning_service, and conversation_service—should receive raw
+embeddings. Downstream services receive only RetrievalCandidate objects.
 """
 
-from dataclasses import dataclass, field
-
 from openai import AsyncOpenAI
+from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -20,28 +19,33 @@ from app.models.reflection_entry import ReflectionEntry
 from app.settings import get_settings
 
 settings = get_settings()
-client = AsyncOpenAI(api_key=settings.openai_api_key)
+
+client = AsyncOpenAI(
+    api_key=settings.openai_api_key,
+)
 
 EMBEDDING_MODEL = "text-embedding-3-small"
 
 
-@dataclass
-class RetrievalCandidate:
+class RetrievalCandidate(BaseModel):
+    """A reflection entry returned by semantic retrieval."""
+
     id: str
+    slogan_number: int
     title: str
+    point: str | None = None
     memo_interpretation: str
     conversation_guidance: str
-    safety: str | None
-    emotions: list[str] = field(default_factory=list)
-    patterns: list[str] = field(default_factory=list)
-    contexts: list[str] = field(default_factory=list)
-    core_principles: list[str] = field(default_factory=list)
-    point: str | None = None
-    similarity: float = 0.0
+    core_principles: list[str] = Field(default_factory=list)
+    emotions: list[str] = Field(default_factory=list)
+    patterns: list[str] = Field(default_factory=list)
+    contexts: list[str] = Field(default_factory=list)
+    safety: str | None = None
+    similarity: float
 
 
 async def embed_query(text: str) -> list[float]:
-    """Convert a retrieval query into an embedding vector."""
+    """Create an embedding for the supplied query text."""
 
     response = await client.embeddings.create(
         model=EMBEDDING_MODEL,
@@ -56,12 +60,11 @@ async def retrieve_candidates(
     query: str,
     top_k: int = 5,
 ) -> list[RetrievalCandidate]:
-    """Return the reflection entries most similar to the retrieval query.
+    """Return the closest reflection entries by cosine similarity.
 
-    The query is embedded and compared with stored reflection embeddings
-    using pgvector cosine distance. Similarity is calculated as
-    1 - cosine_distance, where 1.0 represents an exact match and values
-    closer to 0.0 represent increasingly unrelated entries.
+    Similarity is calculated as 1 minus cosine distance, where 1.0 represents
+    an exact semantic match and 0.0 represents an unrelated or orthogonal
+    result.
     """
 
     query_embedding = await embed_query(query)
@@ -98,16 +101,17 @@ async def retrieve_candidates(
 
         candidates.append(
             RetrievalCandidate(
-                id=entry.id,
+                id=str(entry.id),
+                slogan_number=entry.slogan_number,
                 title=entry.title,
+                point=entry.point,
                 memo_interpretation=entry.memo_interpretation,
                 conversation_guidance=entry.conversation_guidance,
-                safety=entry.safety,
+                core_principles=entry.core_principles or [],
                 emotions=entry.emotions or [],
                 patterns=entry.patterns or [],
                 contexts=entry.contexts or [],
-                core_principles=entry.core_principles or [],
-                point=entry.point,
+                safety=entry.safety,
                 similarity=similarity,
             )
         )
