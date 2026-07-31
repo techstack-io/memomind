@@ -3,50 +3,46 @@ id: lojong-012
 title: Drive All Blames Into One
 difficulty: intermediate
 slogan_number: 12
-point: examine_the_reactive_mind
+point: transform_unfavorable_circumstances
 
 retrieval_signals:
   emotions:
-    - anger
-    - resentment
-    - indignation
-    - frustration
+    - resentful
+    - irritated
   patterns:
     - external_blame
-    - reactive_anger
-    - grudge_holding
-    - righteous_certainty
+    - judging_others
+    - rumination
   contexts:
     - relationships
     - work
-    - conflict
-    - family
+    - friendship
 
 core_principles:
-  - non_reactivity
-  - self_examination
-  - responsibility_without_self_blame
-  - clear_seeing
+  - acceptance
+  - honest_self_reflection
+  - equanimity
+  - non_judgmental_observation
 
 retrieval_summary: |
   Drive All Blames Into One
 
-  Use this reflection when someone feels angry, resentful, or wronged, and
-  their attention is fixed on what someone else did to them. Common patterns
-  include external blame, reactive anger, grudge holding, and a sense of
-  righteous certainty about who is at fault.
+  Use this reflection when someone feels resentful, irritated, or wronged,
+  and their attention is fixed on what someone else did to them. Common
+  patterns include external blame, judging others, and rumination on a
+  grievance.
 
-  The central teaching is that anger narrows perception. The mind, once
-  angry, becomes extremely confident about a story it has not actually
-  examined. This slogan does not ask someone to excuse what happened or to
-  suppress the anger. It asks them to turn attention back toward their own
-  reactive mind, not to punish themselves, but because that is the only
-  place real change is possible. Blaming the other person, however
-  justified, keeps the mind agitated and does not resolve anything.
+  The central teaching is that anger and resentment narrow perception. The
+  mind, once reactive, becomes extremely confident about a story it has not
+  actually examined. This slogan does not ask someone to excuse what
+  happened or to suppress the feeling. It asks them to turn attention back
+  toward their own reactive mind, not to punish themselves, but because that
+  is the only place real change is possible. Blaming the other person,
+  however justified, keeps the mind agitated and does not resolve anything.
 
   This slogan helps people move from outward blame toward examining their
   own reaction, from certainty toward clear seeing, and from being
-  controlled by anger toward choosing a response.
+  controlled by the reaction toward choosing a response.
 
   Do not apply this teaching when someone has experienced real harm, abuse,
   or violation and is naming it clearly. In those cases the priority is
