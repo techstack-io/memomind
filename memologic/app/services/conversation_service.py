@@ -9,6 +9,7 @@ from app.models.conversation_turn import ConversationTurn
 from app.schemas.conversation import (
     ConversationRequest,
     ConversationResponse,
+    FurtherReading,
 )
 from app.schemas.reflection_plan import ReflectionPlan
 from app.services.reflection_reasoning_service import build_reflection_plan
@@ -303,9 +304,8 @@ async def create_reply(
         )
         or "NO CANDIDATES RETURNED"
     )
-    
+
     best_entry = rank_reflection(candidates)
-    
 
     if best_entry is not None:
         logger.warning("=== Selected Reflection ===")
@@ -366,6 +366,14 @@ async def create_reply(
     if not isinstance(content, str):
         content = str(content)
 
+    further_reading = None
+    if reflection_plan is not None and best_entry is not None:
+        further_reading = FurtherReading(
+            id=best_entry.id,
+            title=best_entry.title,
+            slogan_number=best_entry.slogan_number,
+        )
+
     try:
         turn = ConversationTurn(
             user_id=user_id,
@@ -384,4 +392,7 @@ async def create_reply(
         logger.exception("conversation_turn_persist_failed")
         await session.rollback()
 
-    return ConversationResponse(reply=content)
+    return ConversationResponse(
+        reply=content,
+        further_reading=further_reading,
+    )
