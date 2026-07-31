@@ -20,6 +20,11 @@ type Message = {
   role: "assistant" | "user";
   content: string;
   eyebrow?: string;
+  furtherReading?: {
+    id: string;
+    title: string;
+    slogan_number: number | null;
+  };
 };
 
 type Reflection = {
@@ -156,6 +161,7 @@ export default function ConversationPage() {
           id: crypto.randomUUID(),
           role: "assistant",
           content: data.reply,
+          furtherReading: data.further_reading ?? undefined,
         },
       ]);
     } catch (error) {
@@ -315,6 +321,7 @@ export default function ConversationPage() {
                       role={message.role}
                       content={message.content}
                       eyebrow={message.eyebrow}
+                      furtherReading={message.furtherReading}
                     />
                   </motion.div>
                 ))}

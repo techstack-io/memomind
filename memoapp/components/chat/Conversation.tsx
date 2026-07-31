@@ -16,8 +16,8 @@ export default function Conversation() {
     {
       id: "welcome",
       role: "assistant",
-      eyebrow: "A reflection with Memo",
-      content: "Good to see you again. What's present for you today?",
+      eyebrow: "A reflection with Ana",
+      content: "Good to see you again. What's on your mind today?",
     },
   ]);
 

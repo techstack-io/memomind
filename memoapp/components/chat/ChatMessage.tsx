@@ -1,11 +1,17 @@
 "use client";
 
+import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 
 type ChatMessageProps = {
   role: "assistant" | "user";
   content: string;
   eyebrow?: string;
+  furtherReading?: {
+    id: string;
+    title: string;
+    slogan_number: number | null;
+  };
 };
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -14,6 +20,7 @@ export function ChatMessage({
   role,
   content,
   eyebrow,
+  furtherReading,
 }: ChatMessageProps) {
   const reduceMotion = useReducedMotion();
 
@@ -76,6 +83,15 @@ export function ChatMessage({
         <p className="mt-2 whitespace-pre-line text-[15px] leading-relaxed text-memo-text">
           {content}
         </p>
+
+        {furtherReading && (
+          <Link
+            href={`/library/${furtherReading.id}`}
+            className="mt-3 inline-flex items-center gap-1 text-[13px] font-medium text-memo-secondary-500 underline-offset-4 hover:underline"
+          >
+            Read more: {furtherReading.title}
+          </Link>
+        )}
       </article>
     </motion.div>
   );
