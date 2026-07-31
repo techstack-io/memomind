@@ -78,7 +78,7 @@ export function AppNavbar() {
 
           <div className="flex min-w-0 items-center gap-2">
             <span className="truncate font-heading text-xl font-bold text-memo-neutral-900 sm:text-3xl">
-              Mettavia
+              mettavia
             </span>
 
             <span className="hidden text-[10px] uppercase tracking-widest text-memo-neutral-400 xs:inline">
