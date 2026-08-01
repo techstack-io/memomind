@@ -17,8 +17,17 @@ import "@xyflow/react/dist/style.css";
 
 import PulseEdge from "./PulseEdge";
 
+interface SloganData extends Record<string, unknown> {
+  point: number;
+  title: string;
+  sloganText: string;
+  isUnlocked: boolean;
+}
+
+type SloganNodeType = Node<SloganData, "sloganNode">;
+
 // Custom Light-Theme Slogan Node
-const SloganNode = ({ data }: NodeProps) => {
+const SloganNode = ({ data }: NodeProps<SloganNodeType>) => {
   const isUnlocked = data.isUnlocked;
 
   return (
@@ -64,7 +73,7 @@ export default function LojongConstellationMap() {
   const nodeTypes = useMemo(() => ({ sloganNode: SloganNode }), []);
   const edgeTypes = useMemo(() => ({ pulseEdge: PulseEdge }), []);
 
-  const initialNodes: Node[] = [
+  const initialNodes: SloganNodeType[] = [
     {
       id: "point-1",
       type: "sloganNode",
