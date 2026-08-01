@@ -1,4 +1,4 @@
-import { AmbientLandscape } from "@components/landscape/AmbientLandscape";
+import { AmbientLandscape } from "@/components/landscape/AmbientLandscape";
 
 export default function LandscapePage() {
   return (
