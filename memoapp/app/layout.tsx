@@ -3,6 +3,11 @@ import { HexclaveProvider, HexclaveTheme } from "@hexclave/next";
 import { hexclaveServerApp } from "@/hexclave/server";
 import { AppNavbar } from "@/components/layout/AppNavbar";
 import "./globals.css";
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
 
 export default function RootLayout({
   children,
@@ -10,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
       <body>
         <HexclaveProvider app={hexclaveServerApp}>
           <HexclaveTheme>

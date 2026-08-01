@@ -8,7 +8,7 @@ import {
   motion,
   useReducedMotion,
   type Variants,
-} from "motion/react";
+} from "framer-motion"; // or "motion/react" depending on your package setup
 
 import AppSidebar from "@/components/layout/AppSidebar";
 import { ChatComposer } from "@/components/chat/ChatComposer";
@@ -98,7 +98,7 @@ const messageAnimation = {
   exit: { opacity: 0, y: -6 },
 };
 
-export default function ConversationPage() {
+export default function ConversationView() {
   const [query, setQuery] = useState("");
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -164,7 +164,7 @@ export default function ConversationPage() {
           furtherReading: data.further_reading ?? undefined,
         },
       ]);
-    } catch (error) {
+    } catch {
       setMessages((current) => [
         ...current,
         {

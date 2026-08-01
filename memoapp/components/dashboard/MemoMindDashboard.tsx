@@ -3,17 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import AppSidebar from "@/components/layout/AppSidebar";
-import {
-  ArrowRight,
-  BookOpen,
-  Compass,
-  Mountain,
-} from "lucide-react";
-import {
-  motion,
-  useReducedMotion,
-  type Variants,
-} from "motion/react";
+import { ArrowRight, BookOpen, Compass, Mountain } from "lucide-react";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
+
+// React Bits Imports
+import SpotlightCard from "@/components/reactbits/SpotlightCard";
+import BlurText from "@/components/reactbits/BlurText";
+import ShinyText from "@/components/reactbits/ShinyText";
 
 type MemoMindDashboardProps = {
   userName?: string;
@@ -32,17 +28,11 @@ const pageEntrance: Variants = {
 };
 
 const fadeUp: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 10,
-  },
+  hidden: { opacity: 0, y: 10 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.75,
-      ease: calmEase,
-    },
+    transition: { duration: 0.75, ease: calmEase },
   },
 };
 
@@ -57,43 +47,28 @@ const conversationSequence: Variants = {
 };
 
 const conversationItem: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 10,
-    scale: 0.99,
-  },
+  hidden: { opacity: 0, y: 10, scale: 0.99 },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: {
-      duration: 0.65,
-      ease: calmEase,
-    },
+    transition: { duration: 0.65, ease: calmEase },
   },
 };
 
 const exploreContainer: Variants = {
   hidden: {},
   visible: {
-    transition: {
-      staggerChildren: 0.14,
-    },
+    transition: { staggerChildren: 0.14 },
   },
 };
 
 const exploreCard: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 18,
-  },
+  hidden: { opacity: 0, y: 18 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.65,
-      ease: calmEase,
-    },
+    transition: { duration: 0.65, ease: calmEase },
   },
 };
 
@@ -101,7 +76,6 @@ export default function MemoMindDashboard({
   userName = "Dan",
 }: MemoMindDashboardProps) {
   const shouldReduceMotion = useReducedMotion();
-
   const entranceState = shouldReduceMotion ? "visible" : "hidden";
 
   return (
@@ -124,9 +98,14 @@ export default function MemoMindDashboard({
                     Good morning, {userName}
                   </p>
 
-                  <h1 className="mt-4 max-w-2xl font-heading text-4xl leading-[1.05] tracking-[-0.035em] text-slate-700">
-                    Have a look around.
-                  </h1>
+                  {/* React Bits: BlurText Reveal */}
+                  <BlurText
+                    text="Have a look around."
+                    delay={120}
+                    animateBy="words"
+                    direction="top"
+                    className="mt-4 max-w-2xl font-heading text-4xl leading-[1.05] tracking-[-0.035em] text-slate-700"
+                  />
 
                   <p className="mt-4 max-w-xl text-base leading-relaxed text-memo-neutral-700">
                     Memo helps you examine ordinary moments through reflection,
@@ -134,7 +113,7 @@ export default function MemoMindDashboard({
                   </p>
                 </motion.div>
 
-                {/* Demo conversation */}
+                {/* Demo conversation card */}
                 <motion.div
                   variants={fadeUp}
                   className="mt-8 rounded-[28px] border border-memo-divider bg-memo-surface p-8 shadow-[0_18px_50px_rgba(42,36,31,0.07)] sm:p-10"
@@ -166,9 +145,16 @@ export default function MemoMindDashboard({
                       className="flex justify-start"
                     >
                       <div className="max-w-lg rounded-2xl rounded-tl-sm border border-memo-divider bg-memo-bg px-5 py-4">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-memo-connection-600">
-                          Slogan 12 · Drive all blames into one
-                        </p>
+                        {/* React Bits: ShinyText for Lojong Slogan badge */}
+                        <div className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-memo-connection-600">
+                          <span>Slogan 12 ·</span>
+                          <ShinyText
+                            text="Drive all blames into one"
+                            disabled={false}
+                            speed={3}
+                            className="text-memo-connection-600 font-semibold"
+                          />
+                        </div>
 
                         <p className="mt-3 text-sm leading-6 text-memo-neutral-700">
                           This is not about excusing what happened. It is about
@@ -194,21 +180,13 @@ export default function MemoMindDashboard({
                             ? undefined
                             : {
                                 y: -2,
-                                boxShadow:
-                                  "0 12px 28px rgba(42, 36, 31, 0.16)",
+                                boxShadow: "0 12px 28px rgba(42, 36, 31, 0.16)",
                               }
                         }
                         whileTap={
-                          shouldReduceMotion
-                            ? undefined
-                            : {
-                                scale: 0.985,
-                              }
+                          shouldReduceMotion ? undefined : { scale: 0.985 }
                         }
-                        transition={{
-                          duration: 0.2,
-                          ease: calmEase,
-                        }}
+                        transition={{ duration: 0.2, ease: calmEase }}
                         className="rounded-xl"
                       >
                         <Link
@@ -216,7 +194,6 @@ export default function MemoMindDashboard({
                           className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-memo-neutral-900 px-6 text-sm font-semibold text-white transition-colors duration-200 hover:bg-black"
                         >
                           Talk with Memo
-
                           <ArrowRight
                             className="h-4 w-4"
                             strokeWidth={1.8}
@@ -231,21 +208,13 @@ export default function MemoMindDashboard({
                             ? undefined
                             : {
                                 y: -2,
-                                boxShadow:
-                                  "0 10px 24px rgba(42, 36, 31, 0.09)",
+                                boxShadow: "0 10px 24px rgba(42, 36, 31, 0.09)",
                               }
                         }
                         whileTap={
-                          shouldReduceMotion
-                            ? undefined
-                            : {
-                                scale: 0.985,
-                              }
+                          shouldReduceMotion ? undefined : { scale: 0.985 }
                         }
-                        transition={{
-                          duration: 0.2,
-                          ease: calmEase,
-                        }}
+                        transition={{ duration: 0.2, ease: calmEase }}
                         className="rounded-xl"
                       >
                         <Link
@@ -267,99 +236,77 @@ export default function MemoMindDashboard({
                 className="hidden h-3/4 min-h-[520px] self-start bg-memo-divider/30 lg:block"
               />
 
-              {/* Continue-reading column */}
-              <motion.div
-                variants={fadeUp}
-                whileHover={
-                  shouldReduceMotion
-                    ? undefined
-                    : {
-                        y: -4,
-                        boxShadow:
-                          "0 18px 50px rgba(42, 36, 31, 0.08)",
-                      }
-                }
-                transition={{
-                  duration: 0.25,
-                  ease: calmEase,
-                }}
-                className="rounded-[28px]"
-              >
+              {/* Continue-reading card with React Bits Spotlight */}
+              <motion.div variants={fadeUp} className="rounded-[28px]">
                 <Link
                   href="/preliminaries/four-reminders"
-                  className="group block overflow-hidden rounded-[28px] border border-memo-divider bg-memo-surface transition-colors duration-300 hover:border-memo-connection-300"
+                  className="group block overflow-hidden rounded-[28px]"
                 >
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-memo-neutral-100">
-                    <Image
-                      src="/cards/foundations4.jpeg"
-                      alt="The Four Reminders"
-                      fill
-                      priority
-                      sizes="(max-width: 1024px) 100vw, 30vw"
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
-                    />
-
-                    <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_14px_rgba(42,36,31,0.10)]" />
-                  </div>
-
-                  <div className="p-6">
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-memo-connection-600">
-                      Continue Reading
-                    </p>
-
-                    <p className="mt-4 text-xs uppercase tracking-[0.16em] text-memo-neutral-500">
-                      Foundations
-                    </p>
-
-                    <h2 className="mt-2 font-heading text-2xl leading-tight tracking-[-0.025em] text-slate-700">
-                      The Four Reminders
-                    </h2>
-
-                    <p className="mt-3 text-sm leading-6 text-memo-neutral-700">
-                      Reflect on the rarity of human life and why remembering it
-                      changes how we approach each ordinary day.
-                    </p>
-
-                    <div className="mt-6 flex items-center justify-between border-t border-memo-divider pt-5">
-                      <span className="text-sm text-memo-neutral-500">
-                        4 min read
-                      </span>
-
-                      <span className="inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600">
-                        Continue
-
-                        <ArrowRight
-                          className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                          strokeWidth={1.8}
-                          aria-hidden="true"
-                        />
-                      </span>
+                  <SpotlightCard
+                    spotlightColor="rgba(230, 211, 164, 0.12)"
+                    className="border border-memo-divider bg-memo-surface transition-colors duration-300 group-hover:border-memo-connection-300 rounded-[28px] overflow-hidden"
+                  >
+                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-memo-neutral-100">
+                      <Image
+                        src="/cards/foundations4.jpeg"
+                        alt="The Four Reminders"
+                        fill
+                        priority
+                        sizes="(max-width: 1024px) 100vw, 30vw"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                      />
+                      <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_14px_rgba(42,36,31,0.10)]" />
                     </div>
-                  </div>
+
+                    <div className="p-6">
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-memo-connection-600">
+                        Continue Reading
+                      </p>
+                      <p className="mt-4 text-xs uppercase tracking-[0.16em] text-memo-neutral-500">
+                        Foundations
+                      </p>
+                      <h2 className="mt-2 font-heading text-2xl leading-tight tracking-[-0.025em] text-slate-700">
+                        The Four Reminders
+                      </h2>
+                      <p className="mt-3 text-sm leading-6 text-memo-neutral-700">
+                        Reflect on the rarity of human life and why remembering
+                        it changes how we approach each ordinary day.
+                      </p>
+
+                      <div className="mt-6 flex items-center justify-between border-t border-memo-divider pt-5">
+                        <span className="text-sm text-memo-neutral-500">
+                          4 min read
+                        </span>
+                        <span className="inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600">
+                          Continue
+                          <ArrowRight
+                            className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                            strokeWidth={1.8}
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </div>
+                    </div>
+                  </SpotlightCard>
                 </Link>
               </motion.div>
             </section>
 
-            {/* Explore section */}
+            {/* Explore further section */}
             <motion.section
               variants={exploreContainer}
               initial={entranceState}
               whileInView="visible"
-              viewport={{
-                once: true,
-                amount: 0.2,
-              }}
+              viewport={{ once: true, amount: 0.2 }}
               className="mt-14 border-t border-memo-divider pt-10"
             >
               <motion.div variants={exploreCard}>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-memo-connection-600">
                   Explore Further
                 </p>
-
                 <h2 className="mt-3 font-heading text-3xl tracking-[-0.025em] text-slate-700">
                   Continue your practice.
                 </h2>
-
                 <p className="mt-3 max-w-2xl text-sm leading-6 text-memo-neutral-700">
                   Return to the foundations, explore a teaching, or review the
                   themes emerging across your reflections.
@@ -367,165 +314,117 @@ export default function MemoMindDashboard({
               </motion.div>
 
               <div className="mt-7 grid gap-5 md:grid-cols-3">
-                <motion.div
-                  variants={exploreCard}
-                  whileHover={
-                    shouldReduceMotion
-                      ? undefined
-                      : {
-                          y: -4,
-                          boxShadow:
-                            "0 18px 45px rgba(42, 36, 31, 0.08)",
-                        }
-                  }
-                  transition={{
-                    duration: 0.25,
-                    ease: calmEase,
-                  }}
-                  className="rounded-[24px]"
-                >
+                <motion.div variants={exploreCard}>
                   <Link
                     href="/preliminaries/four-reminders"
-                    className="group flex h-full flex-col rounded-[24px] border border-memo-divider bg-memo-surface p-6 transition-colors duration-300 hover:border-memo-connection-300"
+                    className="group block h-full rounded-[24px]"
                   >
-                    <div className="flex items-center gap-2 text-memo-connection-600">
-                      <Mountain
-                        className="h-4 w-4"
-                        strokeWidth={1.8}
-                        aria-hidden="true"
-                      />
-
-                      <span className="text-xs font-semibold uppercase tracking-[0.16em]">
-                        Foundations
+                    <SpotlightCard
+                      spotlightColor="rgba(230, 211, 164, 0.12)"
+                      className="flex h-full flex-col rounded-[24px] border border-memo-divider bg-memo-surface p-6 transition-colors duration-300 group-hover:border-memo-connection-300"
+                    >
+                      <div className="flex items-center gap-2 text-memo-connection-600">
+                        <Mountain
+                          className="h-4 w-4"
+                          strokeWidth={1.8}
+                          aria-hidden="true"
+                        />
+                        <span className="text-xs font-semibold uppercase tracking-[0.16em]">
+                          Foundations
+                        </span>
+                      </div>
+                      <h3 className="mt-5 font-heading text-2xl tracking-[-0.02em] text-slate-700">
+                        Continue the Four Reminders
+                      </h3>
+                      <p className="mt-3 text-sm leading-6 text-memo-neutral-700">
+                        Strengthen the grounding that supports deeper
+                        reflection and everyday practice.
+                      </p>
+                      <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600">
+                        Continue
+                        <ArrowRight
+                          className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                          strokeWidth={1.8}
+                          aria-hidden="true"
+                        />
                       </span>
-                    </div>
-
-                    <h3 className="mt-5 font-heading text-2xl tracking-[-0.02em] text-slate-700">
-                      Continue the Four Reminders
-                    </h3>
-
-                    <p className="mt-3 text-sm leading-6 text-memo-neutral-700">
-                      Strengthen the grounding that supports deeper reflection
-                      and everyday practice.
-                    </p>
-
-                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600">
-                      Continue
-
-                      <ArrowRight
-                        className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                        strokeWidth={1.8}
-                        aria-hidden="true"
-                      />
-                    </span>
+                    </SpotlightCard>
                   </Link>
                 </motion.div>
 
-                <motion.div
-                  variants={exploreCard}
-                  whileHover={
-                    shouldReduceMotion
-                      ? undefined
-                      : {
-                          y: -4,
-                          boxShadow:
-                            "0 18px 45px rgba(42, 36, 31, 0.08)",
-                        }
-                  }
-                  transition={{
-                    duration: 0.25,
-                    ease: calmEase,
-                  }}
-                  className="rounded-[24px]"
-                >
-                  <Link
-                    href="/library"
-                    className="group flex h-full flex-col rounded-[24px] border border-memo-divider bg-memo-surface p-6 transition-colors duration-300 hover:border-memo-connection-300"
-                  >
-                    <div className="flex items-center gap-2 text-memo-connection-600">
-                      <BookOpen
-                        className="h-4 w-4"
-                        strokeWidth={1.8}
-                        aria-hidden="true"
-                      />
-
-                      <span className="text-xs font-semibold uppercase tracking-[0.16em]">
-                        Library
-                      </span>
-                    </div>
-
-                    <h3 className="mt-5 font-heading text-2xl tracking-[-0.02em] text-slate-700">
-                      Explore a teaching
-                    </h3>
-
-                    <p className="mt-3 text-sm leading-6 text-memo-neutral-700">
-                      Browse practices, teachings, and contemplations connected
-                      to ordinary life.
-                    </p>
-
-                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600">
-                      Browse Library
-
-                      <ArrowRight
-                        className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                        strokeWidth={1.8}
-                        aria-hidden="true"
-                      />
-                    </span>
-                  </Link>
-                </motion.div>
-
-                <motion.div
-                  variants={exploreCard}
-                  whileHover={
-                    shouldReduceMotion
-                      ? undefined
-                      : {
-                          y: -4,
-                          boxShadow:
-                            "0 18px 45px rgba(42, 36, 31, 0.08)",
-                        }
-                  }
-                  transition={{
-                    duration: 0.25,
-                    ease: calmEase,
-                  }}
-                  className="rounded-[24px]"
-                >
+                <motion.div variants={exploreCard}>
                   <Link
                     href="/journey"
-                    className="group flex h-full flex-col rounded-[24px] border border-memo-divider bg-memo-surface p-6 transition-colors duration-300 hover:border-memo-connection-300"
+                    className="group block h-full rounded-[24px]"
                   >
-                    <div className="flex items-center gap-2 text-memo-connection-600">
-                      <Compass
-                        className="h-4 w-4"
-                        strokeWidth={1.8}
-                        aria-hidden="true"
-                      />
-
-                      <span className="text-xs font-semibold uppercase tracking-[0.16em]">
-                        Journey
+                    <SpotlightCard
+                      spotlightColor="rgba(230, 211, 164, 0.12)"
+                      className="flex h-full flex-col rounded-[24px] border border-memo-divider bg-memo-surface p-6 transition-colors duration-300 group-hover:border-memo-connection-300"
+                    >
+                      <div className="flex items-center gap-2 text-memo-connection-600">
+                        <BookOpen
+                          className="h-4 w-4"
+                          strokeWidth={1.8}
+                          aria-hidden="true"
+                        />
+                        <span className="text-xs font-semibold uppercase tracking-[0.16em]">
+                          Teachings
+                        </span>
+                      </div>
+                      <h3 className="mt-5 font-heading text-2xl tracking-[-0.02em] text-slate-700">
+                        Explore a teaching
+                      </h3>
+                      <p className="mt-3 text-sm leading-6 text-memo-neutral-700">
+                        Browse practices, teachings, and contemplations connected
+                        to ordinary life.
+                      </p>
+                      <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600">
+                        Browse Teachings
+                        <ArrowRight
+                          className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                          strokeWidth={1.8}
+                          aria-hidden="true"
+                        />
                       </span>
-                    </div>
+                    </SpotlightCard>
+                  </Link>
+                </motion.div>
 
-                    <h3 className="mt-5 font-heading text-2xl tracking-[-0.02em] text-slate-700">
-                      Review what is emerging
-                    </h3>
-
-                    <p className="mt-3 text-sm leading-6 text-memo-neutral-700">
-                      Revisit the themes, patterns, and shifts taking shape
-                      across your reflections.
-                    </p>
-
-                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600">
-                      View Journey
-
-                      <ArrowRight
-                        className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                        strokeWidth={1.8}
-                        aria-hidden="true"
-                      />
-                    </span>
+                <motion.div variants={exploreCard}>
+                  <Link
+                    href="/journey"
+                    className="group block h-full rounded-[24px]"
+                  >
+                    <SpotlightCard
+                      spotlightColor="rgba(230, 211, 164, 0.12)"
+                      className="flex h-full flex-col rounded-[24px] border border-memo-divider bg-memo-surface p-6 transition-colors duration-300 group-hover:border-memo-connection-300"
+                    >
+                      <div className="flex items-center gap-2 text-memo-connection-600">
+                        <Compass
+                          className="h-4 w-4"
+                          strokeWidth={1.8}
+                          aria-hidden="true"
+                        />
+                        <span className="text-xs font-semibold uppercase tracking-[0.16em]">
+                          Journey
+                        </span>
+                      </div>
+                      <h3 className="mt-5 font-heading text-2xl tracking-[-0.02em] text-slate-700">
+                        Review what is emerging
+                      </h3>
+                      <p className="mt-3 text-sm leading-6 text-memo-neutral-700">
+                        Revisit the themes, patterns, and shifts taking shape
+                        across your reflections.
+                      </p>
+                      <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-memo-connection-600">
+                        View Journey
+                        <ArrowRight
+                          className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                          strokeWidth={1.8}
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </SpotlightCard>
                   </Link>
                 </motion.div>
               </div>
