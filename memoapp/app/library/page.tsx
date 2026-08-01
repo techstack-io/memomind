@@ -12,7 +12,8 @@ import {
   Search,
   Sparkles,
 } from "lucide-react";
-import BlurText from "@/components/reactbits/BlurText"; // Adjust path if your BlurText component is located elsewhere
+import BlurText from "@/components/reactbits/BlurText";
+import OptionWheel from "@/components/reactbits/OptionWheel";
 
 type LibraryCategory =
   | "All"
@@ -225,15 +226,12 @@ export default function LibraryPage() {
 
         {featuredItem && activeCategory === "All" && !searchQuery && (
           <section className="mb-12">
-            <Link
-              href={`/library/${featuredItem.id}`}
-              className="group grid overflow-hidden rounded-[2rem] border border-[#D8D1C5] bg-[#E9E6DC] transition hover:-translate-y-0.5 hover:border-[#BEB6AA] hover:shadow-[0_20px_60px_rgba(47,61,54,0.08)] lg:grid-cols-[1.15fr_0.85fr]"
-            >
+            <div className="group grid overflow-hidden rounded-[2rem] border border-[#D8D1C5] bg-[#E9E6DC] transition hover:border-[#BEB6AA] hover:shadow-[0_20px_60px_rgba(47,61,54,0.08)] lg:grid-cols-[1.15fr_0.85fr]">
               <div className="flex min-h-[360px] flex-col justify-between p-7 sm:p-10 lg:p-12">
                 <div>
                   <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#C9C4B9] bg-white/40 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.16em] text-[#5F665E]">
                     <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-                    Featured path
+                    Interactive feature
                   </div>
 
                   <p className="text-sm font-medium text-[#737066]">
@@ -260,34 +258,50 @@ export default function LibraryPage() {
                     {featuredItem.duration}
                   </span>
 
-                  <span className="ml-auto flex items-center gap-2 font-medium text-[#35443C]">
-                    Begin
+                  <Link
+                    href={`/library/${featuredItem.id}`}
+                    className="ml-auto inline-flex items-center gap-2 font-medium text-[#35443C] hover:underline"
+                  >
+                    Open Details
                     <ArrowRight
                       className="h-4 w-4 transition-transform group-hover:translate-x-1"
                       aria-hidden="true"
                     />
-                  </span>
+                  </Link>
                 </div>
               </div>
 
-              <div className="relative hidden min-h-[360px] overflow-hidden border-l border-[#D0CBC0] lg:block">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_35%,rgba(255,255,255,0.85),transparent_28%),linear-gradient(145deg,#C9D0C3_0%,#E8DFD0_48%,#B9C2B7_100%)]" />
-
-                <div className="absolute left-[16%] top-[18%] h-44 w-44 rounded-full border border-white/40 bg-white/20 backdrop-blur-sm" />
-                <div className="absolute bottom-[14%] right-[14%] h-56 w-32 rotate-12 rounded-[50%] bg-[#68766C]/20 blur-sm" />
-
-                <div className="absolute inset-x-10 bottom-10 rounded-3xl border border-white/40 bg-white/30 p-5 backdrop-blur-md">
-                  <Feather
-                    className="mb-4 h-5 w-5 text-[#4F5E55]"
-                    aria-hidden="true"
+              {/* OptionWheel Interactive Replacement */}
+              <div className="relative flex min-h-[360px] items-center justify-center overflow-hidden border-l border-[#D0CBC0] bg-[#292721] p-6 lg:block">
+                <div className="absolute inset-0 h-full w-full">
+                  <OptionWheel
+                    items={[
+                      "The Rare Opportunity",
+                      "Impermanence of Life",
+                      "The Weight of Action",
+                      "The Nature of Suffering",
+                      "Awakening Intention",
+                    ]}
+                    defaultSelected={0}
+                    textColor="#8b8479"
+                    activeColor="#F7F4EE"
+                    side="left"
+                    fontSize={2.5}
+                    spacing={1.4}
+                    curve={1}
+                    tilt={6}
+                    blur={2}
+                    fade={0.25}
+                    smoothing={200}
+                    inset={60}
+                    loop={true}
+                    draggable
+                    soundVolume={0.3}
+                    onChange={(index, item) => console.log(index, item)}
                   />
-                  <p className="max-w-xs text-sm leading-6 text-[#445048]">
-                    A foundation for bringing awareness, appreciation, and
-                    intention into ordinary life.
-                  </p>
                 </div>
               </div>
-            </Link>
+            </div>
           </section>
         )}
 
