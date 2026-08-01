@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import { motion, TargetAndTransition } from "framer-motion";
+import { motion, TargetAndTransition, Easing } from "framer-motion";
 
 interface BlurTextProps {
   text?: string;
@@ -13,7 +13,7 @@ interface BlurTextProps {
   rootMargin?: string;
   animationFrom?: TargetAndTransition;
   animationTo?: TargetAndTransition;
-  easing?: string | ((t: number) => number);
+  easing?: Easing;
   onAnimationComplete?: () => void;
 }
 
@@ -33,25 +33,18 @@ export default function BlurText({
   const elements = animateBy === "words" ? text.split(" ") : text.split("");
   const [inView, setInView] = useState(false);
   const ref = useRef<HTMLParagraphElement>(null);
-  const animatedCount = useRef(0);
 
   // Default animations if custom ones aren't supplied
-  const defaultFrom =
+  const defaultFrom: TargetAndTransition =
     direction === "top"
       ? { filter: "blur(10px)", opacity: 0, transform: "translate3d(0,-50px,0)" }
       : { filter: "blur(10px)", opacity: 0, transform: "translate3d(0,50px,0)" };
 
-  const defaultTo = [
-    {
-      filter: "blur(5px)",
-      opacity: 0.5,
-      transform:
-        direction === "top"
-          ? "translate3d(0,5px,0)"
-          : "translate3d(0,-5px,0)",
-    },
-    { filter: "blur(0px)", opacity: 1, transform: "translate3d(0,0,0)" },
-  ];
+  const defaultTo: TargetAndTransition = {
+    filter: "blur(0px)",
+    opacity: 1,
+    transform: "translate3d(0,0,0)",
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -73,30 +66,25 @@ export default function BlurText({
     return () => observer.disconnect();
   }, [threshold, rootMargin]);
 
-  const springs = elements.map((_, i) => ({
-    from: animationFrom || defaultFrom,
-    to: inView
-      ? async (next: (step: Record<string, unknown>) => Promise<void>) => {
-          const steps = animationTo || defaultTo;
-          for (const step of steps) {
-            await next(step);
-          }
-          animatedCount.current += 1;
-          if (animatedCount.current === elements.length && onAnimationComplete) {
-            onAnimationComplete();
-          }
-        }
-      : animationFrom || defaultFrom,
-    delay: i * delay,
-  }));
+  useEffect(() => {
+    if (!inView || !onAnimationComplete) return;
+
+    const totalDuration = 800 + (elements.length - 1) * delay;
+    const timer = setTimeout(onAnimationComplete, totalDuration);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView]);
+
+  const from = animationFrom || defaultFrom;
+  const to = animationTo || defaultTo;
 
   return (
     <p ref={ref} className={`flex flex-wrap ${className}`}>
       {elements.map((element, index) => (
         <motion.span
           key={index}
-          initial={springs[index].from}
-          animate={inView ? defaultTo[1] : springs[index].from}
+          initial={from}
+          animate={inView ? to : from}
           transition={{
             duration: 0.8,
             delay: (index * delay) / 1000,
