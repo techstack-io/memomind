@@ -13,7 +13,7 @@ interface BlurTextProps {
   rootMargin?: string;
   animationFrom?: Record<string, unknown>;
   animationTo?: Record<string, unknown>[];
-  easing?: (t: number) => number | string;
+  easing?: string | ((t: number) => number);
   onAnimationComplete?: () => void;
 }
 
