@@ -12,6 +12,7 @@ import {
   Search,
   Sparkles,
 } from "lucide-react";
+import BlurText from "@/components/reactbits/BlurText"; // Adjust path if your BlurText component is located elsewhere
 
 type LibraryCategory =
   | "All"
@@ -149,9 +150,14 @@ export default function LibraryPage() {
                 Mettavia Library
               </div>
 
-              <h1 className="text-4xl font-medium tracking-[-0.04em] text-[#292721] sm:text-5xl">
-                Teachings for everyday life
-              </h1>
+              {/* BlurText Animation Applied Here */}
+              <BlurText
+                text="Teachings for everyday life"
+                delay={120}
+                animateBy="words"
+                direction="top"
+                className="mt-4 text-5xl font-light tracking-tight text-neutral-900"
+              />
 
               <p className="mt-4 max-w-xl text-base leading-7 text-[#686258] sm:text-lg">
                 Explore contemplative teachings, guided reflections, and
