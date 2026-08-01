@@ -5,7 +5,7 @@ export default function LandscapePage() {
     <main className="relative flex min-h-screen items-start justify-center overflow-hidden bg-[#F3EEE5] pt-8">
       <div className="relative h-[90vh] w-[84vw] -translate-x-6">
         <Image
-          src="/landscape/hero.jpeg"
+          src="/landscape/tree.jpeg"
           alt=""
           fill
           priority
