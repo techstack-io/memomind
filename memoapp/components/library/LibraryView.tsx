@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import BlurText from "@/components/reactbits/BlurText";
 import OptionWheel from "@/components/reactbits/OptionWheel";
-import LibraryCard from "./LibraryCard";
+import LibraryCard from "@/components/library/LibraryCard";
 
 export type LibraryCategory =
   | "All"
@@ -285,7 +285,7 @@ export default function LibraryView() {
                     textColor="#8b8479"
                     activeColor="#F7F4EE"
                     side="left"
-                    fontSize={2.5}
+                    fontSize={1.75}
                     spacing={1.4}
                     curve={1}
                     tilt={6}
