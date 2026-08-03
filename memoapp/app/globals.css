@@ -11,8 +11,8 @@
 
 @theme inline {
   /* Typography */
-  --font-sans: var(--font-sans);
-  --font-heading: var(--font-sans);
+--font-sans: var(--font-geist);
+--font-heading: var(--font-newsreader);
 
   /* Core surfaces */
   --color-memo-bg: #f6f4ef;
@@ -159,7 +159,7 @@ body {
   min-height: 100vh;
   background: var(--color-memo-bg);
   color: var(--color-memo-text);
-  font-family: var(--font-manrope), Arial, sans-serif;
+  font-family: var(--font-geist), Arial, sans-serif;
 }
 
 button,

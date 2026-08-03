@@ -10,8 +10,9 @@ import {
   Search,
   Sparkles,
 } from "lucide-react";
+
 import BlurText from "@/components/reactbits/BlurText";
-import OptionWheel from "@/components/reactbits/OptionWheel";
+import LineSidebar from "@/components/reactbits/LineSidebar";
 import LibraryCard from "@/components/library/LibraryCard";
 
 export type LibraryCategory =
@@ -30,6 +31,14 @@ export type LibraryItem = {
   duration: string;
   eyebrow: string;
   featured?: boolean;
+};
+
+type FourReminder = {
+  title: string;
+  shortTitle: string;
+  description: string;
+  duration: string;
+  href: string;
 };
 
 const categories: LibraryCategory[] = [
@@ -114,12 +123,49 @@ const libraryItems: LibraryItem[] = [
   },
 ];
 
+const fourReminders: FourReminder[] = [
+  {
+    title: "Precious Human Life",
+    shortTitle: "Precious Human Life",
+    description:
+      "Recognize the rarity and possibility of this life. This reminder is not meant to create pressure, but to awaken appreciation for the conditions available right now.",
+    duration: "6 min",
+    href: "/library/precious-human-life",
+  },
+  {
+    title: "Impermanence",
+    shortTitle: "Impermanence",
+    description:
+      "Everything that arises also changes and passes away. Remembering impermanence can deepen appreciation for the people, opportunities, and moments that are present now.",
+    duration: "6 min",
+    href: "/library/impermanence",
+  },
+  {
+    title: "Cause and Effect",
+    shortTitle: "Cause & Effect",
+    description:
+      "Thoughts, intentions, words, and actions shape what follows. This reminder invites greater care without turning practice into judgment or fear.",
+    duration: "7 min",
+    href: "/library/cause-and-effect",
+  },
+  {
+    title: "The Unsatisfactory Nature of Samsara",
+    shortTitle: "The Nature of Samsara",
+    description:
+      "Lasting peace cannot be secured by endlessly arranging external circumstances. This reminder encourages us to look more deeply at the habits that keep dissatisfaction moving.",
+    duration: "8 min",
+    href: "/library/nature-of-samsara",
+  },
+];
+
 export default function LibraryView() {
   const [activeCategory, setActiveCategory] =
     useState<LibraryCategory>("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeReminderIndex, setActiveReminderIndex] = useState(0);
 
   const featuredItem = libraryItems.find((item) => item.featured);
+  const activeReminder = fourReminders[activeReminderIndex];
 
   const filteredItems = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
@@ -150,13 +196,12 @@ export default function LibraryView() {
                 Mettavia Library
               </div>
 
-              {/* BlurText Animation Applied Here */}
               <BlurText
                 text="Teachings for everyday life"
                 delay={120}
                 animateBy="words"
                 direction="top"
-                className="mt-4 text-5xl font-light tracking-tight text-neutral-900"
+                className="mt-4 font-heading text-4xl font-normal tracking-tight text-neutral-900"
               />
 
               <p className="mt-4 max-w-xl text-base leading-7 text-[#686258] sm:text-lg">
@@ -208,10 +253,12 @@ export default function LibraryView() {
 
             <label className="relative block w-full lg:w-80">
               <span className="sr-only">Search the library</span>
+
               <Search
                 className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8B8479]"
                 aria-hidden="true"
               />
+
               <input
                 type="search"
                 value={searchQuery}
@@ -225,43 +272,48 @@ export default function LibraryView() {
 
         {featuredItem && activeCategory === "All" && !searchQuery && (
           <section className="mb-12">
-            <div className="group grid overflow-hidden rounded-[2rem] border border-[#D8D1C5] bg-[#E9E6DC] transition hover:border-[#BEB6AA] hover:shadow-[0_20px_60px_rgba(47,61,54,0.08)] lg:grid-cols-[1.15fr_0.85fr]">
-              <div className="flex min-h-[360px] flex-col justify-between p-7 sm:p-10 lg:p-12">
+            <div className="grid overflow-hidden rounded-[2rem] border border-[#D8D1C5] bg-[#E9E6DC] shadow-[0_20px_60px_rgba(47,61,54,0.06)] lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="flex min-h-[410px] flex-col justify-between p-7 sm:p-10 lg:p-12">
                 <div>
                   <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#C9C4B9] bg-white/40 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.16em] text-[#5F665E]">
                     <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-                    Interactive feature
+                    Interactive reflection
                   </div>
 
                   <p className="text-sm font-medium text-[#737066]">
-                    {featuredItem.eyebrow}
+                    The Four Reminders
                   </p>
 
-                  <h2 className="mt-3 max-w-lg text-3xl font-medium tracking-[-0.035em] text-[#292721] sm:text-4xl">
-                    {featuredItem.title}
-                  </h2>
+                  <div
+                    key={activeReminder.title}
+                    className="animate-[fadeUp_450ms_ease-out]"
+                  >
+                    <h2 className="mt-4 max-w-lg font-heading text-3xl font-normal tracking-[-0.035em] text-[#292721] sm:text-4xl">
+                      {activeReminder.title}
+                    </h2>
 
-                  <p className="mt-5 max-w-xl text-base leading-7 text-[#625E55]">
-                    {featuredItem.description}
-                  </p>
+                    <p className="mt-5 max-w-xl text-base leading-7 text-[#625E55]">
+                      {activeReminder.description}
+                    </p>
+                  </div>
                 </div>
 
                 <div className="mt-10 flex flex-wrap items-center gap-5 text-sm text-[#6E695F]">
                   <span className="flex items-center gap-2">
                     <Compass className="h-4 w-4" aria-hidden="true" />
-                    {featuredItem.type}
+                    Guided reflection
                   </span>
 
                   <span className="flex items-center gap-2">
                     <Clock3 className="h-4 w-4" aria-hidden="true" />
-                    {featuredItem.duration}
+                    {activeReminder.duration}
                   </span>
 
                   <Link
-                    href={`/library/${featuredItem.id}`}
-                    className="ml-auto inline-flex items-center gap-2 font-medium text-[#35443C] hover:underline"
+                    href={activeReminder.href}
+                    className="group ml-auto inline-flex items-center gap-2 font-medium text-[#35443C] hover:underline"
                   >
-                    Open Details
+                    Open reflection
                     <ArrowRight
                       className="h-4 w-4 transition-transform group-hover:translate-x-1"
                       aria-hidden="true"
@@ -270,36 +322,68 @@ export default function LibraryView() {
                 </div>
               </div>
 
-              {/* OptionWheel Interactive Replacement */}
-              <div className="relative flex min-h-[360px] items-center justify-center overflow-hidden border-l border-[#D0CBC0] bg-[#292721] p-6 lg:block">
-                <div className="absolute inset-0 h-full w-full">
-                  <OptionWheel
-                    items={[
-                      "The Rare Opportunity",
-                      "Impermanence of Life",
-                      "The Weight of Action",
-                      "The Nature of Suffering",
-                      "Awakening Intention",
-                    ]}
-                    defaultSelected={0}
-                    textColor="#8b8479"
-                    activeColor="#F7F4EE"
-                    side="left"
-                    fontSize={1.75}
-                    spacing={1.4}
-                    curve={1}
-                    tilt={6}
-                    blur={2}
-                    fade={0.25}
-                    smoothing={200}
-                    inset={60}
-                    loop={true}
-                    draggable
-                    soundVolume={0.3}
-                    onChange={(index: number, item: string) =>
-                      console.log(index, item)
-                    }
-                  />
+              <div className="relative min-h-[360px] overflow-hidden border-t border-[#D0CBC0] bg-[#292721] px-6 py-10 lg:min-h-[410px] lg:border-l lg:border-t-0 lg:px-8">
+                <div className="mb-8 lg:hidden">
+                  <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#8F897F]">
+                    Choose a reminder
+                  </p>
+                </div>
+
+                <div className="absolute inset-0 hidden lg:block">
+                <LineSidebar
+                  items={fourReminders.map((reminder) => reminder.shortTitle)}
+                  accentColor="#AABDA8"
+                  textColor="#CFC8BC"
+                  markerColor="#716B62"
+                  showIndex={false}
+                  showMarker
+                  proximityRadius={85}
+                  maxShift={12}
+                  falloff="smooth"
+                  markerLength={38}
+                  markerGap={12}
+                  tickScale={0.35}
+                  scaleTick={false}
+                  itemGap={30}
+                  fontSize={1.1}
+                  smoothing={180}
+                  activeIndex={activeReminderIndex}
+                  onItemClick={(index) => setActiveReminderIndex(index)}
+                />
+                </div>
+
+                <div className="space-y-2 lg:hidden">
+                  {fourReminders.map((reminder, index) => {
+                    const isActive = activeReminderIndex === index;
+
+                    return (
+                      <button
+                        key={reminder.title}
+                        type="button"
+                        onClick={() => setActiveReminderIndex(index)}
+                        className={[
+                          "flex w-full items-center gap-4 rounded-xl px-4 py-3 text-left transition",
+                          isActive
+                            ? "bg-white/10 text-[#F7F4EE]"
+                            : "text-[#AAA398] hover:bg-white/5 hover:text-[#E7E1D7]",
+                        ].join(" ")}
+                        aria-pressed={isActive}
+                      >
+                        <span
+                          className={[
+                            "h-px shrink-0 transition-all",
+                            isActive
+                              ? "w-10 bg-[#AABDA8]"
+                              : "w-5 bg-[#716B62]",
+                          ].join(" ")}
+                        />
+
+                        <span className="text-sm">
+                          {reminder.shortTitle}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -312,7 +396,8 @@ export default function LibraryView() {
               <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#827B70]">
                 Explore
               </p>
-              <h2 className="mt-2 text-2xl font-medium tracking-[-0.025em]">
+
+              <h2 className="mt-2 font-heading text-2xl font-normal tracking-[-0.025em]">
                 {activeCategory === "All"
                   ? "All practices and teachings"
                   : activeCategory}
@@ -337,9 +422,11 @@ export default function LibraryView() {
                 className="mx-auto h-6 w-6 text-[#8A8378]"
                 aria-hidden="true"
               />
+
               <h3 className="mt-4 text-lg font-medium">
                 Nothing found in this section
               </h3>
+
               <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#756F65]">
                 Try another category or use a broader search.
               </p>
@@ -353,9 +440,11 @@ export default function LibraryView() {
               <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#80796E]">
                 Not sure where to begin?
               </p>
-              <h2 className="mt-3 text-2xl font-medium tracking-[-0.025em]">
+
+              <h2 className="mt-3 font-heading text-2xl font-normal tracking-[-0.025em]">
                 Begin with what is present today.
               </h2>
+
               <p className="mt-3 text-sm leading-6 text-[#6E685E] sm:text-base">
                 Ana can help you find a practice that relates naturally to what
                 you are experiencing rather than asking you to choose a teaching

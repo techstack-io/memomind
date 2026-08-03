@@ -1,13 +1,23 @@
 import { Suspense } from "react";
 import { HexclaveProvider, HexclaveTheme } from "@hexclave/next";
+import { Geist, Newsreader } from "next/font/google";
+
 import { hexclaveServerApp } from "@/hexclave/server";
 import { AppNavbar } from "@/components/layout/AppNavbar";
-import "./globals.css";
-import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+import "./globals.css";
 
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist",
+});
+
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  variable: "--font-newsreader",
+  display: "swap",
+});
 
 export default function RootLayout({
   children,
@@ -15,7 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      data-scroll-behavior="smooth"
+      className={cn(geist.variable, newsreader.variable)}
+    >
       <body>
         <HexclaveProvider app={hexclaveServerApp}>
           <HexclaveTheme>
