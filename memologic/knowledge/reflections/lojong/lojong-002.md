@@ -14,6 +14,9 @@ retrieval_signals:
     - catastrophizing
     - clinging
     - rumination
+    - taking_thoughts_as_facts
+    - overidentification
+    - fixed_identity
   contexts:
     - work
     - major_life_transition
