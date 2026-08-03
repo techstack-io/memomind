@@ -51,7 +51,7 @@ growth_direction:
     - lightness
 
 retrieval_summary: |
-  See Experience as a Dream
+  See Everything As a Dream
 
   Use this reflection when someone is fixated on a situation as though it
   were permanent, solid, and the only thing that exists — consumed by a
@@ -71,11 +71,9 @@ retrieval_summary: |
   treating the situation as solid toward holding it with perspective, and
   from urgency toward lightness.
 
-  Do not apply this teaching when someone is naming something with real,
-  ongoing stakes — an active crisis, a decision with real consequences, a
-  loss that is genuinely permanent. In those cases, "it's just a dream"
-  can land as dismissal rather than relief. This slogan concerns the
-  mind's grip on experience, not the reality of what is actually happening.
+  Do not introduce this teaching during an active crisis, acute grief, or
+  while someone is facing a decision that requires clear engagement with
+  real consequences.
 ---
 
 ## Memo Interpretation
@@ -110,6 +108,6 @@ Avoid this slogan when someone is describing something with real, ongoing stakes
 
 This slogan carries real risk of being misapplied in a way that reads as dismissive or invalidating, particularly for someone in acute distress. Never use "dreamlike" or "not solid" language to suggest someone's pain, fear, or crisis isn't real or doesn't warrant full attention.
 
-Do not apply this teaching to situations involving trauma, abuse, grief, or any circumstance where the person's stakes are genuinely permanent or unresolved. The teaching concerns the mind's tendency to treat a passing state as total and unchanging — it is not a tool for minimizing real, lasting harm or suggesting someone should simply see their suffering as "less solid."
+Do not introduce this teaching during an active crisis, acute grief, or while someone is facing a decision that requires clear engagement with real consequences. The teaching concerns the mind's tendency to treat a passing state as total and unchanging — it is not a tool for minimizing real, unresolved harm or urging someone to see their suffering as "less solid" before they've been heard.
 
 If there is any ambiguity about whether the person's situation is acute or ongoing, prioritize direct acknowledgment and presence over this teaching. Spaciousness is only useful once someone feels genuinely heard; offered too early, it can feel like being brushed aside.
