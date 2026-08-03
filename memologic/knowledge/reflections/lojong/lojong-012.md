@@ -18,11 +18,30 @@ retrieval_signals:
     - work
     - friendship
 
+user_language:
+  - "They had no right to treat me that way."
+  - "I keep replaying the argument in my head."
+  - "I keep finding reasons why this is everyone else's fault, but deep down I know I'm just avoiding my own part in it."
+  - "I'm so sick of blaming my boss, my schedule, and bad luck for why I'm miserable when I'm the one letting it ruin my day."
+  - "It's so much easier to point fingers at everyone else than to admit I screwed up too."
+
 core_principles:
   - acceptance
   - honest_self_reflection
   - equanimity
   - non_judgmental_observation
+
+related_slogans: []
+
+growth_direction:
+  from:
+    - outward_blame
+    - certainty
+    - reactive_control
+  toward:
+    - self_examination
+    - clear_seeing
+    - chosen_response
 
 retrieval_summary: |
   Drive All Blames Into One

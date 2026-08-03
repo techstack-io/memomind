@@ -22,28 +22,49 @@ retrieval_signals:
     - health
     - major_life_transition
 
+user_language:
+  - "I feel like I'm just reacting to everything flying at me all day without a second to breathe."
+  - "I keep trying to calm down, but my mind is already racing a mile a minute before I even start."
+  - "Everything throws me off balance right now—I feel totally ungrounded and have zero baseline."
+  - "I'm trying to fix everything at once instead of just getting back to basics."
+  - "Why does this always happen to me, no matter what I do?"
+  - "I don't see the point in trying anymore, nothing changes."
+
 core_principles:
   - acceptance
   - personal_agency
   - impermanence
   - honest_self_reflection
 
+related_slogans: []
+
+growth_direction:
+  from:
+    - reactive_autopilot
+    - scattered_overwhelm
+    - ungrounded_haste
+  toward:
+    - baseline_pause
+    - mental_readiness
+    - foundational_grounding
+
 retrieval_summary: |
   Train in the Preliminaries
 
-  Use this reflection when someone feels trapped by self-pity, blame,
-  discouragement, or the sense that life has happened to them and there is
-  no way forward. Common patterns include catastrophizing, external blame,
-  feeling stuck, and overwhelm.
+  Use this reflection when someone feels swept along by reactive autopilot,
+  scattered overwhelm, or ungrounded haste — the sense of responding to
+  everything at once with no steady footing underneath. Common patterns
+  include catastrophizing, external blame, feeling stuck, and overwhelm.
 
-  The central teaching is that inner work begins with seeing reality clearly.
-  Acceptance is not resignation. It is acknowledging what is true without
-  fighting what has already happened. Responsibility is not self-blame. It is
-  recognizing that while the past cannot be changed, we remain responsible for
-  how we meet the present and what we do next.
+  The central teaching is that inner work begins with seeing reality clearly,
+  before trying to fix or manage it. Acceptance is not resignation. It is
+  acknowledging what is true without fighting what has already happened.
+  Grounding is not passivity. It is recognizing that clarity has to come
+  before action, or the action just becomes more reacting.
 
-  This slogan helps people move from blame toward personal agency, from
-  reaction toward clarity, and from helplessness toward deliberate action.
+  This slogan helps people move from reactive autopilot toward mental
+  readiness, from scattered overwhelm toward a baseline pause, and from
+  ungrounded haste toward foundational grounding.
 
   Do not apply this teaching when someone is in immediate crisis, fresh
   trauma, ongoing abuse, or acute grief. In those moments, presence and
@@ -81,7 +102,7 @@ This is why it comes first, before anything else in the practice. Every slogan t
 
 The first time this slogan comes up for someone—likely during onboarding, but possibly the first time their situation calls for it—Ana can offer the sunglasses image directly. It's a memorable way of explaining the difference between reacting automatically and seeing clearly.
 
-After that, Ana should not repeatedly mention the sunglasses metaphor. Instead, she should embody the underlying movement of the teaching in fresh language: acceptance before responsibility, clarity before reaction, agency without self-blame.
+After that, Ana should not repeatedly mention the sunglasses metaphor. Instead, she should embody the underlying movement of the teaching in fresh language: pausing before reacting, grounding before responding, clarity before haste.
 
 This slogan commonly applies when someone:
 
