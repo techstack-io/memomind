@@ -98,6 +98,10 @@ class ContextTag(StrEnum):
     GRIEF_AND_LOSS = "grief_and_loss"
     SOCIAL_MEDIA = "social_media"
 
+    # Expanded relational/situational contexts (added for lojong-002)
+    FAMILY_CONFLICT = "family_conflict"
+    FAILURE_OR_REJECTION = "failure_or_rejection"
+
 
 class CorePrincipleTag(StrEnum):
     # Original (Lojong)
