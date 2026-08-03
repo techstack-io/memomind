@@ -72,6 +72,15 @@ class PatternTag(StrEnum):
     CLINGING = "clinging"
     RESISTING_CHANGE = "resisting_change"
 
+    # Cognitive distortions (added for lojong-002)
+    TAKING_THOUGHTS_AS_FACTS = "taking_thoughts_as_facts"
+    OVERIDENTIFICATION = "overidentification"
+    PERSONALIZING = "personalizing"
+    MIND_READING = "mind_reading"
+    FORTUNE_TELLING = "fortune_telling"
+    BLACK_AND_WHITE_THINKING = "black_and_white_thinking"
+    FIXED_IDENTITY = "fixed_identity"
+
 
 class ContextTag(StrEnum):
     # Original (Lojong)
