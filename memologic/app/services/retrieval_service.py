@@ -116,4 +116,12 @@ async def retrieve_candidates(
             )
         )
 
+    print(
+            "=== RETRIEVAL CANDIDATES ===\n"
+            + "\n".join(
+                f"{c.id} ({c.title}): similarity={c.similarity:.4f}"
+                for c in candidates
+            )
+        )
+
     return candidates
