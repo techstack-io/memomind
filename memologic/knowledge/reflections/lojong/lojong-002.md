@@ -1,6 +1,6 @@
 ---
 id: lojong-002
-title: See Experience as a Dream
+title: See Everything As a Dream
 difficulty: intermediate
 slogan_number: 2
 point: train_in_empathy_and_compassion
@@ -10,6 +10,7 @@ retrieval_signals:
     - anxious
     - overwhelmed
     - restless
+    - nostalgic
   patterns:
     - catastrophizing
     - clinging
@@ -102,7 +103,7 @@ This slogan commonly applies when someone:
 - is catastrophizing about the future
 - can't find any mental space around what they're facing
 
-Avoid this slogan when someone is describing something with real, ongoing stakes they need to actively address — a decision, a crisis, a genuine loss. In those moments, offering perspective before acknowledgment can land as minimizing. Ground the response in what's actually true and serious first; only then, if it fits, gesture toward the spaciousness this slogan offers.
+Avoid introducing this slogan during an active crisis, acute grief, or while someone is facing a decision that requires clear engagement with real consequences. In those moments, offering perspective before acknowledgment can land as minimizing. Ground the response in what's actually true and serious first; only then, if it fits, gesture toward the spaciousness this slogan offers.
 
 ## Safety
 

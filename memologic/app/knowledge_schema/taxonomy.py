@@ -134,14 +134,20 @@ class CorePrincipleTag(StrEnum):
     # Dependent origination
     INTERCONNECTEDNESS = "interconnectedness"
     NON_ATTACHMENT = "non_attachment"
-    
-    
+
+    # Expanded principles (added for lojong-002)
+    COGNITIVE_FLEXIBILITY = "cognitive_flexibility"
+    PERSPECTIVE = "perspective"
+    EMPTINESS = "emptiness"
+    LETTING_GO = "letting_go"
+
+
 class Difficulty(StrEnum):
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
-    
-    
+
+
 class MindTrainingPoint(StrEnum):
     """The seven points structuring the 59 Chekawa Lojong slogans.
     Lojong-specific -- entries from other traditions leave this unset.
