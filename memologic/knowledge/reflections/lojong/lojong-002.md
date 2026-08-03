@@ -29,6 +29,8 @@ user_language:
   - "I'm so wrapped up in this that I can't see anything outside of it."
   - "Everything feels so solid and urgent right now, like there's no space around it."
   - "I know objectively this will pass, but it doesn't feel that way at all."
+  - "I can't stop replaying that rejection like it's going to define everything from here."
+  - "I keep thinking about how things used to feel, like something's already slipping away even though nothing's actually changed."
 
 core_principles:
   - impermanence
