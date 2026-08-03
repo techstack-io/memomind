@@ -44,6 +44,12 @@ class EmotionTag(StrEnum):
     GRIEVING = "grieving"
     AFRAID = "afraid"
 
+    # Expanded emotional range (added for lojong-002)
+    SAD = "sad"
+    DISAPPOINTED = "disappointed"
+    HURT = "hurt"
+    NOSTALGIC = "nostalgic"
+
 
 class PatternTag(StrEnum):
     # Original (Lojong)
