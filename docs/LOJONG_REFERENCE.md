@@ -23,13 +23,13 @@ source to draw phrasing from.
 
 | # | Traditional gist (our paraphrase) | Status |
 |---|---|---|
-| 1 | Ground yourself first in the basics — impermanence, suffering, interdependence — before deeper practice | ⬜ |
+| 1 | Ground yourself first in the basics — impermanence, suffering, interdependence — before deeper practice | ✅ |
 
 ## Point Two: Training in Bodhicitta
 
 | # | Traditional gist (our paraphrase) | Status |
 |---|---|---|
-| 2 | See all experience as dreamlike, insubstantial | ⬜ |
+| 2 | See all experience as dreamlike, insubstantial | ⬜ *(next entry)* |
 | 3 | Examine the mind's own awareness, prior to thought | ⬜ |
 | 4 | Don't cling even to the antidote or method itself | ⬜ |
 | 5 | Rest in the open, essential nature of mind | ⬜ |
@@ -44,7 +44,7 @@ source to draw phrasing from.
 | # | Traditional gist (our paraphrase) | Status |
 |---|---|---|
 | 11 | Treat difficulty itself as material for the path, not an obstacle to it | ⬜ |
-| 12 | When something goes wrong, look first at your own reaction, not external causes | 🟡 *(next entry — "Drive all blames into one")* |
+| 12 | When something goes wrong, look first at your own reaction, not external causes | ✅ *("Drive all blames into one")* |
 | 13 | See even difficult people as offering something worth genuine gratitude | ⬜ |
 | 14 | See confusion as inseparable from awakened awareness, not something to fight | ⬜ |
 | 15 | Rely on four key supports (merit, purification, offering to obstacles, offering to protectors) | ⬜ |
@@ -117,15 +117,13 @@ source to draw phrasing from.
 
 ## Notes
 
-- **`lojong-001` ("Beginning Where You Are")** doesn't map cleanly to a single
-  numbered slogan above — it reads as an original framing inspired by the
-  broader tradition (closest conceptual neighbors: #10, beginning with
-  yourself, and #1, the preliminaries) rather than a direct rendering of one
-  specific slogan. Worth deciding at some point whether it should be
-  formally tied to a slogan number, or intentionally stands apart as an
-  orientation piece.
-- **Slogan 12** ("Drive all blames into one") is the confirmed next entry to
-  author, per this morning's session.
+- **`lojong-001` ("Train in the Preliminaries")** is authored and live —
+  content covers acceptance, responsibility, and the Four Reminders,
+  landing as a direct treatment of Point One's traditional gist rather
+  than the looser "orientation piece" this doc originally described it
+  as. Updated title reflects the file as it now stands.
+- **Slogan 12** ("Drive all blames into one") is authored and live.
+- **Slogan 2** is the confirmed next entry to author, opening Point Two.
 - **Slogan 49** ("Always meditate on whatever provokes resentment") is
   referenced as a cross-reference candidate from `metta-001`, not yet
   authored itself.
