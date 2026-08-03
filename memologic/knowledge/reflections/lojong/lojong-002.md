@@ -21,6 +21,7 @@ retrieval_signals:
     - work
     - major_life_transition
     - health
+    - failure_or_rejection
 
 user_language:
   - "This feels like the biggest thing in the world right now, but I know in six months I probably won't even remember it."
