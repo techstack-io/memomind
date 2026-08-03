@@ -93,15 +93,59 @@ def build_embedding_text(
 
     retrieval_summary = parsed.retrieval_summary.strip()
 
+    user_language_text = "\n".join(
+        f'"{phrase}"' for phrase in parsed.user_language
+    )
+
     return "\n".join(
         [
             f"Title: {parsed.title}",
             f"Slogan number: {slogan_number or ''}",
             f"Point: {point_text}",
             "",
+            "User language:",
+            user_language_text,
+            "",
+            "Retrieval summary:",
             retrieval_summary,
         ]
     ).strip()
+
+
+def check_related_slogans(
+    md_files: list[Path],
+) -> list[tuple[str, str]]:
+    """Validate that every related_slogans reference points to a real entry.
+
+    Parses frontmatter across all files (independent of ingest_file's own
+    parsing) to build the full known-ID set, then flags any related_slogans
+    entry that doesn't resolve. Returns a list of (source_id, missing_id)
+    pairs; empty if the corpus is internally consistent.
+    """
+
+    parsed_entries: list[ReflectionFrontmatter] = []
+
+    for path in md_files:
+        post = frontmatter.load(path)
+
+        try:
+            parsed_entries.append(
+                ReflectionFrontmatter(**post.metadata)
+            )
+        except ValidationError:
+            # Already logged/skipped by ingest_file; don't double-report here.
+            continue
+
+    known_ids = {entry.id for entry in parsed_entries}
+
+    broken_refs = [
+        (entry.id, ref)
+        for entry in parsed_entries
+        for ref in entry.related_slogans
+        if ref not in known_ids
+    ]
+
+    return broken_refs
 
 
 async def embed(text: str) -> list[float]:
@@ -285,8 +329,14 @@ async def ingest_file(path: Path) -> None:
     )
 
 
-async def main() -> None:
-    """Ingest every reflection Markdown file."""
+async def main(strict: bool = False) -> None:
+    """Ingest every reflection Markdown file.
+
+    strict=True aborts ingestion if any related_slogans reference is
+    dangling. strict=False (default) logs a warning and proceeds --
+    useful while authoring a corpus point-by-point, where forward
+    references to not-yet-written entries are expected.
+    """
 
     md_files = sorted(
         KNOWLEDGE_ROOT.rglob("*.md")
@@ -298,6 +348,22 @@ async def main() -> None:
             KNOWLEDGE_ROOT,
         )
         return
+
+    broken_refs = check_related_slogans(md_files)
+
+    if broken_refs:
+        for source_id, missing_id in broken_refs:
+            logger.warning(
+                "%s references %s, which does not exist",
+                source_id,
+                missing_id,
+            )
+
+        if strict:
+            raise ValueError(
+                f"{len(broken_refs)} dangling related_slogans "
+                "reference(s) found -- aborting ingestion"
+            )
 
     for path in md_files:
         try:

@@ -5,7 +5,7 @@ validated against ReflectionFrontmatter before ingestion.
 """
 
 from sqlalchemy import Integer, String, Text
-from sqlalchemy.dialects.postgresql import ARRAY
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import Base
@@ -34,6 +34,19 @@ class ReflectionEntry(Base):
     core_principles: Mapped[list[str]] = mapped_column(
         ARRAY(String),
         default=list,
+    )
+
+    user_language: Mapped[list[str]] = mapped_column(
+        ARRAY(String),
+        default=list,
+    )
+    related_slogans: Mapped[list[str]] = mapped_column(
+        ARRAY(String),
+        default=list,
+    )
+    growth_direction: Mapped[dict | None] = mapped_column(
+        JSONB,
+        nullable=True,
     )
 
     # Lojong-only metadata. Null for entries from other traditions.

@@ -1,14 +1,9 @@
-"""Validate a knowledge-base Markdown file's frontmatter.
-
-This schema checks retrieval tags against the shared taxonomy before an
-entry is embedded or written to the database.
-"""
-
 from pydantic import BaseModel, Field
 
 from app.knowledge_schema.taxonomy import (
     ContextTag,
     CorePrincipleTag,
+    Difficulty,
     EmotionTag,
     MindTrainingPoint,
     PatternTag,
@@ -21,10 +16,17 @@ class RetrievalSignals(BaseModel):
     contexts: list[ContextTag] = Field(default_factory=list)
 
 
+class GrowthDirection(BaseModel):
+    from_: list[str] = Field(default_factory=list, alias="from")
+    toward: list[str] = Field(default_factory=list)
+
+    model_config = {"populate_by_name": True}
+
+
 class ReflectionFrontmatter(BaseModel):
     id: str
     title: str
-    difficulty: str
+    difficulty: Difficulty
     retrieval_summary: str
 
     slogan_number: int | None = Field(
@@ -36,3 +38,7 @@ class ReflectionFrontmatter(BaseModel):
 
     retrieval_signals: RetrievalSignals
     core_principles: list[CorePrincipleTag] = Field(default_factory=list)
+
+    user_language: list[str] = Field(default_factory=list)
+    related_slogans: list[str] = Field(default_factory=list)
+    growth_direction: GrowthDirection | None = None

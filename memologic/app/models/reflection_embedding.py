@@ -1,9 +1,15 @@
 """SQLAlchemy model for a knowledge-base entry's embedding vector.
+
 One-to-one with ReflectionEntry -- entry_id is the primary key itself,
 enforcing the one-embedding-per-entry constraint at the schema level.
-Populated by the (not yet built) ingestion script after the entry row
-is written, using OpenAI's text-embedding-3-small on the entry's full
-combined content (Memo Interpretation + Conversation Guidance + Safety).
+
+Populated by scripts/ingest_knowledge.py after the entry row is written,
+using OpenAI's text-embedding-3-small on a compact, curated text built
+from the entry's title, slogan number, point, user_language examples,
+and retrieval_summary (see build_embedding_text). The longer body
+sections -- Memo Interpretation, Conversation Guidance, Safety -- are
+deliberately excluded from the embedding to keep retrieval precise;
+they're only pulled in after a match is found, to generate Ana's reply.
 """
 
 from pgvector.sqlalchemy import Vector

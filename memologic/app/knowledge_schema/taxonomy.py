@@ -116,6 +116,13 @@ class CorePrincipleTag(StrEnum):
     INTERCONNECTEDNESS = "interconnectedness"
     NON_ATTACHMENT = "non_attachment"
     
+    
+class Difficulty(StrEnum):
+    BEGINNER = "beginner"
+    INTERMEDIATE = "intermediate"
+    ADVANCED = "advanced"
+    
+    
 class MindTrainingPoint(StrEnum):
     """The seven points structuring the 59 Chekawa Lojong slogans.
     Lojong-specific -- entries from other traditions leave this unset.
