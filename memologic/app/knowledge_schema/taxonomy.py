@@ -49,6 +49,7 @@ class EmotionTag(StrEnum):
     DISAPPOINTED = "disappointed"
     HURT = "hurt"
     NOSTALGIC = "nostalgic"
+    ASHAMED = "ashamed"
 
 
 class PatternTag(StrEnum):
