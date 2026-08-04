@@ -19,11 +19,11 @@ retrieval_signals:
     - friendship
 
 user_language:
-  - "They had no right to treat me that way."
-  - "I keep replaying the argument in my head."
-  - "I keep finding reasons why this is everyone else's fault, but deep down I know I'm just avoiding my own part in it."
-  - "I'm so sick of blaming my boss, my schedule, and bad luck for why I'm miserable when I'm the one letting it ruin my day."
-  - "It's so much easier to point fingers at everyone else than to admit I screwed up too."
+  - "It's not fair that this happened, and I don't know what to do now that it has."
+  - "I keep waiting for someone to admit they were wrong before I can move forward."
+  - "This wasn't my fault, but somehow I'm the one who has to deal with it."
+  - "I don't see how anything good can come from this."
+  - "I know dwelling on whose fault this is isn't helping, but I can't seem to stop."
 
 core_principles:
   - acceptance
@@ -31,75 +31,80 @@ core_principles:
   - equanimity
   - non_judgmental_observation
 
-related_slogans: []
+related_slogans:
+  - lojong-011
 
 growth_direction:
   from:
-    - outward_blame
-    - certainty
-    - reactive_control
+    - waiting_on_fault
+    - grievance
+    - stalled_agency
   toward:
-    - self_examination
-    - clear_seeing
-    - chosen_response
+    - practical_responsibility
+    - resourcefulness
+    - re-engagement
 
 retrieval_summary: |
   Drive All Blames Into One
 
-  Use this reflection when someone feels resentful, irritated, or wronged,
-  and their attention is fixed on what someone else did to them. Common
-  patterns include external blame, judging others, and rumination on a
-  grievance.
+  Use this reflection when someone is stuck on whose fault a situation
+  is — genuinely wronged, or arguing with themselves about blame — and
+  hasn't yet turned toward what to actually do with what's happened.
+  Common patterns include external blame, rumination on a grievance, and
+  waiting for fault to be resolved before moving forward.
 
-  The central teaching is that anger and resentment narrow perception. The
-  mind, once reactive, becomes extremely confident about a story it has not
-  actually examined. This slogan does not ask someone to excuse what
-  happened or to suppress the feeling. It asks them to turn attention back
-  toward their own reactive mind, not to punish themselves, but because that
-  is the only place real change is possible. Blaming the other person,
-  however justified, keeps the mind agitated and does not resolve anything.
+  The central teaching is that responsibility and blame are not the same
+  thing. Once something has happened, whoever caused it, the fault
+  itself stops being useful information. What remains useful is asking
+  what happened, what can be learned from it, and how it might still be
+  put to use. This is not about deciding you were secretly at fault. It
+  is about recognizing that finding the use in a situation is always
+  available to you, regardless of who caused it.
 
-  This slogan helps people move from outward blame toward examining their
-  own reaction, from certainty toward clear seeing, and from being
-  controlled by the reaction toward choosing a response.
+  This slogan helps people move from waiting on a verdict about fault
+  toward taking responsibility for what happens next, from feeling
+  wronged toward finding what can be learned or used, and from being
+  stalled by the injustice toward re-engaging with their own capacity
+  to respond.
 
-  Do not apply this teaching when someone has experienced real harm, abuse,
-  or violation and is naming it clearly. In those cases the priority is
-  validating the harm, not redirecting attention inward.
+  Do not apply this teaching when someone has experienced real harm,
+  abuse, or violation and is naming it clearly. In those cases the
+  priority is validating the harm, not redirecting attention toward
+  finding a benefit in it.
 ---
 
 ## Memo Interpretation
 
-Anger has a particular trick. It doesn't just make you feel something — it makes you *certain*. In the moment anger arrives, the situation stops looking like one version of events among several and starts looking like simple fact: they were wrong, you were right, and anyone reasonable would see it the same way.
+There's an old story about a farmer whose soup goes wrong. Maybe the cook burned it, maybe the farmer grew bad vegetables, maybe neither of them did anything wrong and the weather just failed the crop that year. It doesn't really matter whose fault it was. The soup is still ruined, and someone still has to decide what to do about dinner.
 
-That certainty is the thing worth noticing before anything else. Not because the anger is baseless — sometimes it isn't — but because anger has a way of narrowing the mind exactly when clear thinking matters most. It's like looking at a situation through a single, very bright spotlight: whatever's lit up in the beam looks enormous and obvious, and everything outside the beam disappears completely. The other person's behavior is in the beam. Your own reaction, your own assumptions, the parts of the situation you can't see from where you're standing — all of that goes dark.
+This slogan starts from that same plain fact: something happened. Whoever caused it, however unfair or careless or genuinely wrong it was, the cause is no longer the live question. The live question is what you're going to do with what's now in front of you.
 
-This slogan has an unusual instruction: when a conflict arises, before sorting out who did what to whom, bring the inquiry back to your own mind first. Not to conclude that you're at fault. Not to talk yourself out of being angry. Just to ask: what is my mind doing with this? What story am I already certain of? What would I need to let go of to actually look clearly?
+"Driving the blame into one" doesn't mean deciding the fault was actually yours all along. It means recognizing that fault, once established, stops being useful information. It doesn't cook a new dinner. It doesn't undo the ruined soup. What actually helps is turning toward the situation itself and asking three things: what happened, what can be learned from it, and how it might still be put to use. Those questions are yours to answer, and — this is the part worth sitting with — you can actually answer them. Nobody else's fault or innocence changes whether you're capable of finding the use in what's arrived.
 
-This is not the same as blaming yourself for what happened. Driving the blame "into one" doesn't mean deciding you're the guilty party — it means recognizing that there is exactly one mind you can actually work with in this moment, and it isn't theirs. You don't have access to their intentions, their history, or their next move. You do have access to your own reactivity, your own grip on the story, your own next choice. That's not a consolation prize. It's the only place the practice can actually happen.
+This is a much larger claim than "let go of grudges." It's a claim that almost nothing that happens to you is pure loss. Even a disaster, even something genuinely someone else's doing, carries some possibility inside it — not because the universe is fair, but because usefulness isn't about fairness. A ruined dinner might become a lesson in improvising. A financial setback might become the moment you finally build a plan instead of drifting. The teaching isn't asking you to be grateful for the setback. It's asking you to stop waiting for the fault to be resolved before you start working with what you've actually got.
 
-Held loosely, this slogan is a strange kind of relief. It doesn't ask you to resolve who was right. It asks you to notice what your own mind is doing while it insists on an answer — and to see if there's a version of you, right now, that isn't run entirely by the spotlight.
+Taking this kind of responsibility is not the same as accepting blame. You can know, clearly, that something wasn't your doing, and still be the one who decides what happens next. In fact, that's usually the more honest position: most things that happen to us involve some mix of causes we didn't choose and a life we still have to keep living afterward. Waiting for a clean verdict on whose fault it was, before you're willing to move, just delays the only part that was ever really yours to do.
 
 ## Conversation Guidance
 
-This slogan applies when someone is describing anger, resentment, or a grievance where their attention is fixed almost entirely outward — on what someone else did, said, or failed to do.
+This slogan applies when someone is stuck on the question of fault — genuinely wronged, arguing with themselves about who's to blame, or waiting for the unfairness to be resolved before they're willing to move forward.
 
-Ana should not talk the person out of their anger, minimize what happened, or rush to "both sides" a conflict she doesn't have full context on. The teaching is not "you're wrong to be angry." It's "your own reactive mind is the one place you actually have leverage right now."
+Ana should not argue about whether the person's grievance is valid, and should not suggest the fault doesn't matter or wasn't real. The teaching is not "it wasn't really their fault." It's "fault, once established, doesn't do the next useful thing for you — only turning toward what can be learned or used does that."
 
 This slogan commonly applies when someone:
 
-- is angry or resentful about something someone else did
-- is fixated on being right or being wronged
-- is rehearsing an argument or grievance internally
-- describes a grudge they're having trouble releasing
-- feels certain about another person's motives or character
+- is fixated on who's to blame for a difficult situation
+- feels wronged and is waiting for that wrong to be acknowledged before moving on
+- describes a setback and hasn't yet considered what to do with it
+- is stalled, treating the unresolved fault as a reason they can't act yet
+- describes a disaster or mistake, theirs or someone else's, as pure loss
 
-Avoid using this slogan when someone is naming real harm, abuse, or a violation clearly and specifically. In those situations, redirecting attention to "your own reactive mind" can read as minimizing what was done to them. Validate the harm first; this teaching is for the ordinary friction of resentment and reactive anger, not for processing genuine violation.
+Avoid using this slogan when someone is naming real harm, abuse, or a violation clearly and specifically. In those situations, moving toward "what can you learn or use from this" can read as minimizing or rushing past what was done to them. Validate the harm first; this teaching is for situations where someone is capable of re-engaging their own agency, not for processing genuine violation.
 
 ## Safety
 
-This slogan can be misused to suggest a person is responsible for another person's harmful behavior, or that their anger is illegitimate. Never use it to imply the person caused the conflict, deserved the treatment they received, or should suppress a justified reaction.
+This slogan can be misused to suggest a person is responsible for another person's harmful behavior, or that they should look for a positive in abuse or violation. Never use it to imply someone caused harm done to them, or that finding a benefit in what happened is required or expected of them.
 
-The turn toward "your own mind" concerns your reactivity and your next response — not an admission that you are at fault for what someone else did. If there is any ambiguity about whether real harm occurred, treat it as real harm and prioritize acknowledgment and safety over this teaching.
+Taking responsibility for what happens next is not the same as excusing what happened, absorbing blame that isn't yours, or being asked to be grateful for a setback. If there is any ambiguity about whether real harm occurred, treat it as real harm and prioritize acknowledgment and safety over this teaching.
 
-If someone describes anger connected to abuse, ongoing mistreatment, or a pattern of harm, do not apply this slogan. Presence, validation, and appropriate support take priority.
+If someone describes a setback connected to abuse, ongoing mistreatment, or a pattern of harm, do not apply this slogan. Presence, validation, and appropriate support take priority over questions of what can be learned or used.
