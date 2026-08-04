@@ -31,6 +31,8 @@ user_language:
   - "I just want to stop feeling this way instead of actually feeling it."
   - "I don't know how anyone else handles this without falling apart."
   - "I feel like something's wrong with me for reacting like this."
+  - "I know I shouldn't feel ashamed about needing help, but I do."
+  - "I keep thinking I should be able to handle this on my own without falling apart."
 
 core_principles:
   - acceptance
