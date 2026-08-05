@@ -27,6 +27,7 @@ export default function WaitlistEntry() {
     <main className="min-h-screen bg-memo-50 text-memo-900">
       <div className="mx-auto flex max-w-2xl flex-col items-center px-6 py-20 text-center">
         <div className="flex min-w-0 items-center gap-2">
+          {/* fixed image rendering */}
           <Image
             src="/memomind-logo@72x.svg"
             alt="mettavia"
