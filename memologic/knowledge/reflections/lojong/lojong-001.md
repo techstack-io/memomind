@@ -36,7 +36,8 @@ core_principles:
   - impermanence
   - honest_self_reflection
 
-related_slogans: []
+related_slogans: 
+  - lojong-003
 
 growth_direction:
   from:

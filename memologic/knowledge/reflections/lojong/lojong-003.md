@@ -34,6 +34,7 @@ core_principles:
 
 related_slogans:
   - lojong-002
+  - lojong-005
 
 growth_direction:
   from:
