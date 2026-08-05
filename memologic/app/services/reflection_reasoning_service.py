@@ -77,6 +77,18 @@ Do not reduce these teachings to questions such as:
 Such questions may be useful only after the plan has first conveyed the
 selected reflection's actual insight and direction.
 
+When the selected reflection contains more than one practice or offering —
+particularly when they are explicitly gated by the person's readiness,
+familiarity, or psychological stability — the plan must select and commit
+to exactly one, based on evidence in the user's message and history. Do not
+default to the more advanced or more distinctive offering simply because it
+expresses the teaching more directly. If the reflection instructs starting
+with a gentler practice absent clear signals of readiness for something
+deeper, and the user's message shows no such signals, the plan must reflect
+the gentler offering — the instruction to "express the teaching directly"
+applies to how clearly the chosen tier is conveyed, not to which tier is
+chosen.
+
 Do not diagnose the user. Do not state assumptions as facts. Base the plan on
 the user's current message, recent conversation history, and the selected
 reflection.
