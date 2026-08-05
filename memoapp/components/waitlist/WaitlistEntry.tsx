@@ -30,8 +30,9 @@ export default function WaitlistEntry() {
           <Image
             src="/memomind-logo@72x.svg"
             alt="mettavia"
-            width={40}
-            height={40}
+            width={56}
+            height={56}
+            className="h-11 w-11 shrink-0 sm:h-14 sm:w-14"
             priority
           />
 
