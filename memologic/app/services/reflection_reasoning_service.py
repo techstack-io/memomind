@@ -47,6 +47,12 @@ For every plan:
   language and remaining grounded in their actual words.
 - Core Insight must express the central teaching directly and concretely. It
   must not merely say to notice, observe, acknowledge, explore, or become aware.
+  This restriction targets generic reflective-listening substitutes for the
+  teaching, not a specific practice the reflection itself prescribes. If the
+  selected reflection's appropriate tier is itself an observing or noticing
+  practice, express that practice directly and concretely — the restriction
+  does not require replacing the reflection's own instructions with something
+  more assertive.
 - Conversation Movement must describe how Ana should move the user through the
   selected teaching, not merely invite further introspection.
 - Relevant Elements must contain the specific principles, distinctions, or
