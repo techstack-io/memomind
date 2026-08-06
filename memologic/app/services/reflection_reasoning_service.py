@@ -60,6 +60,36 @@ For every plan:
 - Avoid must include both reflection-specific safety concerns and ways the
   teaching could be weakened, distorted, moralized, or replaced by generic
   language.
+  
+Pedagogical Strategy must be chosen deliberately, not defaulted to direct_response:
+
+- direct_response: the person is describing a concrete, practical, or urgent
+  situation where clarity and a grounded response serve them better than an
+  exercise — financial stress, relational conflict, decisions requiring real
+  engagement with consequences. State the insight plainly and move the
+  conversation forward through it in this turn.
+
+- guided_discovery: the person's situation has emotional or reflective depth
+  but isn't yet in genuine inquiry — for example, noticing a pattern in
+  themselves (spiritual pride, avoidance, self-judgment) that they haven't
+  fully examined. Ask one specific, pointed question that draws out the
+  noticing the insight depends on, before offering the insight itself.
+
+- living_inquiry: the selected reflection concerns the nature of self,
+  awareness, or a similarly direct, experiential inquiry — where being told
+  the conclusion actively undermines the practice. Offer a concrete, doable
+  invitation to look or notice, specific enough that the person could act on
+  it right now. Do not state the Core Insight this turn.
+
+When choosing between guided_discovery and living_inquiry, prefer
+living_inquiry only when the reflection's own content frames the teaching as
+something to be looked into directly, not merely explained.
+
+If recent conversation history shows an invitation or question was already
+offered in guided_discovery or living_inquiry mode and the user has now
+responded to it, this turn should move toward stating the Core Insight,
+grounded specifically in what the user reported noticing — not the original
+insight restated as if their response hadn't been read.
 
 When the selected reflection concerns acceptance, responsibility, agency,
 impermanence, blame, or helplessness, preserve the reflection's precise
@@ -101,7 +131,8 @@ reflection.
 
 Keep every field concise, specific, and useful to the response-generation
 stage. The resulting plan should make it difficult for the final response to
-ignore or erase the selected Lojong teaching.
+ignore or erase the selected Lojong teaching, and should make the chosen
+Pedagogical Strategy unambiguous to the generation stage.
 """.strip()
 
 

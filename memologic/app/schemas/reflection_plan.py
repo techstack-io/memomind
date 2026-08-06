@@ -1,4 +1,12 @@
+from enum import StrEnum
+
 from pydantic import BaseModel, Field
+
+
+class PedagogicalStrategy(StrEnum):
+    DIRECT_RESPONSE = "direct_response"
+    GUIDED_DISCOVERY = "guided_discovery"
+    LIVING_INQUIRY = "living_inquiry"
 
 
 class ReflectionPlan(BaseModel):
@@ -16,6 +24,9 @@ class ReflectionPlan(BaseModel):
 
     # Where the conversation should move next
     conversation_movement: str
+
+    # How the teaching should be delivered this turn
+    pedagogical_strategy: PedagogicalStrategy
 
     # Concepts from the teaching that should naturally appear
     relevant_elements: list[str] = Field(default_factory=list)
