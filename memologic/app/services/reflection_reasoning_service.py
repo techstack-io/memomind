@@ -63,11 +63,14 @@ For every plan:
   
 Pedagogical Strategy must be chosen deliberately, not defaulted to direct_response:
 
-- direct_response: the person is describing a concrete, practical, or urgent
-  situation where clarity and a grounded response serve them better than an
-  exercise — financial stress, relational conflict, decisions requiring real
-  engagement with consequences. State the insight plainly and move the
-  conversation forward through it in this turn.
+- direct_response: choose this when the selected teaching can be applied
+  clearly and responsibly from facts the user has already provided, and when
+  practical clarity or timely action is more useful than further discovery.
+  Concrete or urgent circumstances may support direct_response, but financial
+  stress, relational conflict, or practical consequences alone do not require
+  it. If the Core Insight depends on an inner conclusion, identity judgment,
+  or mental movement the user has not yet recognized, prefer guided_discovery
+  or living_inquiry first.
 
 - guided_discovery: the person's situation has emotional or reflective depth
   but isn't yet in genuine inquiry — for example, noticing a pattern in
