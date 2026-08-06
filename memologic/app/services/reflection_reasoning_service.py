@@ -43,8 +43,8 @@ For every plan:
 
 - Contemplative Lens must state the selected teaching's distinct way of seeing
   the user's situation.
-- User Dynamic must describe what may be happening for the user, using cautious
-  language and remaining grounded in their actual words.
+- User Dynamic must describe what may be happening for the user, using
+  cautious language and remaining grounded in their actual words.
 - Core Insight must express the central teaching directly and concretely. It
   must not merely say to notice, observe, acknowledge, explore, or become aware.
   This restriction targets generic reflective-listening substitutes for the
@@ -64,13 +64,19 @@ For every plan:
 Pedagogical Strategy must be chosen deliberately, not defaulted to direct_response:
 
 - direct_response: choose this when the selected teaching can be applied
-  clearly and responsibly from facts the user has already provided, and when
-  practical clarity or timely action is more useful than further discovery.
+  clearly and responsibly from facts or inner dynamics the user has already
+  stated or clearly recognized, and when practical clarity or timely action
+  is more useful than further discovery.
+
   Concrete or urgent circumstances may support direct_response, but financial
   stress, relational conflict, or practical consequences alone do not require
-  it. If the Core Insight depends on an inner conclusion, identity judgment,
-  or mental movement the user has not yet recognized, prefer guided_discovery
-  or living_inquiry first.
+  it.
+
+  Do not choose direct_response when the Core Insight depends on an inferred
+  inner conclusion, identity judgment, emotional meaning, or mental movement
+  that the user has not explicitly described or recognized. In that case,
+  choose guided_discovery or living_inquiry first. Do not place the inference
+  in User Dynamic and then treat it as sufficient evidence for direct_response.
 
 - guided_discovery: the Core Insight depends on something the user has not
   yet recognized or articulated. Ask one specific, pointed question that
@@ -95,10 +101,16 @@ living_inquiry only when the reflection's own content frames the teaching as
 something to be looked into directly, not merely explained.
 
 Pedagogical Strategy should reflect the user's current place in the inquiry,
-not simply the reflection itself. If the user has already made a meaningful
-observation that the selected teaching depends upon, prefer a strategy that
-integrates and develops that observation rather than repeating another
-observational invitation.
+not simply the reflection itself.
+
+Ask yourself:
+
+- Has the user already recognized the distinction or pattern the selected
+  teaching depends upon?
+- If not, choose guided_discovery or living_inquiry, whichever best matches
+  the reflection.
+- If they have, choose the strategy that develops what they have already
+  discovered rather than repeating the same inquiry.
 
 When the selected reflection concerns acceptance, responsibility, agency,
 impermanence, blame, or helplessness, preserve the reflection's precise
@@ -112,15 +124,17 @@ distinctions. For example:
 - the conversation should move from helplessness or blame toward a deliberate
   way of meeting what is actually present.
 
-Do not reduce these teachings to questions such as:
+Do not reduce the selected teaching to generic introspective questions such as:
 
 - What do you notice?
 - Where do you feel it?
-- What happens next in your mind?
 - Can you sit with the feeling?
 
-Such questions may be useful only after the plan has first conveyed the
-selected reflection's actual insight and direction.
+When guided_discovery or living_inquiry is selected, the question or invitation
+must target the specific unrecognized distinction, conclusion, or movement that
+the selected reflection depends upon. It may precede expression of the Core
+Insight when discovering that experiential basis is the purpose of the chosen
+strategy.
 
 When the selected reflection contains more than one practice or offering —
 particularly when they are explicitly gated by the person's readiness,
