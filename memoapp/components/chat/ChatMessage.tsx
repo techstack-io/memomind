@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
+import { BookOpen, ArrowUpRight } from "lucide-react";
 
 type ChatMessageProps = {
   role: "assistant" | "user";
@@ -47,10 +48,8 @@ export function ChatMessage({
         }}
         className="flex justify-end"
       >
-        <div className="max-w-[82%] rounded-2xl rounded-tr-sm border border-memo-divider bg-memo-surface-raised px-5 py-3.5 shadow-[0_1px_0_rgba(0,0,0,0.02)] md:max-w-[72%]">
-          <p className="whitespace-pre-line text-[15px] leading-relaxed text-memo-text">
-            {content}
-          </p>
+        <div className="max-w-2xl rounded-2xl bg-memo-neutral-100 px-4 py-3 text-[15px] leading-relaxed text-memo-text">
+          {content}
         </div>
       </motion.div>
     );
@@ -66,13 +65,8 @@ export function ChatMessage({
       }}
       className="flex gap-4"
     >
-      <div
-        aria-hidden="true"
-        className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-memo-divider bg-memo-surface-raised"
-      >
-        <span className="font-serif text-base leading-none text-memo-secondary-500">
-          a
-        </span>
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-memo-secondary-100 text-[13px] font-medium text-memo-secondary-600">
+        a
       </div>
 
       <article className="max-w-2xl border-l border-memo-secondary-300/70 pl-4">
@@ -85,12 +79,39 @@ export function ChatMessage({
         </p>
 
         {furtherReading && (
-          <Link
-            href={`/library/${furtherReading.id}`}
-            className="mt-3 inline-flex items-center gap-1 text-[13px] font-medium text-memo-secondary-500 underline-offset-4 hover:underline"
-          >
-            Read more: {furtherReading.title}
-          </Link>
+          <div className="mt-5 pt-1">
+            <div className="mb-1 flex items-center gap-1.5">
+              <BookOpen className="h-4.5 w-4.5 text-memo-secondary-500" />
+
+              <span className="text-[12px] font-medium uppercase tracking-[0.18em] text-memo-secondary-500">
+                Lojong
+                {furtherReading.slogan_number !== null
+                  ? ` · ${furtherReading.slogan_number}`
+                  : ""}
+              </span>
+            </div>
+
+            <p className="font-heading text-[16px] leading-snug text-memo-text">
+              {furtherReading.title}
+            </p>
+
+            <Link
+              href={`/library/${furtherReading.id}`}
+              className="group mt-2 inline-flex items-center gap-1.5 text-[13px] font-medium text-memo-secondary-500"
+            >
+              Explore the teaching
+
+              <ArrowUpRight
+                className="
+                  h-3.5 w-3.5
+                  transition-transform
+                  duration-200
+                  group-hover:-translate-y-0.5
+                  group-hover:translate-x-0.5
+                "
+              />
+            </Link>
+          </div>
         )}
       </article>
     </motion.div>
