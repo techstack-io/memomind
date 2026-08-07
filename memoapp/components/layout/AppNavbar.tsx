@@ -29,7 +29,7 @@ export function AppNavbar() {
   const app = useHexclaveApp();
   const user = useUser();
 
-  if (pathname === "/waitlist") return null;
+  if (pathname === "/waitlist" || pathname === "/marketing") return null;
 
   const userLabel =
     user?.displayName?.trim() ||
