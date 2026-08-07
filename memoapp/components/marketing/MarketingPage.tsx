@@ -363,7 +363,9 @@ export function MarketingPage() {
             </p>
 
             <a
-              href="mailto:team@mettavia.app?subject=Mettavia Early Access"
+              href="https://sendfox.com/form/3lr8l0/3l9n4v"
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-9 inline-flex items-center justify-center gap-2 rounded-full bg-[#302f2a] px-7 py-3.5 text-sm font-medium text-[#f7f1e8] transition hover:-translate-y-0.5 hover:bg-[#4a473f]"
             >
               Join early access
