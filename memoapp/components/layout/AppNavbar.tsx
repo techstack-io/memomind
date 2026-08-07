@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useHexclaveApp, useUser } from "@hexclave/next";
 
@@ -23,13 +23,30 @@ const navigationItems = [
 
 export function AppNavbar() {
   const pathname = usePathname();
+
+  const [isLojongDomain, setIsLojongDomain] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const hostname = window.location.hostname;
+
+    setIsLojongDomain(
+      hostname === "mettavia-lojong.com" ||
+      hostname === "www.mettavia-lojong.com"
+    );
+  }, []);
 
   const app = useHexclaveApp();
   const user = useUser();
 
-  if (pathname === "/waitlist" || pathname === "/marketing") return null;
+  if (
+    pathname === "/waitlist" ||
+    pathname === "/marketing" ||
+    isLojongDomain
+  ) {
+    return null;
+  }
 
   const userLabel =
     user?.displayName?.trim() ||
