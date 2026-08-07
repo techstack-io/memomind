@@ -274,7 +274,10 @@ def build_response_prompt(plan: ReflectionPlan) -> str:
     """Build Ana's final response prompt from the internal Reflection Plan."""
 
     reflection_plan_markdown = format_reflection_plan(plan)
-    strategy_prompt = PEDAGOGICAL_STRATEGY_PROMPTS[plan.pedagogical_strategy.value]
+    strategy_prompt = PEDAGOGICAL_STRATEGY_PROMPTS.get(plan.pedagogical_strategy.value)
+    if strategy_prompt is None:
+        logger.error("missing_strategy_prompt", extra={"strategy": plan.pedagogical_strategy.value})
+        strategy_prompt = DIRECT_RESPONSE_PROMPT  # safe default
 
     return (
         f"{UNIVERSAL_SYSTEM_PROMPT}\n\n"
@@ -363,22 +366,22 @@ async def create_reply(
         logger.exception("retrieval_failed")
         candidates = []
 
-    logger.warning("=== Retrieval Candidates ===")
-    logger.warning(
+    logger.debug(
+        "=== Retrieval Candidates ===\n%s",
         "\n".join(
             f"{candidate.id}: {candidate.similarity}"
             for candidate in candidates
         )
-        or "NO CANDIDATES RETURNED"
+        or "NO CANDIDATES RETURNED",
     )
 
     best_entry = rank_reflection(candidates)
 
     if best_entry is not None:
-        logger.warning("=== Selected Reflection ===")
-        logger.warning(best_entry.model_dump_json(indent=2))
+        logger.debug("=== Selected Reflection ===\n%s", best_entry.model_dump_json(indent=2))
     else:
         logger.warning("=== No Reflection Selected ===")
+
 
     reflection_plan: ReflectionPlan | None = None
 
@@ -390,8 +393,8 @@ async def create_reply(
                 history=history,
             )
 
-            logger.warning("=== Reflection Plan ===")
-            logger.warning(reflection_plan.model_dump_json(indent=2))
+            logger.debug("=== Reflection Plan ===\n%s", reflection_plan.model_dump_json(indent=2))
+            
         except Exception:
             logger.exception(
                 "reflection_plan_generation_failed",
@@ -413,8 +416,7 @@ async def create_reply(
         ("human", request.message),
     ]
 
-    logger.warning("=== Final System Prompt ===")
-    logger.warning(system_prompt)
+    logger.debug("=== Final System Prompt ===\n%s", system_prompt)
 
     try:
         result = await response_model.ainvoke(messages)
@@ -434,7 +436,7 @@ async def create_reply(
         content = str(content)
 
     further_reading = None
-    if reflection_plan is not None and best_entry is not None:
+    if best_entry is not None:
         further_reading = FurtherReading(
             id=best_entry.id,
             title=best_entry.title,
