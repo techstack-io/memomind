@@ -70,8 +70,8 @@ export function ChatMessage({
           <Image
             src="/avatars/ana.jpg"
             alt="Ana"
-            width={40}
-            height={40}
+            width={48}
+            height={48}
             className="h-full w-full object-cover"
             priority
           />
