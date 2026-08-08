@@ -54,6 +54,9 @@ class EmotionTag(StrEnum):
     # Added for lojong-005
     EXHAUSTED = "exhausted"
 
+    # Added for lojong-006
+    CYNICAL = "cynical"
+
 
 class PatternTag(StrEnum):
     # Original (Lojong)
@@ -66,6 +69,7 @@ class PatternTag(StrEnum):
     COMPARISON = "comparison"
     JUDGING_OTHERS = "judging_others"
     WITHHOLDING_KINDNESS = "withholding_kindness"
+    SELECTIVE_COMPASSION = "selective_compassion"
 
     # Mindfulness
     RUMINATION = "rumination"
@@ -84,9 +88,12 @@ class PatternTag(StrEnum):
     FORTUNE_TELLING = "fortune_telling"
     BLACK_AND_WHITE_THINKING = "black_and_white_thinking"
     FIXED_IDENTITY = "fixed_identity"
-    
+
     # Added for lojong-005
     NEED_FOR_CONTROL = "need_for_control"
+
+    # Added for lojong 6 & 7
+    SELF_PROTECTION = "self_protection"
 
 
 class ContextTag(StrEnum):
@@ -108,9 +115,12 @@ class ContextTag(StrEnum):
     # Expanded relational/situational contexts (added for lojong-002)
     FAMILY_CONFLICT = "family_conflict"
     FAILURE_OR_REJECTION = "failure_or_rejection"
-    
+
     # Added for lojong-005
     DECISION_MAKING = "decision_making"
+
+    # Added for lojong-007
+    CAREGIVING = "caregiving"
 
 
 class CorePrincipleTag(StrEnum):
@@ -150,9 +160,9 @@ class CorePrincipleTag(StrEnum):
     PERSPECTIVE = "perspective"
     EMPTINESS = "emptiness"
     LETTING_GO = "letting_go"
-    
+
     # added for lojong-005
-    TRUST = "trust" # Trust in the process of life and the universe
+    TRUST = "trust"  # Trust in the process of life and the universe
 
 
 class Difficulty(StrEnum):
