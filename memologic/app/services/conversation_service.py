@@ -433,7 +433,7 @@ async def create_reply(
                 reflection_plan.model_dump_json(indent=2),
             )
 
-            logger.info(
+            logger.warning(
                 "pedagogical_strategy=%s",
                 reflection_plan.pedagogical_strategy.value,
             )
@@ -476,7 +476,7 @@ async def create_reply(
     content = generated.reply
     follow_up_question = generated.follow_up_question
 
-    logger.info(
+    logger.warning(
         "follow_up_generated=%s",
         bool(follow_up_question),
     )
