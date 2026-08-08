@@ -428,8 +428,16 @@ async def create_reply(
                 history=history,
             )
 
-            logger.debug("=== Reflection Plan ===\n%s", reflection_plan.model_dump_json(indent=2))
-            
+            logger.debug(
+                "=== Reflection Plan ===\n%s",
+                reflection_plan.model_dump_json(indent=2),
+            )
+
+            logger.info(
+                "pedagogical_strategy=%s",
+                reflection_plan.pedagogical_strategy.value,
+            )
+
         except Exception:
             logger.exception(
                 "reflection_plan_generation_failed",
@@ -467,6 +475,11 @@ async def create_reply(
 
     content = generated.reply
     follow_up_question = generated.follow_up_question
+
+    logger.info(
+        "follow_up_generated=%s",
+        bool(follow_up_question),
+    )
 
     further_reading = None
     if best_entry is not None:
