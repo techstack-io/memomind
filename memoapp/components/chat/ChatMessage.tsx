@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { BookOpen, ArrowUpRight } from "lucide-react";
 
@@ -64,10 +65,17 @@ export function ChatMessage({
         ease,
       }}
       className="flex gap-4"
-    >
-      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-memo-secondary-100 text-[13px] font-medium text-memo-secondary-600">
-        a
-      </div>
+      >
+        <div className="mt-0.5 h-10 w-10 shrink-0 overflow-hidden rounded-full border border-memo-secondary-300/40 shadow-sm">
+          <Image
+            src="/avatars/ana.jpg"
+            alt="Ana"
+            width={40}
+            height={40}
+            className="h-full w-full object-cover"
+            priority
+          />
+        </div>
 
       <article className="max-w-2xl border-l border-memo-secondary-300/70 pl-4">
         <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-memo-neutral-500">
