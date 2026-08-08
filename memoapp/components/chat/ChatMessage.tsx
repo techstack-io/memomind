@@ -66,7 +66,7 @@ export function ChatMessage({
       }}
       className="flex gap-4"
       >
-        <div className="mt-0.5 h-10 w-10 shrink-0 overflow-hidden rounded-full border border-memo-secondary-300/40 shadow-sm">
+        <div className="mt-0.5 h-12 w-12 shrink-0 overflow-hidden rounded-full border border-memo-secondary-300/40 shadow-sm">
           <Image
             src="/avatars/ana.jpg"
             alt="Ana"
