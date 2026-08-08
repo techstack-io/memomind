@@ -1,6 +1,8 @@
 "use client";
 
 import {
+  useEffect,
+  useRef,
   useState,
   type FormEvent,
   type KeyboardEvent,
@@ -9,10 +11,21 @@ import { ArrowUp } from "lucide-react";
 
 type ChatComposerProps = {
   onSend: (content: string) => void;
+  focusRequest?: number;
 };
 
-export function ChatComposer({ onSend }: ChatComposerProps) {
+export function ChatComposer({
+  onSend,
+  focusRequest = 0,
+}: ChatComposerProps) {
   const [value, setValue] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (focusRequest === 0) return;
+
+    textareaRef.current?.focus();
+  }, [focusRequest]);
 
   function submit() {
     const trimmed = value.trim();
@@ -36,9 +49,10 @@ export function ChatComposer({ onSend }: ChatComposerProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full">
-      <div className="relative rounded-2xl border border-memo-divider bg-memo-surface-raised p-2 shadow-[0_1px_0_rgba(0,0,0,0.02)] transition focus-within:border-memo-primary-300 focus-within:shadow-[0_0_0_3px_rgba(100,122,103,0.12)]">
+    <form onSubmit={handleSubmit}>
+      <div className="relative rounded-2xl border border-memo-divider bg-memo-background shadow-[0_10px_30px_rgba(42,36,31,0.04)] transition-colors focus-within:border-memo-connection-300">
         <textarea
+          ref={textareaRef}
           value={value}
           onChange={(event) => setValue(event.target.value)}
           onKeyDown={handleKeyDown}

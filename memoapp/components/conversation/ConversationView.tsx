@@ -8,23 +8,31 @@ import {
   motion,
   useReducedMotion,
   type Variants,
-} from "framer-motion"; // or "motion/react" depending on your package setup
+} from "framer-motion";
 
 import AppSidebar from "@/components/layout/AppSidebar";
 import { ChatComposer } from "@/components/chat/ChatComposer";
 import { ChatMessage } from "@/components/chat/ChatMessage";
+import { FollowUpPrompt } from "@/components/chat/FollowUpPrompt";
 import { hexclaveClientApp } from "@/hexclave/client";
+
+type FurtherReading = {
+  id: string;
+  title: string;
+  slogan_number: number | null;
+};
+
+type FollowUp = {
+  question: string;
+};
 
 type Message = {
   id: string;
   role: "assistant" | "user";
   content: string;
   eyebrow?: string;
-  furtherReading?: {
-    id: string;
-    title: string;
-    slogan_number: number | null;
-  };
+  furtherReading?: FurtherReading;
+  followUp?: FollowUp;
 };
 
 type Reflection = {
@@ -109,6 +117,8 @@ export default function ConversationView() {
     },
   ]);
 
+  const [composerFocusRequest, setComposerFocusRequest] = useState(0);
+
   const user = hexclaveClientApp.useUser();
 
   const shouldReduceMotion = useReducedMotion();
@@ -127,11 +137,13 @@ export default function ConversationView() {
     const trimmed = content.trim();
     if (!trimmed) return;
 
+
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: "user",
       content: trimmed,
     };
+
     setMessages((current) => [...current, userMessage]);
 
     if (!user) return;
@@ -151,7 +163,9 @@ export default function ConversationView() {
         }
       );
 
-      if (!response.ok) throw new Error("Request failed");
+      if (!response.ok) {
+        throw new Error(`Conversation request failed: ${response.status}`);
+      }
 
       const data = await response.json();
 
@@ -162,6 +176,9 @@ export default function ConversationView() {
           role: "assistant",
           content: data.reply,
           furtherReading: data.further_reading ?? undefined,
+          followUp: data.follow_up?.question
+            ? { question: data.follow_up.question }
+            : undefined,
         },
       ]);
     } catch {
@@ -175,6 +192,23 @@ export default function ConversationView() {
         },
       ]);
     }
+  }
+
+  function handleRespondToFollowUp() {
+    setComposerFocusRequest((current) => current + 1);
+  }
+
+  function handleSkipFollowUp(messageId: string) {
+    setMessages((current) =>
+      current.map((message) =>
+        message.id === messageId
+          ? {
+              ...message,
+              followUp: undefined,
+            }
+          : message
+      )
+    );
   }
 
   return (
@@ -323,6 +357,14 @@ export default function ConversationView() {
                       eyebrow={message.eyebrow}
                       furtherReading={message.furtherReading}
                     />
+
+                    {message.role === "assistant" && message.followUp && (
+                      <FollowUpPrompt
+                        question={message.followUp.question}
+                        onRespond={handleRespondToFollowUp}
+                        onSkip={() => handleSkipFollowUp(message.id)}
+                      />
+                    )}
                   </motion.div>
                 ))}
               </AnimatePresence>
@@ -337,7 +379,10 @@ export default function ConversationView() {
             className="bg-memo-surface/90 px-5 py-6 backdrop-blur sm:px-8"
           >
             <div className="mx-auto w-full max-w-3xl">
-              <ChatComposer onSend={handleSend} />
+            <ChatComposer
+              onSend={handleSend}
+              focusRequest={composerFocusRequest}
+            />
             </div>
           </motion.div>
         </div>
