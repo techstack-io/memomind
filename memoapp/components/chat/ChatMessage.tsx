@@ -87,38 +87,43 @@ export function ChatMessage({
         </p>
 
         {furtherReading && (
-          <div className="mt-5 pt-1">
-            <div className="mb-1 flex items-center gap-1.5">
-              <BookOpen className="h-4.5 w-4.5 text-memo-secondary-500" />
+          <div className="mt-6 max-w-[540px] rounded-2xl border border-memo-secondary-300/40 bg-memo-secondary-100/30 px-5 py-4">
+            <div className="flex items-start gap-3">
+              <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-memo-secondary-100">
+                <BookOpen
+                  className="h-4 w-4 text-memo-secondary-600"
+                  aria-hidden="true"
+                />
+              </div>
 
-              <span className="text-[12px] font-medium uppercase tracking-[0.18em] text-memo-secondary-500">
-                Lojong
-                {furtherReading.slogan_number !== null
-                  ? ` · ${furtherReading.slogan_number}`
-                  : ""}
-              </span>
+              <div className="min-w-0">
+                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-memo-secondary-600">
+                  A practice for this moment
+                </p>
+
+                <p className="mt-2 font-heading text-[17px] leading-snug text-memo-text">
+                  {furtherReading.title}
+                </p>
+
+                {furtherReading.slogan_number !== null && (
+                  <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.12em] text-memo-neutral-500">
+                    Lojong · {furtherReading.slogan_number}
+                  </p>
+                )}
+
+                <Link
+                  href={`/library/${furtherReading.id}`}
+                  className="group mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium text-memo-secondary-600"
+                >
+                  Explore the teaching
+
+                  <ArrowUpRight
+                    className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </div>
             </div>
-
-            <p className="font-heading text-[16px] leading-snug text-memo-text">
-              {furtherReading.title}
-            </p>
-
-            <Link
-              href={`/library/${furtherReading.id}`}
-              className="group mt-2 inline-flex items-center gap-1.5 text-[13px] font-medium text-memo-secondary-500"
-            >
-              Explore the teaching
-
-              <ArrowUpRight
-                className="
-                  h-3.5 w-3.5
-                  transition-transform
-                  duration-200
-                  group-hover:-translate-y-0.5
-                  group-hover:translate-x-0.5
-                "
-              />
-            </Link>
           </div>
         )}
       </article>
