@@ -2,6 +2,7 @@
 import logging
 
 from langchain_openai import ChatOpenAI
+from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -9,6 +10,7 @@ from app.models.conversation_turn import ConversationTurn
 from app.schemas.conversation import (
     ConversationRequest,
     ConversationResponse,
+    FollowUp,
     FurtherReading,
 )
 from app.schemas.reflection_plan import ReflectionPlan
@@ -26,6 +28,34 @@ logger = logging.getLogger(__name__)
 response_model = ChatOpenAI(
     model=settings.openai_model,
     api_key=settings.openai_api_key,
+)
+
+
+class GeneratedReply(BaseModel):
+    """Structured output produced by Ana for a conversation turn."""
+
+    reply: str = Field(
+        description=(
+            "Ana's main conversational response. "
+            "This must stand on its own and must not contain "
+            "the follow-up question."
+        )
+    )
+
+    follow_up_question: str | None = Field(
+        default=None,
+        description=(
+            "An optional question offered after the main response. "
+            "Use this only when the current pedagogical strategy calls "
+            "for a main response followed by a separate invitation to "
+            "continue. If the main response itself is the pedagogical "
+            "question, leave this null."
+        ),
+    )
+
+
+structured_response_model = response_model.with_structured_output(
+    GeneratedReply
 )
 
 UNIVERSAL_SYSTEM_PROMPT = """
@@ -116,11 +146,17 @@ Pedagogical Strategy for this turn: direct_response.
 
 - Begin by expressing the Core Insight in natural language, grounded in the
   person's specific situation, not stated as an abstract principle.
+
 - Then follow the Conversation Movement — express its full arc, not just its
   starting point. If it contains more than one distinction, your response
   must carry the person through all of it, not stop after the first part.
-- Finally, ask one question that continues that movement forward, not one
-  that reopens exploration the plan has already resolved.
+
+- Do not append the follow-up question to the conversational response.
+  Produce the main response as a complete thought that can stand on its own.
+
+  Then provide one separate follow-up question that continues the
+  Conversation Movement forward. The question should not repeat the
+  response or reopen exploration the plan has already resolved.
 """.strip()
 
 
@@ -154,7 +190,6 @@ Avoid explicitly stating the Core Insight unless:
 - the user has made a meaningful observation and expressing the Core Insight
   would deepen or integrate what they have already discovered,
 - or withholding it would meaningfully impede the conversation.
-
 If you do express the Core Insight, offer it tentatively ("I wonder if...",
 "Could it be that...") and derive it explicitly from what the user actually
 said or noticed during the conversation. Do not simply reveal or restate the
@@ -419,7 +454,7 @@ async def create_reply(
     logger.debug("=== Final System Prompt ===\n%s", system_prompt)
 
     try:
-        result = await response_model.ainvoke(messages)
+        generated = await structured_response_model.ainvoke(messages)
     except Exception:
         logger.exception("conversation_model_call_failed")
 
@@ -430,10 +465,8 @@ async def create_reply(
             )
         )
 
-    content = result.content
-
-    if not isinstance(content, str):
-        content = str(content)
+    content = generated.reply
+    follow_up_question = generated.follow_up_question
 
     further_reading = None
     if best_entry is not None:
@@ -441,6 +474,13 @@ async def create_reply(
             id=best_entry.id,
             title=best_entry.title,
             slogan_number=best_entry.slogan_number,
+        )
+        
+    follow_up = None
+
+    if follow_up_question:
+        follow_up = FollowUp(
+            question=follow_up_question,
         )
 
     try:
@@ -464,4 +504,5 @@ async def create_reply(
     return ConversationResponse(
         reply=content,
         further_reading=further_reading,
+        follow_up=follow_up,
     )
