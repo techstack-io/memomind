@@ -8,18 +8,13 @@ point: train_in_empathy_and_compassion
 retrieval_signals:
   emotions:
     - resentful
-    - guilty
-    - conflicted
-    - compassion_fatigue
   patterns:
     - selective_compassion
     - self_protection
     - avoidance
-    - people_pleasing
   contexts:
     - relationships
     - caregiving
-    - conflict
 
 user_language:
   - "I can care about some people so easily, but not this person."
@@ -34,7 +29,7 @@ core_principles:
   - compassion
   - non_attachment
   - equanimity
-  - interdependence
+  - interconnectedness
 
 related_slogans:
   - lojong-005

@@ -7,17 +7,13 @@ point: train_in_empathy_and_compassion
 
 retrieval_signals:
   emotions:
-    - jaded
     - cynical
-    - guarded
-    - numb
+    - resentful
   patterns:
-    - cynicism
     - self_protection
     - rumination
   contexts:
     - relationships
-    - daily_life
     - major_life_transition
 
 user_language:
@@ -31,7 +27,6 @@ user_language:
 
 core_principles:
   - trust
-  - openness
   - non_attachment
   - present_moment_awareness
 
